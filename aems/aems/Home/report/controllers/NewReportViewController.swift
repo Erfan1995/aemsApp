@@ -87,6 +87,8 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateImage.image = candidateImage
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
+        cell.layer.borderWidth = 1.0
+        cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
