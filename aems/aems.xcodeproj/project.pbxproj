@@ -28,7 +28,7 @@
 		228852152302995B00F5AEFF /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228852142302995B00F5AEFF /* InformationViewController.swift */; };
 		2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521A2302DCD000F5AEFF /* NotificationTableViewCell.swift */; };
 		2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521C2302E00E00F5AEFF /* NotificationViewController.swift */; };
-		228852202302E19F00F5AEFF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521F2302E19F00F5AEFF /* Notification.swift */; };
+		228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521F2302E19F00F5AEFF /* NotificationTab.swift */; };
 		22AA79FD22F952BB0050298A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FC22F952BB0050298A /* AppDelegate.swift */; };
 		22AA79FF22F952BB0050298A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FE22F952BB0050298A /* LoginController.swift */; };
 		22AA7A0222F952BB0050298A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22AA7A0022F952BB0050298A /* Main.storyboard */; };
@@ -73,7 +73,7 @@
 		228852142302995B00F5AEFF /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		2288521A2302DCD000F5AEFF /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		2288521C2302E00E00F5AEFF /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		2288521F2302E19F00F5AEFF /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		2288521F2302E19F00F5AEFF /* NotificationTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTab.swift; sourceTree = "<group>"; };
 		22AA79F922F952BB0050298A /* aems.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aems.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AA79FC22F952BB0050298A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22AA79FE22F952BB0050298A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				2288521E2302E0A300F5AEFF /* controller */,
-				2288521F2302E19F00F5AEFF /* Notification.swift */,
+				2288521F2302E19F00F5AEFF /* NotificationTab.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -239,13 +239,6 @@
 				22AA7A0322F952BB0050298A /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		22880ED922F9A837009E2B0D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		228852122302992000F5AEFF /* infromation */ = {
@@ -300,7 +293,6 @@
 				22EC5DF522F9580F0025AE5E /* Register */,
 				22EC5DF222F9561B0025AE5E /* Login */,
 				22880ED822F9A803009E2B0D /* Resources */,
-				22880ED922F9A837009E2B0D /* Supporting Files */,
 				22AA7A0022F952BB0050298A /* Main.storyboard */,
 				22AA79FC22F952BB0050298A /* AppDelegate.swift */,
 				22AA7A0522F952BB0050298A /* LaunchScreen.storyboard */,
@@ -335,7 +327,6 @@
 		22EC5DF222F9561B0025AE5E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				22EC5DFA22F9654A0025AE5E /* View */,
 				22EC5DF422F956320025AE5E /* Controller */,
 				22EC5DF322F956270025AE5E /* Modal */,
 			);
@@ -368,7 +359,6 @@
 		22EC5DF522F9580F0025AE5E /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				22EC5DF722F95F890025AE5E /* view */,
 				22EC5DF622F958190025AE5E /* Controller */,
 			);
 			path = Register;
@@ -380,20 +370,6 @@
 				22EC5DF022F953410025AE5E /* RegisterViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		22EC5DF722F95F890025AE5E /* view */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = view;
-			sourceTree = "<group>";
-		};
-		22EC5DFA22F9654A0025AE5E /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -522,7 +498,7 @@
 				2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */,
 				174703BB23091E450030AD28 /* User.swift in Sources */,
 				22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */,
-				228852202302E19F00F5AEFF /* Notification.swift in Sources */,
+				228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */,
 				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,

@@ -13,12 +13,12 @@ class NotificationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var messageTextVies: UITextView!
+    @IBOutlet weak var messageText: UILabel!
     
-    func setNotification (notification: Notification){
+    func setNotification (notification: NotificationTab){
         userImage.image = notification.image
         dateLabel.text = notification.date
-        messageTextVies.text = notification.message
+        messageText.text = notification.message
     }
 
 }

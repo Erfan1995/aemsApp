@@ -11,26 +11,68 @@ import UIKit
 class NewReportViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    let candidateName = ["اشرف غنی","اتمر","عبدالله","حکمتیار","جلییلی","نبیل","فرهاد"]
+   
+    var estimatedWidth = 180.0
+    var cellMarginSize = 5.0
+    let candidateName = ["محمد اشرف غنی","اتمر","عبدالله","حکمتیار","جلییلی","نبیل","فرهاد"]
     let candidateNumber = [1,2,3,4,5,6,7,8]
     let candidateImage = #imageLiteral(resourceName: "user (2)")
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-        // Do any additional setup after loading the view.
-    }
-   
+        collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
+        self.hideKeyboardWhenTappedAround()
+        addBarButton()
+        setupGrid()
+        
 
+    }
+    func setupGrid(){
+        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
+        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
+    }
+    func addBarButton(){
+        
+
+        let buttonSend = UIButton(type: .custom)
+        buttonSend.setImage(UIImage(named: "send-button (3)"), for: .normal)
+        buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
+        buttonSend.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        
+        let barButtonSend = UIBarButtonItem(customView: buttonSend)
+        let buttonAttach = UIButton(type: .custom)
+        buttonAttach.setImage(UIImage(named: "icon (3)"), for: .normal)
+        buttonAttach.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
+
+        buttonAttach.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        
+        let barButtonAttach = UIBarButtonItem(customView: buttonAttach)
+        self.navigationItem.rightBarButtonItems = [barButtonSend, barButtonAttach]
+}
+
+    @objc func tapButton(){
+        print("do something")
+    }
+        
+    
 }
 extension NewReportViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: self.collectionView.frame.width*0.3, height: self.collectionView.frame.height*0.1)
-        return size
+        let width = self.calculateWidth()
+        return CGSize(width: width, height: 200.0)
+    }
+    
+    func calculateWidth() -> CGFloat{
+        let estimateWidth = CGFloat(estimatedWidth)
+        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
+        let margin = CGFloat(cellMarginSize * 2)
+        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
+        return width
     }
 }
+
 extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -45,19 +87,6 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateImage.image = candidateImage
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
-        
-        cell.contentView.layer.cornerRadius = 0.4
-        cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
-        cell.contentView.layer.masksToBounds = false
-        cell.contentView.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0 , height: 1.0)
-        cell.layer.shadowRadius = 4.0
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-        
-        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -71,3 +100,5 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
 }
+
+

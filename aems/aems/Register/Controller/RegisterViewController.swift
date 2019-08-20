@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
    
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var province: UITextField!
     @IBOutlet weak var district: UITextField!
     @IBOutlet weak var pollingCenter: UITextField!
@@ -27,11 +28,29 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var selectedDaty:String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
         pollingCenter.delegate = self
         creatProvincePicker()
         createToolbar()
+//        scrollForKeyboard(scrollView: self.scrollView)
+        scrollForKeyboard()
+    }
+    func scrollForKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
+    }
+    @objc func Keyboard(notification: Notification){
+        let userInfo = notification.userInfo
+        let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        if notification.name == Notification.Name.UIKeyboardWillHide{
+            scrollView.contentInset = UIEdgeInsets.zero
+        }else{
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
     func creatProvincePicker(){
        
@@ -46,18 +65,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         toolbar.barTintColor = .black
-        toolbar.tintColor  = .white
-        let doneButton = UIBarButtonItem(title:"done", style:.plain, target: self, action: #selector(RegisterViewController.dismissKeyboard))
-            toolbar.setItems([doneButton], animated: false)
+        toolbar.tintColor  = .white    
         toolbar.isUserInteractionEnabled = true
         province.inputAccessoryView = toolbar
         district.inputAccessoryView = toolbar
         pollingCenter.inputAccessoryView = toolbar
     }
-    @objc func dismissKeyboard(){
-        view.endEditing(true)
-    }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         switch textField {
         case province:

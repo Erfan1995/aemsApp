@@ -11,9 +11,9 @@ import UIKit
 class NotificationViewController: UIViewController {
     
     @IBOutlet weak var notificationCell: UITableView!
-    var notifications: [Notification] = []
+    var notifications: [NotificationTab] = []
     var date = "Dddd"
-    var message = ["سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی"]
+    var message = ["سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی","سلام خوبی"]
     override func viewDidLoad() {
         super.viewDidLoad()
         notifications = creatArray()
@@ -26,25 +26,30 @@ class NotificationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func  creatArray() -> [Notification] {
-        var tempNotification: [Notification] = []
-//        for i in message{
-//            tempNotification.append(Notification(image: #imageLiteral(resourceName: "user (2)"), date: self.date, message: i ))
-//        }
-        let n1 = Notification(image: #imageLiteral(resourceName: "user (2)"), date: "dd", message: "helllo")
-        let n2 = Notification(image: #imageLiteral(resourceName: "user (2)"), date: "dd", message: "helllo")
-        let n3 = Notification(image: #imageLiteral(resourceName: "user (2)"), date: "dd", message: "helllo")
-        let n4 = Notification(image: #imageLiteral(resourceName: "user (2)"), date: "dd", message: "helllo")
-        
-        tempNotification.append(n1)
-        tempNotification.append(n2)
-        tempNotification.append(n3)
-        tempNotification.append(n4)
+    func  creatArray() -> [NotificationTab] {
+        var tempNotification: [NotificationTab] = []
+        for i in message{
+            tempNotification.append(NotificationTab(image: #imageLiteral(resourceName: "user (2)"), date: self.date, message: i ))
+        }
+
         return tempNotification
     }
 
 }
-
+extension NotificationViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return notifications.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+        cell.setNotification(notification: notifications[indexPath.row])
+        return cell
+    }
+    
+    
+}
 
 
 
