@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-class Notification {
+class NotificationTab{
     var image: UIImage
     var date : String
     var message : String
