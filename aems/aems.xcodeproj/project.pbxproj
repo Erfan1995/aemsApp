@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171ECC03230A7AE4005F7A38 /* LoginData.swift */; };
+		174703A4230911E40030AD28 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A3230911E40030AD28 /* AVKit.framework */; };
+		174703A6230911F20030AD28 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A5230911F20030AD28 /* AVFoundation.framework */; };
+		174703A8230911FA0030AD28 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A7230911FA0030AD28 /* libsqlite3.0.tbd */; };
+		174703A9230912FB0030AD28 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1747039A230910D00030AD28 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		174703AA2309130A0030AD28 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1747039F230910D00030AD28 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		174703AB230913190030AD28 /* FMDatabasePool.h in Sources */ = {isa = PBXBuildFile; fileRef = 17470398230910D00030AD28 /* FMDatabasePool.h */; };
+		174703AC230913260030AD28 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 17470399230910D00030AD28 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		174703AD230913340030AD28 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 17470396230910D00030AD28 /* FMDatabaseQueue.m */; };
+		174703B1230919C00030AD28 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703B0230919C00030AD28 /* AppDatabase.swift */; };
+		174703BB23091E450030AD28 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703BA23091E450030AD28 /* User.swift */; };
+		174703BE230922900030AD28 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703BD230922900030AD28 /* Candidate.swift */; };
+		174703C0230926450030AD28 /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703BF230926450030AD28 /* Province.swift */; };
+		174703C2230928690030AD28 /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C1230928690030AD28 /* District.swift */; };
+		174703C4230929550030AD28 /* PollingCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C3230929550030AD28 /* PollingCenter.swift */; };
+		174703C623092A610030AD28 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C523092A610030AD28 /* Report.swift */; };
 		220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220C961B230282AC0096E5EA /* ReportViewController.swift */; };
 		22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22880ED222F9995E009E2B0D /* TabBarViewController.swift */; };
 		228852152302995B00F5AEFF /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228852142302995B00F5AEFF /* InformationViewController.swift */; };
@@ -23,9 +39,35 @@
 		22AE321A2304189800CFD4BF /* NewReportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE32192304189800CFD4BF /* NewReportCollectionViewCell.swift */; };
 		22BA2FD22307B9DA00412FFB /* NewReportHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2FD12307B9DA00412FFB /* NewReportHeaderView.swift */; };
 		22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC5DF022F953410025AE5E /* RegisterViewController.swift */; };
+		265382E8C4B6687FBCA7D9E4 /* Pods_aems.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E620151C4D21FC0B6AD134BA /* Pods_aems.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033D503977E8DCAB4D95D071 /* Pods-aems.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aems.debug.xcconfig"; path = "Target Support Files/Pods-aems/Pods-aems.debug.xcconfig"; sourceTree = "<group>"; };
+		171ECC03230A7AE4005F7A38 /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		17470395230910D00030AD28 /* FMDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		17470396230910D00030AD28 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		17470397230910D00030AD28 /* FMResultSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		17470398230910D00030AD28 /* FMDatabasePool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		17470399230910D00030AD28 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		1747039A230910D00030AD28 /* FMDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		1747039B230910D00030AD28 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		1747039C230910D00030AD28 /* FMDB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		1747039D230910D00030AD28 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		1747039E230910D00030AD28 /* FMDatabasePool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		1747039F230910D00030AD28 /* FMResultSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		174703A0230910D00030AD28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		174703A12309112D0030AD28 /* fmdb_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fmdb_header.h; sourceTree = "<group>"; };
+		174703A3230911E40030AD28 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		174703A5230911F20030AD28 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		174703A7230911FA0030AD28 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		174703B0230919C00030AD28 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		174703BA23091E450030AD28 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		174703BD230922900030AD28 /* Candidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
+		174703BF230926450030AD28 /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
+		174703C1230928690030AD28 /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
+		174703C3230929550030AD28 /* PollingCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingCenter.swift; sourceTree = "<group>"; };
+		174703C523092A610030AD28 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		220C961B230282AC0096E5EA /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		22880ED222F9995E009E2B0D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		228852142302995B00F5AEFF /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +86,8 @@
 		22AE32192304189800CFD4BF /* NewReportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportCollectionViewCell.swift; sourceTree = "<group>"; };
 		22BA2FD12307B9DA00412FFB /* NewReportHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportHeaderView.swift; sourceTree = "<group>"; };
 		22EC5DF022F953410025AE5E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		630D8939929694D25DE545C0 /* Pods-aems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aems.release.xcconfig"; path = "Target Support Files/Pods-aems/Pods-aems.release.xcconfig"; sourceTree = "<group>"; };
+		E620151C4D21FC0B6AD134BA /* Pods_aems.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aems.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,12 +95,126 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				174703A8230911FA0030AD28 /* libsqlite3.0.tbd in Frameworks */,
+				174703A6230911F20030AD28 /* AVFoundation.framework in Frameworks */,
+				174703A4230911E40030AD28 /* AVKit.framework in Frameworks */,
+				265382E8C4B6687FBCA7D9E4 /* Pods_aems.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17470394230910D00030AD28 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				17470395230910D00030AD28 /* FMDatabase.h */,
+				17470396230910D00030AD28 /* FMDatabaseQueue.m */,
+				17470397230910D00030AD28 /* FMResultSet.h */,
+				17470398230910D00030AD28 /* FMDatabasePool.h */,
+				17470399230910D00030AD28 /* FMDatabaseAdditions.m */,
+				1747039A230910D00030AD28 /* FMDatabase.m */,
+				1747039B230910D00030AD28 /* FMDatabaseQueue.h */,
+				1747039C230910D00030AD28 /* FMDB.h */,
+				1747039D230910D00030AD28 /* FMDatabaseAdditions.h */,
+				1747039E230910D00030AD28 /* FMDatabasePool.m */,
+				1747039F230910D00030AD28 /* FMResultSet.m */,
+				174703A0230910D00030AD28 /* Info.plist */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
+		174703A2230911E40030AD28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				174703A7230911FA0030AD28 /* libsqlite3.0.tbd */,
+				174703A5230911F20030AD28 /* AVFoundation.framework */,
+				174703A3230911E40030AD28 /* AVKit.framework */,
+				E620151C4D21FC0B6AD134BA /* Pods_aems.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		174703AF230919690030AD28 /* DatabaseHelper */ = {
+			isa = PBXGroup;
+			children = (
+				174703B0230919C00030AD28 /* AppDatabase.swift */,
+			);
+			path = DatabaseHelper;
+			sourceTree = "<group>";
+		};
+		174703B223091D830030AD28 /* Candidate */ = {
+			isa = PBXGroup;
+			children = (
+				174703BD230922900030AD28 /* Candidate.swift */,
+			);
+			path = Candidate;
+			sourceTree = "<group>";
+		};
+		174703B323091D8E0030AD28 /* District */ = {
+			isa = PBXGroup;
+			children = (
+				174703C1230928690030AD28 /* District.swift */,
+			);
+			path = District;
+			sourceTree = "<group>";
+		};
+		174703B423091D980030AD28 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		174703B523091DA30030AD28 /* Password */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Password;
+			sourceTree = "<group>";
+		};
+		174703B623091DA90030AD28 /* PollingCenter */ = {
+			isa = PBXGroup;
+			children = (
+				174703C3230929550030AD28 /* PollingCenter.swift */,
+			);
+			path = PollingCenter;
+			sourceTree = "<group>";
+		};
+		174703B723091DB90030AD28 /* Province */ = {
+			isa = PBXGroup;
+			children = (
+				174703BF230926450030AD28 /* Province.swift */,
+			);
+			path = Province;
+			sourceTree = "<group>";
+		};
+		174703B823091DC70030AD28 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				174703C523092A610030AD28 /* Report.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		174703B923091DCD0030AD28 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				174703BA23091E450030AD28 /* User.swift */,
+				171ECC03230A7AE4005F7A38 /* LoginData.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		1DA457CDD7B25112A4378565 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				033D503977E8DCAB4D95D071 /* Pods-aems.debug.xcconfig */,
+				630D8939929694D25DE545C0 /* Pods-aems.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		220C9619230282910096E5EA /* report */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,8 +269,11 @@
 		22AA79F022F952BB0050298A = {
 			isa = PBXGroup;
 			children = (
+				174703A12309112D0030AD28 /* fmdb_header.h */,
 				22AA79FB22F952BB0050298A /* aems */,
 				22AA79FA22F952BB0050298A /* Products */,
+				174703A2230911E40030AD28 /* Frameworks */,
+				1DA457CDD7B25112A4378565 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +288,7 @@
 		22AA79FB22F952BB0050298A /* aems */ = {
 			isa = PBXGroup;
 			children = (
+				174703AF230919690030AD28 /* DatabaseHelper */,
 				22D569AE22F982D80075F41D /* Home */,
 				22EC5DF522F9580F0025AE5E /* Register */,
 				22EC5DF222F9561B0025AE5E /* Login */,
@@ -135,6 +297,7 @@
 				22AA79FC22F952BB0050298A /* AppDelegate.swift */,
 				22AA7A0522F952BB0050298A /* LaunchScreen.storyboard */,
 				22AA7A0822F952BB0050298A /* Info.plist */,
+				17470394230910D00030AD28 /* fmdb */,
 			);
 			path = aems;
 			sourceTree = "<group>";
@@ -173,6 +336,14 @@
 		22EC5DF322F956270025AE5E /* Modal */ = {
 			isa = PBXGroup;
 			children = (
+				174703B923091DCD0030AD28 /* User */,
+				174703B823091DC70030AD28 /* Report */,
+				174703B723091DB90030AD28 /* Province */,
+				174703B623091DA90030AD28 /* PollingCenter */,
+				174703B523091DA30030AD28 /* Password */,
+				174703B423091D980030AD28 /* Notification */,
+				174703B323091D8E0030AD28 /* District */,
+				174703B223091D830030AD28 /* Candidate */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -208,9 +379,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22AA7A0B22F952BB0050298A /* Build configuration list for PBXNativeTarget "aems" */;
 			buildPhases = (
+				FE2C9680A028D4D90BD3DEB7 /* [CP] Check Pods Manifest.lock */,
 				22AA79F522F952BB0050298A /* Sources */,
 				22AA79F622F952BB0050298A /* Frameworks */,
 				22AA79F722F952BB0050298A /* Resources */,
+				1A7A31849EF61F3A727DD946 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -269,22 +442,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A7A31849EF61F3A727DD946 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-aems/Pods-aems-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-aems/Pods-aems-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE2C9680A028D4D90BD3DEB7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-aems-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		22AA79F522F952BB0050298A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				174703B1230919C00030AD28 /* AppDatabase.swift in Sources */,
+				174703AD230913340030AD28 /* FMDatabaseQueue.m in Sources */,
+				174703AC230913260030AD28 /* FMDatabaseAdditions.m in Sources */,
+				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
+				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
+				174703A9230912FB0030AD28 /* FMDatabase.m in Sources */,
 				22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */,
 				2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */,
+				174703BB23091E450030AD28 /* User.swift in Sources */,
 				22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */,
 				228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */,
 				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
+				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
 				22AE32142303D67700CFD4BF /* NewReportViewController.swift in Sources */,
 				22BA2FD22307B9DA00412FFB /* NewReportHeaderView.swift in Sources */,
+				174703C0230926450030AD28 /* Province.swift in Sources */,
 				228852152302995B00F5AEFF /* InformationViewController.swift in Sources */,
 				22AA79FF22F952BB0050298A /* LoginController.swift in Sources */,
+				174703C2230928690030AD28 /* District.swift in Sources */,
 				220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */,
+				171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */,
+				174703C623092A610030AD28 /* Report.swift in Sources */,
+				174703BE230922900030AD28 /* Candidate.swift in Sources */,
 				22AA79FD22F952BB0050298A /* AppDelegate.swift in Sources */,
 				22AE321A2304189800CFD4BF /* NewReportCollectionViewCell.swift in Sources */,
 			);
@@ -421,18 +648,22 @@
 		};
 		22AA7A0C22F952BB0050298A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 033D503977E8DCAB4D95D071 /* Pods-aems.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 334CU6SKU6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -440,17 +671,21 @@
 		};
 		22AA7A0D22F952BB0050298A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 630D8939929694D25DE545C0 /* Pods-aems.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 334CU6SKU6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
+				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
