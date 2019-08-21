@@ -17,7 +17,7 @@ class AppDatabase: NSObject {
     override init() {
         do{
             super.init()
-            print(getCandidates().count)
+     
             let database = openDatabase()
             if (database!.open()) {
                 do{

@@ -21,11 +21,6 @@ class NotificationViewController: UIViewController {
 //        notificationCell.dataSource = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func  creatArray() -> [NotificationTab] {
         var tempNotification: [NotificationTab] = []
         for i in message{
@@ -45,8 +40,10 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
         cell.setNotification(notification: notifications[indexPath.row])
+        
         return cell
     }
+    
     
     
 }

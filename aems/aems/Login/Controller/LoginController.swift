@@ -27,9 +27,9 @@ class LoginViewController: UIViewController {
         
         
 //        txtDownload.isUserInteractionEnabled=true
-//         let downloadGesture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(downloadGesture)
+         let downloadGesture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(downloadGesture)
         
-        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(newReportTapGetsture)
+//        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(newReportTapGetsture)
         
 
         hideKeyboardWhenTappedAround()
@@ -58,8 +58,13 @@ class LoginViewController: UIViewController {
 //            withIdentifier: "RegisterViewController") as! RegisterViewController
 //        present(registerViewController, animated: true, completion: nil)
         
-        
-        
+//        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        guard let registerViewController = mainStoryboard.instantiateViewController(withIdentifier: "RegisterViewController" ) as? RegisterViewController else{
+//            print("could not find controller")
+//            return
+//        }
+//        navigationController?.pushViewController(registerViewController, animated: true)
+
         Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
                           method: .get)
             .validate()
@@ -67,30 +72,30 @@ class LoginViewController: UIViewController {
                 guard response.result.isSuccess else {
                     return
                 }
-                
+
                 let json=JSON(response.value)
                 var condidateData : Array<Candidate> = Array()
                 var provinceData : Array<Province> = Array()
                 var districtData : Array<District> = Array();
                 var pollingCenterData : Array<PollingCenter> = Array();
-                
+
                 json["candidates"].array?.forEach({
                     (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
                     condidateData.append(condidate)
                 })
-                
+
                 json["provinces"].array?.forEach({
                     (province) in let province = Province(province_id: province["province_id"].int, name: province["province_name"].stringValue)
                     provinceData.append(province)
                 })
-                
-                
+
+
                 json["districts"].array?.forEach({
                     (district) in let district = District(district_id: district["district_id"].intValue, province_id: district["province_id"].intValue, name: district["district_name"].stringValue)
                     districtData.append(district)
                 })
-                
-                
+
+
                 json["polling_centers"].array?.forEach({
                     (center) in let center = PollingCenter(polling_center_id: center["id"].intValue, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].intValue)
                     pollingCenterData.append(center)
@@ -104,12 +109,12 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginBtnPressed(_ sender: Any) {
       
-//        let tabBarViewController =
-//            storyboard?.instantiateViewController(
-//                withIdentifier: "TabBarViewController") as! TabBarViewController
-//        
-//          present(tabBarViewController, animated: true, completion: nil)
-      
+        let tabBarViewController =
+            storyboard?.instantiateViewController(
+                withIdentifier: "TabBarViewController") as! TabBarViewController
+
+          present(tabBarViewController, animated: true, completion: nil)
+       
         
         Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
                           method: .post,
