@@ -9,9 +9,11 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MaterialComponents.MaterialSnackbar
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
-   
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var province: UITextField!
     @IBOutlet weak var district: UITextField!
@@ -31,9 +33,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var centers : Array<PollingCenter> = Array();
     
     var selectedDaty:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         provinces = AppDatabase().getProvinces()
         for province in provinces{
             provincePickerData.append(province.name!)
@@ -111,7 +113,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
    
     
     @IBAction func register(_ sender: Any) {
-        //dismiss( animated: true, completion: nil)
+       
+
         var province_id : Int32 = 0
         var pollingCenter_id : Int32 = 0
         let complete_name : String = fullName.text!
@@ -131,23 +134,38 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        var user : User = User(id: nil, complete_name: complete_name, observer_code: observer_code, phone: phone, password: pass, polling_center_id: pollingCenter_id)
     
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register",
-                          method: .post,
-                          parameters: ["user": user])
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    return
-                }
-                let json=JSON(response.value)
-                print(json)
-        }
         
+        let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
+        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                    guard response.result.isSuccess else {
+                        return
+                    }
+                    let json=JSON(response.value)
+                    if  json["response"]==1{
+                        self.showSnackBar(messageString: "you registred successfuly")
+                        self.dismiss( animated: true, completion: nil)
+                    }
+                    else if json["response"]==2{
+                        self.showSnackBar(messageString: "your user is exists")
+                    }
+                    else if json["response"]==3{
+                        self.showSnackBar(messageString: "occured some problem ")
+                    }
+                
+               
+            }
         
     }
     
+
+    func  showSnackBar(messageString:String) {
+        let message=MDCSnackbarMessage()
+        message.text = messageString
+        MDCSnackbarManager.show(message)
+    }
+
 }
 
 
@@ -234,6 +252,5 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         }
         return label
     }
-   
-    
+
 }
