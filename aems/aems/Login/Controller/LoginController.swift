@@ -11,13 +11,15 @@ import Alamofire
 import SwiftyJSON
 
 class LoginViewController: UIViewController {
-    @IBOutlet var txtDownload: UIView!
+
+    @IBOutlet weak var txtDownload: UIButton!
+    @IBOutlet weak var txtPhone: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       AppDatabase()
-        var loginDate : LoginData? = User().getLoginUserDefault()
+        let loginDate : LoginData? = User().getLoginUserDefault()
         if loginDate != nil {
             print("ok")
         }
@@ -25,23 +27,24 @@ class LoginViewController: UIViewController {
             print("not")
         }
         
-        
-//        txtDownload.isUserInteractionEnabled=true
-//         let downloadGesture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(downloadGesture)
-        
-        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(newReportTapGetsture)
+    
+        txtDownload.isUserInteractionEnabled=true
+        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));       txtDownload.addGestureRecognizer(newReportTapGetsture)
         
 
         hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
     }
 
     
     @objc func txtDownload_Click(sender: UITapGestureRecognizer){
-        let newReportController = storyboard?.instantiateViewController(withIdentifier: "NewReportViewController") as! NewReportViewController
-        
-        present(newReportController, animated: true, completion: nil)
+        if !Candidate().getCondidateUserDefault() && !Province().getProvinceUserDefault() && !District().getDistrictUserDefault() && !PollingCenter().getPollingCenterUserDefault() {
+                    downloadFiles()
+                }
+                else{
+                     print("download operation completed successfuly ")
+                }
     }
     
     
@@ -53,13 +56,59 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func registerBtnPressed(_ sender: Any) {
+        if Candidate().getCondidateUserDefault() && Province().getProvinceUserDefault() && District().getDistrictUserDefault() && PollingCenter().getPollingCenterUserDefault() {
+            let registerViewController = storyboard?.instantiateViewController(
+                withIdentifier: "RegisterViewController") as! RegisterViewController
+            present(registerViewController, animated: true, completion: nil)
+        }
+        else{
+            print("please download needed file at the first ")
+        }
         
-//        let registerViewController = storyboard?.instantiateViewController(
-//            withIdentifier: "RegisterViewController") as! RegisterViewController
-//        present(registerViewController, animated: true, completion: nil)
+    }
+    
+
+
+    @IBAction func loginBtnPressed(_ sender: Any) {
+
+        let phone : String = txtPhone.text!
+        let password : String = txtPassword.text!
         
-        
-        
+        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
+                          method: .post,
+                          parameters: ["phone": phone,"password":password])
+            .validate()
+            .responseJSON { response in
+                guard response.result.isSuccess else {
+                    return
+                }
+          let json=JSON(response.value)
+                if json["response"]==1{
+                    var responseData = json["data"]
+                    var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
+                    User().setLoginUserDefault(loginData: loginData)
+                    
+                    let tabBarViewController =
+                                self.storyboard?.instantiateViewController(
+                                    withIdentifier: "TabBarViewController") as! TabBarViewController
+                              self.present(tabBarViewController, animated: true, completion: nil)
+                }
+                else if json["response"]==2{
+                     print("yout acount not approved ")
+                }
+                else if json["response"]==3{
+                     print("your phone or password in wrong")
+                }
+                else if json["response"]==4{
+                    print("occured some problem try again")
+                }
+        }
+    }
+    
+    
+    
+    
+    func downloadFiles() {
         Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
                           method: .get)
             .validate()
@@ -80,57 +129,30 @@ class LoginViewController: UIViewController {
                 })
                 
                 json["provinces"].array?.forEach({
-                    (province) in let province = Province(province_id: province["province_id"].int, name: province["province_name"].stringValue)
+                    (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
                     provinceData.append(province)
                 })
                 
                 
                 json["districts"].array?.forEach({
-                    (district) in let district = District(district_id: district["district_id"].intValue, province_id: district["province_id"].intValue, name: district["district_name"].stringValue)
+                    (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
                     districtData.append(district)
                 })
                 
                 
                 json["polling_centers"].array?.forEach({
-                    (center) in let center = PollingCenter(polling_center_id: center["id"].intValue, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].intValue)
+                    (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
                     pollingCenterData.append(center)
                 })
-
+                
                 AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
-        }
-    }
-    
-
-
-    @IBAction func loginBtnPressed(_ sender: Any) {
-      
-//        let tabBarViewController =
-//            storyboard?.instantiateViewController(
-//                withIdentifier: "TabBarViewController") as! TabBarViewController
-//        
-//          present(tabBarViewController, animated: true, completion: nil)
-      
-        
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
-                          method: .post,
-                          parameters: ["phone": "0700808080","password":"123456"])
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    return
-                }
-          let json=JSON(response.value)
-                if json["response"]==1{
-                    var responseData = json["data"]
-                    var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
-                    User().setLoginUserDefault(loginData: loginData)
-                }
-                else{
-                    print("you authontication field please try again")
-                }
+                
         }
     }
 }
+
+
+
 extension UIViewController{
    
     func hideKeyboardWhenTappedAround() {
@@ -142,22 +164,6 @@ extension UIViewController{
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-//    func scrollForKeyboard( scrollView: UIScrollView){
-//       var scrollView = scrollView
-//        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
-//            NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
-//        }
-//        @objc func Keyboard(notification: Notification){
-//            let userInfo = notification.userInfo
-//            let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//            let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-//            if notification.name == Notification.Name.UIKeyboardWillHide{
-//                scrollView.contentInset = UIEdgeInsets.zero
-//            }else{
-//                scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-//            }
-//            scrollView.scrollIndicatorInsets = scrollView.contentInset
-//        }
+
 }
 

@@ -29,8 +29,8 @@ class User {
     var observer_code : String?
     var phone : String?
     var password : String?
-    var polling_center_id : Int?
-    init(id:Int? , complete_name:String?,observer_code:String?,phone:String?,password:String?,polling_center_id:Int?) {
+    var polling_center_id : Int32?
+    init(id:Int? , complete_name:String?,observer_code:String?,phone:String?,password:String?,polling_center_id:Int32?) {
         self.id=id
         self.complete_name=complete_name
         self.observer_code=observer_code

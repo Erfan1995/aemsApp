@@ -12,6 +12,7 @@ class Candidate {
     static let TABLE_NAME = "candidates"
     static let COL_ID = "election_no"
     static let COL_NAME = "candidate_name"
+    let CONDIDATE_USER_DEFAULT="condidate_user_default"
 
     var election_no : Int32?
     var candidate_name : String?
@@ -23,5 +24,19 @@ class Candidate {
         self.candidate_name=candidate_name
     }
 
+    init() {
+    }
+    
+    
+    func setCondidateUserDefault(uploaded:Bool)  {
+        let defaults = UserDefaults.standard
+        defaults.set(uploaded, forKey: CONDIDATE_USER_DEFAULT)
+    }
+    
+    func getCondidateUserDefault() -> Bool {
+        let defaults = UserDefaults.standard
+        return defaults.bool(forKey: CONDIDATE_USER_DEFAULT)
+    }
+    
 
 }
