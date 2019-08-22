@@ -20,18 +20,20 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         let loginDate : LoginData? = User().getLoginUserDefault()
-        if loginDate != nil {
-            print("ok")
+        if loginDate!.polling_center_id != 0{
+            let registerViewController = storyboard?.instantiateViewController(
+                withIdentifier: "RegisterViewController") as! RegisterViewController
+            present(registerViewController, animated: true, completion: nil)
+            print("borher you sidgned in system")
         }
         else{
-            print("not")
+            print("please eneter correct username and password")
+            var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_amount_of_vote: 0)
         }
         
     
         txtDownload.isUserInteractionEnabled=true
-        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));       txtDownload.addGestureRecognizer(newReportTapGetsture)
-        
-
+        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));    txtDownload.addGestureRecognizer(newReportTapGetsture)
         hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -43,7 +45,7 @@ class LoginViewController: UIViewController {
                     downloadFiles()
                 }
                 else{
-                     print("download operation completed successfuly ")
+                    Helper.showSnackBar(messageString: "download operation completed successfuly ")
                 }
     }
     
@@ -62,7 +64,7 @@ class LoginViewController: UIViewController {
             present(registerViewController, animated: true, completion: nil)
         }
         else{
-            print("please download needed file at the first ")
+            Helper.showSnackBar(messageString: "please download needed file at the first ")
         }
         
     }
@@ -94,13 +96,13 @@ class LoginViewController: UIViewController {
                               self.present(tabBarViewController, animated: true, completion: nil)
                 }
                 else if json["response"]==2{
-                     print("yout acount not approved ")
+                    Helper.showSnackBar(messageString: "yout acount not approved ")
                 }
                 else if json["response"]==3{
-                     print("your phone or password in wrong")
+                     Helper.showSnackBar(messageString: "your phone or password in wrong")
                 }
                 else if json["response"]==4{
-                    print("occured some problem try again")
+                    Helper.showSnackBar(messageString: "occured some problem try again")
                 }
         }
     }

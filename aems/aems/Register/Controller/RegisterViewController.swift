@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import MaterialComponents.MaterialSnackbar
+
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
@@ -41,7 +41,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             provincePickerData.append(province.name!)
         }
  
-
         hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
@@ -50,13 +49,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         createToolbar()
 //        scrollForKeyboard(scrollView: self.scrollView)
         scrollForKeyboard()
-        
-        
     }
+    
     func scrollForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
     }
+    
     @objc func Keyboard(notification: Notification){
         let userInfo = notification.userInfo
         let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -71,14 +70,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     
     func creatProvincePicker(){
-       
         picker.delegate = self
         province.inputView = picker
         district.inputView = picker
         pollingCenter.inputView = picker
-        picker.backgroundColor = .black
+        picker.backgroundColor = .gray
     }
-    
     
     
     func createToolbar(){
@@ -91,6 +88,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         district.inputAccessoryView = toolbar
         pollingCenter.inputAccessoryView = toolbar
     }
+    
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         switch textField {
@@ -114,7 +112,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func register(_ sender: Any) {
        
-
         var province_id : Int32 = 0
         var pollingCenter_id : Int32 = 0
         let complete_name : String = fullName.text!
@@ -144,28 +141,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     }
                     let json=JSON(response.value)
                     if  json["response"]==1{
-                        self.showSnackBar(messageString: "you registred successfuly")
+                        Helper.showSnackBar(messageString: "you registred successfuly")
                         self.dismiss( animated: true, completion: nil)
                     }
                     else if json["response"]==2{
-                        self.showSnackBar(messageString: "your user is exists")
+                        Helper.showSnackBar(messageString: "your user is exists")
                     }
                     else if json["response"]==3{
-                        self.showSnackBar(messageString: "occured some problem ")
+                        Helper.showSnackBar(messageString: "occured some problem ")
                     }
-                
-               
             }
-        
-    }
-    
-
-    func  showSnackBar(messageString:String) {
-        let message=MDCSnackbarMessage()
-        message.text = messageString
-        MDCSnackbarManager.show(message)
-    }
-
+     }
 }
 
 

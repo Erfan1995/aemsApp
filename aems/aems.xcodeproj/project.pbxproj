@@ -23,6 +23,7 @@
 		174703C2230928690030AD28 /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C1230928690030AD28 /* District.swift */; };
 		174703C4230929550030AD28 /* PollingCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C3230929550030AD28 /* PollingCenter.swift */; };
 		174703C623092A610030AD28 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C523092A610030AD28 /* Report.swift */; };
+		17F60F2E230E51BB002B4035 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F60F2D230E51BB002B4035 /* Helper.swift */; };
 		220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220C961B230282AC0096E5EA /* ReportViewController.swift */; };
 		22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22880ED222F9995E009E2B0D /* TabBarViewController.swift */; };
 		228852152302995B00F5AEFF /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228852142302995B00F5AEFF /* InformationViewController.swift */; };
@@ -68,6 +69,7 @@
 		174703C1230928690030AD28 /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
 		174703C3230929550030AD28 /* PollingCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingCenter.swift; sourceTree = "<group>"; };
 		174703C523092A610030AD28 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		17F60F2D230E51BB002B4035 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		220C961B230282AC0096E5EA /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		22880ED222F9995E009E2B0D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		228852142302995B00F5AEFF /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				174703B0230919C00030AD28 /* AppDatabase.swift */,
+				17F60F2D230E51BB002B4035 /* Helper.swift */,
 			);
 			path = DatabaseHelper;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				174703AC230913260030AD28 /* FMDatabaseAdditions.m in Sources */,
 				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
+				17F60F2E230E51BB002B4035 /* Helper.swift in Sources */,
 				174703A9230912FB0030AD28 /* FMDatabase.m in Sources */,
 				22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */,
 				2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */,
