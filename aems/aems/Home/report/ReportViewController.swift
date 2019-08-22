@@ -20,9 +20,6 @@ class ReportViewController: UIViewController {
     }
 
     @objc func handleTap(sender: UITapGestureRecognizer){
-//      let newReportController = storyboard?.instantiateViewController(withIdentifier: "NewReportViewController") as! NewReportViewController
-//
-//        present(newReportController, animated: true, completion: nil)
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let newReportViewController = mainStoryboard.instantiateViewController(withIdentifier: "NewReportViewController") as? NewReportViewController else {

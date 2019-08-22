@@ -12,6 +12,7 @@ import SwiftyJSON
 
 class LoginViewController: UIViewController {
 
+
     @IBOutlet weak var txtDownload: UIButton!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -20,48 +21,37 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         let loginDate : LoginData? = User().getLoginUserDefault()
-        if loginDate!.polling_center_id != 0{
-            let registerViewController = storyboard?.instantiateViewController(
-                withIdentifier: "RegisterViewController") as! RegisterViewController
-            present(registerViewController, animated: true, completion: nil)
-            print("borher you sidgned in system")
+        if  loginDate != nil {
+            if loginDate!.polling_center_id != 0{
+                let registerViewController = storyboard?.instantiateViewController(
+                    withIdentifier: "RegisterViewController") as! RegisterViewController
+                present(registerViewController, animated: true, completion: nil)
+                print("borher you sidgned in system")
+            }
+            else{
+                print("please eneter correct username and password")
+                var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_amount_of_vote: 0)
+            }
         }
-        else{
-            print("please eneter correct username and password")
-            var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_amount_of_vote: 0)
-        }
-        
-    
-        txtDownload.isUserInteractionEnabled=true
-        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));    txtDownload.addGestureRecognizer(newReportTapGetsture)
         hideKeyboardWhenTappedAround()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+    
     }
-
-    
-    @objc func txtDownload_Click(sender: UITapGestureRecognizer){
-        if !Candidate().getCondidateUserDefault() && !Province().getProvinceUserDefault() && !District().getDistrictUserDefault() && !PollingCenter().getPollingCenterUserDefault() {
-                    downloadFiles()
-                }
-                else{
-                    Helper.showSnackBar(messageString: "download operation completed successfuly ")
-                }
-    }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
 
+    }
     
     @IBAction func registerBtnPressed(_ sender: Any) {
+        
         if Candidate().getCondidateUserDefault() && Province().getProvinceUserDefault() && District().getDistrictUserDefault() && PollingCenter().getPollingCenterUserDefault() {
-            let registerViewController = storyboard?.instantiateViewController(
-                withIdentifier: "RegisterViewController") as! RegisterViewController
-            present(registerViewController, animated: true, completion: nil)
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            guard let registerViewController = mainStoryboard.instantiateViewController(withIdentifier: "RegisterViewController" ) as? RegisterViewController else{
+                print("could not find controller")
+                return
+            }
+            navigationController?.pushViewController(registerViewController, animated: true)
         }
         else{
             Helper.showSnackBar(messageString: "please download needed file at the first ")
@@ -150,10 +140,21 @@ class LoginViewController: UIViewController {
                 AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
                 
         }
+
+    }
+    @IBAction func downloadPressed(_ sender: Any) {
+        if !Candidate().getCondidateUserDefault() && !Province().getProvinceUserDefault() && !District().getDistrictUserDefault() && !PollingCenter().getPollingCenterUserDefault() {
+            downloadFiles()
+        }
+        else{
+            Helper.showSnackBar(messageString: "download operation completed successfuly ")
+        }
     }
 }
 
 
+
+    
 
 extension UIViewController{
    

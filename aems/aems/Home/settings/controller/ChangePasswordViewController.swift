@@ -1,14 +1,14 @@
 //
-//  InformationViewController.swift
+//  ChangePasswordViewController.swift
 //  aems
 //
-//  Created by aems aems on 5/22/1398 AP.
+//  Created by aems aems on 5/30/1398 AP.
 //  Copyright © 1398 aems aems. All rights reserved.
 //
 
 import UIKit
 
-class InformationViewController: UIViewController {
+class ChangePasswordViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

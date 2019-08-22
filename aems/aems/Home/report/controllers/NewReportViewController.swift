@@ -99,7 +99,8 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
         cell.txtVoteNumber.text = String(candidateNumber[indexPath.row])
-//        cell.txtVoteNumber.addTarget(self, action: selector(self.txtVoteChange), for: .editingChanged)
+        cell.layer.borderWidth = 1.0
+        cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return cell
     }
     
