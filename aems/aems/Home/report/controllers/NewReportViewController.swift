@@ -14,8 +14,10 @@ class NewReportViewController: UIViewController {
    
     var estimatedWidth = 180.0
     var cellMarginSize = 5.0
-    let candidateName = ["محمد اشرف غنی","اتمر","عبدالله","حکمتیار","جلییلی","نبیل","فرهاد"]
-    let candidateNumber = [1,2,3,4,5,6,7,8]
+    var candidateName : Array<String> = Array()
+    var candidateNumber : Array<Int32> = Array()
+    
+    
     let candidateImage = #imageLiteral(resourceName: "user (2)")
 
 
@@ -24,8 +26,17 @@ class NewReportViewController: UIViewController {
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
-        setupGrid()
         
+        
+        candidateName.removeAll()
+        candidateNumber.removeAll()
+        for candidate in AppDatabase().getCandidates(){
+            candidateName.append(candidate.candidate_name!)
+            candidateNumber.append(candidate.election_no!)
+        }
+        
+        
+        setupGrid()
 
     }
     func setupGrid(){
@@ -33,9 +44,9 @@ class NewReportViewController: UIViewController {
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
         flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
     }
+    
+    
     func addBarButton(){
-        
-
         let buttonSend = UIButton(type: .custom)
         buttonSend.setImage(UIImage(named: "send-button (3)"), for: .normal)
         buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
@@ -87,8 +98,15 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateImage.image = candidateImage
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
+        cell.txtVoteNumber.text = String(candidateNumber[indexPath.row])
+//        cell.txtVoteNumber.addTarget(self, action: selector(self.txtVoteChange), for: .editingChanged)
         return cell
     }
+    
+    func txtVoteChange(sender : Any){
+        print(sender)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionElementKindSectionHeader else {
             fatalError("unexpected element kind")
