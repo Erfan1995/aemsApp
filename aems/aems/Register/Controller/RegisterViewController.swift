@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
-   
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var province: UITextField!
     @IBOutlet weak var district: UITextField!
@@ -19,15 +23,24 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
-    var provincePickerData = ["کابل", "غزنی" , "قندهار", "هرات", "مزارشریف"]
-    var districtPickerData = ["جاغوری", "یکاولنگ", "بهسود","استالیف","کابل" ,"پولخمری"]
-    var pollingCenterData = ["مرکز۱","مرکز ۲","مرکز۳","مزکز۴","مرکز۵"]
+    var provincePickerData : Array<String> = Array()
+    var districtPickerData : Array<String> = Array()
+    var pollingCenterData : Array<String> = Array()
     var activeTextField = 0
     let picker = UIPickerView()
+    var provinces : Array<Province> = Array();
+    var districts : Array<District> = Array();
+    var centers : Array<PollingCenter> = Array();
     
     var selectedDaty:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        provinces = AppDatabase().getProvinces()
+        for province in provinces{
+            provincePickerData.append(province.name!)
+        }
+ 
         hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
@@ -37,10 +50,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 //        scrollForKeyboard(scrollView: self.scrollView)
         scrollForKeyboard()
     }
+    
     func scrollForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
     }
+    
     @objc func Keyboard(notification: Notification){
         let userInfo = notification.userInfo
         let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -52,15 +67,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
+    
+    
     func creatProvincePicker(){
-       
         picker.delegate = self
         province.inputView = picker
         district.inputView = picker
         pollingCenter.inputView = picker
-        
-        picker.backgroundColor = .black
+        picker.backgroundColor = .gray
     }
+    
+    
     func createToolbar(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -71,6 +88,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         district.inputAccessoryView = toolbar
         pollingCenter.inputAccessoryView = toolbar
     }
+    
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         switch textField {
@@ -91,19 +109,58 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
    
+    
     @IBAction func register(_ sender: Any) {
-        dismiss( animated: true, completion: nil)
-    }
+       
+        var province_id : Int32 = 0
+        var pollingCenter_id : Int32 = 0
+        let complete_name : String = fullName.text!
+        let observer_code : String = pollsterCode.text!
+        let phone : String = phoneNumber.text!
+        let pass : String = password.text!
+        
+        for pro in provinces{
+            if pro.name == province.text!{
+                province_id=pro.province_id!
+            }
+        }
+        
+        for cen in centers{
+            if cen.polling_center_code == pollingCenter.text!{
+                pollingCenter_id=cen.polling_center_id!
+            }
+        }
+        
     
- 
-  
-    
+        
+        let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
+        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                    guard response.result.isSuccess else {
+                        return
+                    }
+                    let json=JSON(response.value)
+                    if  json["response"]==1{
+                        Helper.showSnackBar(messageString: "you registred successfuly")
+                        self.dismiss( animated: true, completion: nil)
+                    }
+                    else if json["response"]==2{
+                        Helper.showSnackBar(messageString: "your user is exists")
+                    }
+                    else if json["response"]==3{
+                        Helper.showSnackBar(messageString: "occured some problem ")
+                    }
+            }
+     }
 }
+
+
 extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
   
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch activeTextField {
         case 1 :
@@ -121,9 +178,31 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         switch activeTextField {
         case 1:
             province.text = provincePickerData[row]
+            for pro in provinces{
+                if pro.name == province.text! {
+                   districtPickerData.removeAll()
+                   districts = AppDatabase().getDistrict(province_id: pro.province_id!)
+                    for dis in districts{
+                        districtPickerData.append(dis.name!)
+                    }
+                    district.text=districtPickerData[0]
+                }
+            }
             break
         case 2:
             district.text = districtPickerData[row]
+            for dis in districts{
+                if dis.name == district.text! {
+                    pollingCenterData.removeAll()
+                    centers = AppDatabase().getPollingCenters(district_id: dis.district_id!)
+                    for center in centers{
+                        pollingCenterData.append(center.polling_center_code!)
+                    }
+                    if  pollingCenterData.count>0{
+                        pollingCenter.text=pollingCenterData[0]
+                    }
+                }
+            }
             break
         case 3:
             pollingCenter.text = pollingCenterData[row]
@@ -133,6 +212,7 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
             break
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var label: UILabel
         if let view = view as? UILabel{
@@ -158,6 +238,5 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         }
         return label
     }
-   
-    
+
 }

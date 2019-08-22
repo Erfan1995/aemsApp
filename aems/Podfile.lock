@@ -1,20 +1,81 @@
 PODS:
   - Alamofire (4.8.2)
+  - MaterialComponents/AnimationTiming (87.1.0)
+  - MaterialComponents/Buttons (87.1.0):
+    - MaterialComponents/Elevation
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Shapes
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - MaterialComponents/Elevation (87.1.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/Ink (87.1.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/OverlayWindow (87.1.0):
+    - MaterialComponents/private/Application
+  - MaterialComponents/private/Application (87.1.0)
+  - MaterialComponents/private/Color (87.1.0)
+  - MaterialComponents/private/KeyboardWatcher (87.1.0):
+    - MaterialComponents/private/Application
+  - MaterialComponents/private/Math (87.1.0)
+  - MaterialComponents/private/Overlay (87.1.0)
+  - MaterialComponents/Ripple (87.1.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/ShadowElevations (87.1.0)
+  - MaterialComponents/ShadowLayer (87.1.0):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Shapes (87.1.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/Snackbar (87.1.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Buttons
+    - MaterialComponents/Elevation
+    - MaterialComponents/OverlayWindow
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/Overlay
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/Typography (87.1.0):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire
+  - MaterialComponents/Snackbar
   - SwiftyJSON (~> 3.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  MaterialComponents: e9f8d400e52dda691c0ff26100908f9ffa51e9ff
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 914d1b3348fd2edc23718e0c52ca5af173ae2fa1
+PODFILE CHECKSUM: 1f52dd75d11b0fa13d0102ffd1162101e2f3e162
 
 COCOAPODS: 1.7.5

@@ -150,6 +150,13 @@
                         <viewLayoutGuide key="safeArea" id="pkt-6f-6BI"/>
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="9Yv-Ck-mds"/>
+
+                    <connections>
+                    
+                        <outlet property="txtPassword" destination="hsc-Qj-B88" id="fL5-if-A7m"/>
+                        <outlet property="txtPhone" destination="2Ca-JT-rik" id="y6O-Gk-jXX"/>
+                    </connections>
+
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
