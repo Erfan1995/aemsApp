@@ -11,7 +11,6 @@ import Alamofire
 import SwiftyJSON
 
 class LoginViewController: UIViewController {
-    @IBOutlet var txtDownload: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,85 +23,18 @@ class LoginViewController: UIViewController {
         else{
             print("not")
         }
-        
-        
-//        txtDownload.isUserInteractionEnabled=true
-         let downloadGesture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(downloadGesture)
-        
-//        let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(txtDownload_Click(sender:)));        txtDownload.addGestureRecognizer(newReportTapGetsture)
-        
-
         hideKeyboardWhenTappedAround()
-        // Do any additional setup after loading the view, typically from a nib.
 
     }
-
-    
-    @objc func txtDownload_Click(sender: UITapGestureRecognizer){
-        let newReportController = storyboard?.instantiateViewController(withIdentifier: "NewReportViewController") as! NewReportViewController
-        
-        present(newReportController, animated: true, completion: nil)
-    }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     
     @IBAction func registerBtnPressed(_ sender: Any) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            guard let registerViewController = mainStoryboard.instantiateViewController(withIdentifier: "RegisterViewController" ) as? RegisterViewController else{
+                print("could not find controller")
+                            return
+                        }
+                       navigationController?.pushViewController(registerViewController, animated: true)
         
-//        let registerViewController = storyboard?.instantiateViewController(
-//            withIdentifier: "RegisterViewController") as! RegisterViewController
-//        present(registerViewController, animated: true, completion: nil)
-        
-//        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        guard let registerViewController = mainStoryboard.instantiateViewController(withIdentifier: "RegisterViewController" ) as? RegisterViewController else{
-//            print("could not find controller")
-//            return
-//        }
-//        navigationController?.pushViewController(registerViewController, animated: true)
-
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
-                          method: .get)
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    return
-                }
-
-                let json=JSON(response.value)
-                var condidateData : Array<Candidate> = Array()
-                var provinceData : Array<Province> = Array()
-                var districtData : Array<District> = Array();
-                var pollingCenterData : Array<PollingCenter> = Array();
-
-                json["candidates"].array?.forEach({
-                    (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
-                    condidateData.append(condidate)
-                })
-
-                json["provinces"].array?.forEach({
-                    (province) in let province = Province(province_id: province["province_id"].int, name: province["province_name"].stringValue)
-                    provinceData.append(province)
-                })
-
-
-                json["districts"].array?.forEach({
-                    (district) in let district = District(district_id: district["district_id"].intValue, province_id: district["province_id"].intValue, name: district["district_name"].stringValue)
-                    districtData.append(district)
-                })
-
-
-                json["polling_centers"].array?.forEach({
-                    (center) in let center = PollingCenter(polling_center_id: center["id"].intValue, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].intValue)
-                    pollingCenterData.append(center)
-                })
-
-                AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
-        }
     }
     
 
@@ -134,7 +66,12 @@ class LoginViewController: UIViewController {
                     print("you authontication field please try again")
                 }
         }
+        
     }
+    @IBAction func downloadPressed(_ sender: Any) {
+        print("hello>>>>>>>>>")
+    }
+    
 }
 extension UIViewController{
    
@@ -147,22 +84,15 @@ extension UIViewController{
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-//    func scrollForKeyboard( scrollView: UIScrollView){
-//       var scrollView = scrollView
-//        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
-//            NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
-//        }
-//        @objc func Keyboard(notification: Notification){
-//            let userInfo = notification.userInfo
-//            let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//            let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-//            if notification.name == Notification.Name.UIKeyboardWillHide{
-//                scrollView.contentInset = UIEdgeInsets.zero
-//            }else{
-//                scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-//            }
-//            scrollView.scrollIndicatorInsets = scrollView.contentInset
-//        }
+//    func scrollPageKeyboarAppear(){
+//        let center: NotificationCenter = NotificationCenter.default
+//        center.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+//    }
+//    @objc func keyboardDidShow(notification: Notification){
+//        let info: NSDictionary = notification.userInfo! as NSDictionary
+//        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//        let keyboardY = self.view.frame.size.height - keyboardSize.height
+//
+//    }
 }
 
