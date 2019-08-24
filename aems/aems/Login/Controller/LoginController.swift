@@ -23,13 +23,12 @@ class LoginViewController: UIViewController {
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
-                let registerViewController = storyboard?.instantiateViewController(
-                    withIdentifier: "RegisterViewController") as! RegisterViewController
-                present(registerViewController, animated: true, completion: nil)
-                print("borher you sidgned in system")
+                let tabBarViewController = storyboard?.instantiateViewController(
+                    withIdentifier: "TabBarViewController") as! TabBarViewController
+                present(tabBarViewController, animated: true, completion: nil)
+
             }
             else{
-                print("please eneter correct username and password")
                 var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_amount_of_vote: 0)
             }
         }

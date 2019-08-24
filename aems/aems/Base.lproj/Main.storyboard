@@ -453,6 +453,7 @@
                                             <outlet property="candidateImage" destination="FmJ-i5-gWz" id="sbv-Dz-neg"/>
                                             <outlet property="candidateName" destination="79n-EG-yr3" id="vTG-Ra-v15"/>
                                             <outlet property="candidateNumber" destination="fX6-c4-caV" id="Rxq-87-ix4"/>
+                                            <outlet property="txtVoteNumber" destination="JVy-S2-7EN" id="u3S-2I-TGx"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

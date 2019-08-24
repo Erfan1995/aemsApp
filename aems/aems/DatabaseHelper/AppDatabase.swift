@@ -51,6 +51,7 @@ class AppDatabase: NSObject {
     
     
     func insertCandidates(candidate:Array<Candidate>) {
+        
         let con = openDatabase()
         con!.open()
         var isFirst : Bool = true
@@ -241,10 +242,20 @@ class AppDatabase: NSObject {
     
     
     func downloadFileFromServer(condidates : Array<Candidate> = Array(),provinces : Array<Province> = Array(),districts : Array<District> = Array(),centers : Array<PollingCenter> = Array())  {
-        insertCandidates(candidate: condidates)
-        insertProvinces(provinces: provinces)
-        insertDistricts(districts: districts)
-        insertPollingCenters(centers: centers)
+        if  !Candidate().getCondidateUserDefault(){
+            insertCandidates(candidate: condidates)
+        }
+        
+        if !Province().getProvinceUserDefault() {
+            insertProvinces(provinces: provinces)
+        }
+        
+        if !District().getDistrictUserDefault() {
+            insertDistricts(districts: districts)
+        }
+        
+        if !PollingCenter().getPollingCenterUserDefault() {
+            insertPollingCenters(centers: centers)
+        }
     }
-
 }

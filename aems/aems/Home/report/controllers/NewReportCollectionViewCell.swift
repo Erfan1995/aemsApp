@@ -13,4 +13,6 @@ class NewReportCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var candidateNumber: UILabel!
     @IBOutlet weak var candidateName: UILabel!
     @IBOutlet weak var candidateImage: UIImageView!
+    @IBOutlet weak var txtVoteNumber: UITextField!
+
 }

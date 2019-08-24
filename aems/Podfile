@@ -8,12 +8,8 @@ target 'aems' do
   # Pods for aems
 
 pod 'Alamofire'
-pod 'SwiftyJSON', '~> 3.0'
-<<<<<<< HEAD
-pod 'BSImagePicker', '~> 2.8'
-=======
+pod 'SwiftyJSON', '~> 4.0'
 pod 'MaterialComponents/Snackbar'
 #pod 'BSImagePicker', '~> 1.4.2'
 #pod 'WXImageCompress', '~> 0.1.1'
->>>>>>> eeff83f606a13cab5951c3f15dedde052474a42d
 end
