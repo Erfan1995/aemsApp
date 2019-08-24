@@ -16,7 +16,7 @@ class NewReportViewController: UIViewController {
     var cellMarginSize = 5.0
     var candidateName : Array<String> = Array()
     var candidateNumber : Array<Int32> = Array()
-    
+    var candidateVoteNumber = Array(repeating: 0, count: 19)
     
     let candidateImage = #imageLiteral(resourceName: "user (2)")
 
@@ -30,15 +30,49 @@ class NewReportViewController: UIViewController {
         
         candidateName.removeAll()
         candidateNumber.removeAll()
-        for candidate in AppDatabase().getCandidates(){
-            candidateName.append(candidate.candidate_name!)
-            candidateNumber.append(candidate.election_no!)
+        
+        var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
+        
+        for x in 1...18{
+            var match : Bool = false
+            for y in 0..<candidatesList.count{
+                if x == Int(candidatesList[y].election_no!){
+                    match=true
+                    break
+                }
+            }
+            
+            if  match{
+                candidateVoteNumber[x] = 0
+                
+            }
+            else{
+                candidateVoteNumber[x] = -1
+            }
         }
         
         
+        for candidate in candidatesList{
+            candidateName.append(candidate.candidate_name!)
+            candidateNumber.append(candidate.election_no!)
+        }
         setupGrid()
 
     }
+    
+    
+    func isExists(index :Int) -> Bool {
+        var result : Bool = false
+        for x in 1...18{
+            if index==x{
+                result=true
+                break
+            }
+        }
+        return result
+    }
+    
+    
     func setupGrid(){
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
@@ -64,7 +98,10 @@ class NewReportViewController: UIViewController {
 }
 
     @objc func tapButton(){
-        print("do something")
+        var index : Int = 0
+        for value in candidateVoteNumber{
+            print("candidate index  \(value)")
+        }
     }
         
     
@@ -98,7 +135,7 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateImage.image = candidateImage
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
-        cell.txtVoteNumber.text = String(candidateNumber[indexPath.row])
+        cell.txtVoteNumber.text = String(candidateVoteNumber[Int(candidateNumber[indexPath.row])])
         cell.layer.borderWidth = 1.0
         cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return cell
@@ -117,6 +154,9 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         
         return headerView
     }
+    
+    
+    
     
 }
 
