@@ -12,8 +12,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var settingsTableView: UITableView!
     var settings: [SettingsContent] = []
-    var setName = ["مشخصات","تغییر رمز","خروج"]
-    var setImage = [#imageLiteral(resourceName: "user (2)"),#imageLiteral(resourceName: "lock (4)"),#imageLiteral(resourceName: "logout (3)")]
+    var setName = ["مشخصات","راهنما","تغییر رمز","خروج"]
+    var setImage = [#imageLiteral(resourceName: "user (2)"),#imageLiteral(resourceName: "questions-circular-button"),#imageLiteral(resourceName: "lock (4)"),#imageLiteral(resourceName: "logout (3)")]
     override func viewDidLoad() {
         super.viewDidLoad()
         settingsTableView.delegate = self
@@ -53,8 +53,17 @@ extension SettingsViewController{
             }
             navigationController?.pushViewController(userInfoViewController, animated: true)
         }
+        if(index == 1){
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let helpViewController = mainStoryboard.instantiateViewController(withIdentifier: "HelpViewController") as? HelpViewController else {
+                print("couldn't find the view controller")
+                return
+                
+            }
+            navigationController?.pushViewController(helpViewController, animated: true)
+        }
         
-            if(index == 1){
+            if(index == 2){
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 guard let changePasswordViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as? ChangePasswordViewController else {
                     print("couldn't find the view controller")
@@ -63,7 +72,7 @@ extension SettingsViewController{
                 }
                 navigationController?.pushViewController(changePasswordViewController, animated: true)
         }
-            if(index == 2){
+            if(index == 3){
                 let dialogMessage = UIAlertController(title: "خروج", message: "آیا می خواهید خارج شوید؟ ", preferredStyle: .alert)
                 let ok = UIAlertAction(title: "بلی", style: .default, handler:{
                     (action)->Void in
