@@ -26,10 +26,11 @@ class NewReportViewController: UIViewController {
     let candidateImage = #imageLiteral(resourceName: "user (2)")
     var firsImage : UIImageView?
     var secondImage: UIImageView?
-
+    var pollingCenter: UITextField?
+    let picker = UIPickerView()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+//       self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
@@ -147,7 +148,7 @@ extension NewReportViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -195,11 +196,19 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         headerView.pickFirstImage.addGestureRecognizer(firstImageTap)
         headerView.pickSecondImage.isUserInteractionEnabled = true
         headerView.pickSecondImage.addGestureRecognizer(secondImageTap)
+        self.pollingCenter = headerView.pollingCenter
+        pollingCenter?.delegate = self
+//        let pollingCenterTap = UITapGestureRecognizer(target: self, action: #selector(choosePollingCenter))
+//        pollingCenter?.addGestureRecognizer(pollingCenterTap)
+        createPollingCenterPicker()
         return headerView
     }
     
-    
-    
+    func createPollingCenterPicker(){
+        picker.delegate = self as? UIPickerViewDelegate
+        pollingCenter?.inputView = picker
+        picker.backgroundColor = .gray
+    }
     
     //Action
     @IBAction func tapFirstDetected(_sender: UIView) {
@@ -211,7 +220,9 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         self.selectedImage = 2
         self.imagePicker.present(from: _sender)
     }
-
+    @objc func choosePollingCenter(){
+        
+    }
     
 }
 extension NewReportViewController:  ImagePickerDelegate{
@@ -248,6 +259,33 @@ extension NewReportViewController:  ImagePickerDelegate{
    
     
     
+}
+extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return candidateName.count
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pollingCenter?.text = candidateName[row]
+        
+    }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var label: UILabel
+        if let view = view as? UILabel{
+            label = view
+        }else{
+            label = UILabel()
+        }
+        label.textColor = .green
+        label.textAlignment = .center
+        label.text = candidateName[row]
+        return label
+    }
+    
+   
 }
 
 

@@ -16,11 +16,47 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
+     
         super.viewDidLoad()
         let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)));        newReportView.addGestureRecognizer(newReportTapGetsture)
+        if !hasLocationPermission() {
+            let alertController = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: UIAlertController.Style.alert)
+            
+            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+                //Redirect to Settings app
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+            alertController.addAction(cancelAction)
+            
+            alertController.addAction(okAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        }
         
     }
-//    @IBAction func getLocation(_ sender: Any ){
+    func hasLocationPermission() -> Bool {
+        var hasPermission = false
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                hasPermission = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                hasPermission = true
+            default:
+                print("<#T##items: Any...##Any#>")
+            }
+        } else {
+            hasPermission = false
+        }
+        
+        return hasPermission
+    }
+    
+//   func getLocation(){
 //         let status = CLLocationManager.authorizationStatus()
 //        switch status {
 //        case .notDetermined:
@@ -40,14 +76,14 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
 //        locationManager.delegate = self
 //        locationManager.startUpdatingLocation()
 //    }
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let currentLocation = locations.last {
-//            print("Current location: \(currentLocation)")
-//        }
-//    }
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print(error)
-//    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let currentLocation = locations.last {
+            print("Current location: \(currentLocation)")
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
     @objc func handleTap(sender: UITapGestureRecognizer){
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

@@ -535,6 +535,7 @@
                                         <outlet property="correctVote" destination="wQM-Et-p3b" id="ET1-l4-KV1"/>
                                         <outlet property="pickFirstImage" destination="SDN-1a-w9j" id="PHJ-UL-khe"/>
                                         <outlet property="pickSecondImage" destination="OKg-E4-grY" id="ZJX-ld-kis"/>
+                                        <outlet property="pollingCenter" destination="lpw-b8-Yl1" id="p7t-FA-GsI"/>
                                         <outlet property="whiteVote" destination="HIi-ht-ae6" id="usb-nw-IMv"/>
                                         <outlet property="wrongVote" destination="Vqv-gc-Kxx" id="Iel-ZE-6Ho"/>
                                     </connections>
