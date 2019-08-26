@@ -52,15 +52,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func scrollForKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillHide , object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: Notification.Name.UIKeyboardWillChangeFrame , object:  nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillHideNotification , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillChangeFrameNotification , object:  nil)
     }
     
     @objc func Keyboard(notification: Notification){
         let userInfo = notification.userInfo
-        let keyboardScreenEndFrame = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        if notification.name == Notification.Name.UIKeyboardWillHide{
+        if notification.name == UIResponder.keyboardWillHideNotification{
             scrollView.contentInset = UIEdgeInsets.zero
         }else{
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
