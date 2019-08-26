@@ -24,12 +24,11 @@ class AppDatabase: NSObject {
                     try database!.executeUpdate(District.CREATE_TABLE, values: nil)
                     try database!.executeUpdate(PollingCenter.CREATE_TABLE, values: nil)
                     try database!.executeUpdate(Report.CREATE_TABLE, values: nil)
+                    try database!.executeUpdate(ReportCondidates.TABLE_NAME, values: nil)
+                    try database!.executeUpdate(ReportImage.TABLE_NAME, values: nil)
                 }catch{
                     print( error)
                 }
-                
-                print("province \(getProvinces().count)" )
-                
             }
         }
     }
@@ -37,7 +36,6 @@ class AppDatabase: NSObject {
     
     
     func openDatabase() -> FMDatabase?{
-        
         do{
         let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let fileUrl = documentDirectory.appendingPathComponent("aems").appendingPathExtension("sqlite")
@@ -258,4 +256,6 @@ class AppDatabase: NSObject {
             insertPollingCenters(centers: centers)
         }
     }
+    
+    
 }

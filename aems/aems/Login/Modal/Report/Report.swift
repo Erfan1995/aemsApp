@@ -13,6 +13,7 @@ class Report {
     static let TABLE_NAME="reports";
     static let COL_ID="id";
     static let COL_POLLING_CENTER="polling_center_id";
+    static let COL_STATION="pc_station_number"
     static let COL_OBSERVER_ID="observer_id";
     static let COL_VOID_VOTE="void_vote";
     static let COL_WHITE_VOTE="white_vote";
@@ -26,6 +27,7 @@ class Report {
     
     var id:Int?
     var polling_center_id:Int?
+    var pc_station_number:Int?
     var observer_id:Int?
     var void_vote:Int?
     var white_vote:Int?
@@ -36,7 +38,8 @@ class Report {
     var longitude:Double?
     var is_sent:Bool?;
     
-    static let CREATE_TABLE=" CREATE TABLE IF NOT EXISTS \(TABLE_NAME) ( \(COL_ID) INTEGER PRIMARY KEY AUTOINCREMENT ,\(COL_POLLING_CENTER) INTEGER , \(COL_OBSERVER_ID) INTEGER , \(COL_VOID_VOTE) INTEGER , \(COL_WHITE_VOTE) INTEGER ,\(COL_RIGHT_VOTE) INTEGER , \(COL_DATE_TIME) TIMESTAMP , \(COL_LATITUDE) DOUBLE , \(COL_LONGITUDE) DOUBLE , \(COL_PROVINCE_ID) INTEGER , \(COL_IS_SENT) BOOLEAN DEFAULT FALSE ); "
+    
+    static let CREATE_TABLE=" CREATE TABLE IF NOT EXISTS \(TABLE_NAME) ( \(COL_ID) INTEGER PRIMARY KEY AUTOINCREMENT ,\(COL_POLLING_CENTER) INTEGER , \(COL_STATION) INTEGER , \(COL_OBSERVER_ID) INTEGER , \(COL_VOID_VOTE) INTEGER , \(COL_WHITE_VOTE) INTEGER ,\(COL_RIGHT_VOTE) INTEGER , \(COL_DATE_TIME) TIMESTAMP , \(COL_LATITUDE) DOUBLE , \(COL_LONGITUDE) DOUBLE , \(COL_PROVINCE_ID) INTEGER , \(COL_IS_SENT) BOOLEAN DEFAULT FALSE ); "
 
 
 }
