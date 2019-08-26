@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171BAB2023125D5A00EAEC8B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BAB1F23125D5A00EAEC8B /* ImagePicker.swift */; };
 		171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171ECC03230A7AE4005F7A38 /* LoginData.swift */; };
 		174703A4230911E40030AD28 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A3230911E40030AD28 /* AVKit.framework */; };
 		174703A6230911F20030AD28 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A5230911F20030AD28 /* AVFoundation.framework */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		033D503977E8DCAB4D95D071 /* Pods-aems.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aems.debug.xcconfig"; path = "Target Support Files/Pods-aems/Pods-aems.debug.xcconfig"; sourceTree = "<group>"; };
+		171BAB1F23125D5A00EAEC8B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		171ECC03230A7AE4005F7A38 /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		17470395230910D00030AD28 /* FMDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		17470396230910D00030AD28 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				22AE32152303D6A000CFD4BF /* SentReportViewController.swift */,
 				22AE32192304189800CFD4BF /* NewReportCollectionViewCell.swift */,
 				22BA2FD12307B9DA00412FFB /* NewReportHeaderView.swift */,
+				171BAB1F23125D5A00EAEC8B /* ImagePicker.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -424,7 +427,7 @@
 				TargetAttributes = {
 					22AA79F822F952BB0050298A = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -525,6 +528,7 @@
 				174703BB23091E450030AD28 /* User.swift in Sources */,
 				22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */,
 				228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */,
+				171BAB2023125D5A00EAEC8B /* ImagePicker.swift in Sources */,
 				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
@@ -688,14 +692,14 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -711,13 +715,13 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
