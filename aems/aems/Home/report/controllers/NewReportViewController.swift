@@ -9,6 +9,8 @@
 import UIKit
 import Photos
 import AVFoundation
+import Alamofire
+import SwiftyJSON
 class NewReportViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -65,18 +67,6 @@ class NewReportViewController: UIViewController {
     }
     
     
-    func isExists(index :Int) -> Bool {
-        var result : Bool = false
-        for x in 1...18{
-            if index==x{
-                result=true
-                break
-            }
-        }
-        return result
-    }
-    
-    
     func setupGrid(){
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
@@ -102,11 +92,41 @@ class NewReportViewController: UIViewController {
 }
 
     @objc func tapButton(){
-        var index : Int = 0
-        for value in candidateVoteNumber{
-            print("candidate index  \(value)")
-        }
+//
+//        for value in candidateVoteNumber{
+//            print("candidate index  \(value)")
+//        }
+        
+        let imageData = (firsImage!.image?.jpegData(compressionQuality: 0.8))!
+        let strImage = imageData.base64EncodedString(options: .lineLength64Characters)
+        
+        let dataDecoded:NSData = NSData(base64Encoded: strImage, options: NSData.Base64DecodingOptions(rawValue: 0))!
+        let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
+   
+        // https://stackoverflow.com/a/40521003
+        
+//        Alamofire.upload(multipartFormData: { (multipartFormData) in
+//            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
+//            multipartFormData.append(imageData, withName: "image2", fileName: "test2.jpg", mimeType: "image/jpg")
+//        }, to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register") { (result) in
+//            switch result {
+//            case .success(let upload, _, _):
+//                upload.uploadProgress(closure: { (progress) in
+//                    print("Upload Progress: \(progress.fractionCompleted)")
+//                })
+//
+//                upload.responseJSON { response in
+//                    print("Success")
+//                    print(response.result.value)
+//                }
+//
+//            case .failure(let encodingError):
+//                print("Error")
+//                print(encodingError)
+//            }
+//        }
     }
+        
         
     
 }
@@ -199,10 +219,12 @@ extension NewReportViewController:  ImagePickerDelegate{
         
         if selectedImage==1{
             if firsImage != nil{
-                firsImage?.image=image
-            }
-            else{
-                print("<#T##items: Any...##Any#>")
+                let imageData = (image?.jpegData(compressionQuality: 0.8))!
+                let strImage = imageData.base64EncodedString(options: .lineLength64Characters)
+                
+                let dataDecoded:NSData = NSData(base64Encoded: strImage, options: NSData.Base64DecodingOptions(rawValue: 0))!
+                let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
+                firsImage!.image=decodedimage
             }
         }
         else if(selectedImage==2){
