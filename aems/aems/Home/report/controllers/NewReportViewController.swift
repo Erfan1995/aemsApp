@@ -98,33 +98,42 @@ class NewReportViewController: UIViewController {
 //        }
         
         let imageData = (firsImage!.image?.jpegData(compressionQuality: 0.8))!
-        let strImage = imageData.base64EncodedString(options: .lineLength64Characters)
-        
-        let dataDecoded:NSData = NSData(base64Encoded: strImage, options: NSData.Base64DecodingOptions(rawValue: 0))!
-        let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
-   
+
         // https://stackoverflow.com/a/40521003
+
+        let parameters = ["polling_center_id": 1, "pc_station_number": 1,"observer_id":12,"void_vote":120,"white_vote":200,"right_vote":30,"latitude":793.3,"longitude":47.4,"province_id":1]
         
-//        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
-//            multipartFormData.append(imageData, withName: "image2", fileName: "test2.jpg", mimeType: "image/jpg")
-//        }, to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register") { (result) in
-//            switch result {
-//            case .success(let upload, _, _):
-//                upload.uploadProgress(closure: { (progress) in
-//                    print("Upload Progress: \(progress.fractionCompleted)")
-//                })
-//
-//                upload.responseJSON { response in
-//                    print("Success")
-//                    print(response.result.value)
-//                }
-//
-//            case .failure(let encodingError):
-//                print("Error")
-//                print(encodingError)
-//            }
-//        }
+        
+        let headers: HTTPHeaders = [
+            "authorization": User().getLoginUserDefault()!.token
+        ]
+
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
+            multipartFormData.append(imageData, withName: "image2", fileName: "test2.jpg", mimeType: "image/jpg");
+            multipartFormData.append("ali".data(using: String.Encoding.utf8)!, withName: "name")
+            
+        },
+                         
+                         
+                         to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+            switch result {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                })
+                
+                upload.responseJSON { response in
+                    print("Success")
+                    print(response.result.value)
+                }
+                
+            case .failure(let encodingError):
+                print("Error")
+                print(encodingError)
+            }
+        }
     }
         
         
@@ -219,12 +228,10 @@ extension NewReportViewController:  ImagePickerDelegate{
         
         if selectedImage==1{
             if firsImage != nil{
-                let imageData = (image?.jpegData(compressionQuality: 0.8))!
-                let strImage = imageData.base64EncodedString(options: .lineLength64Characters)
-                
-                let dataDecoded:NSData = NSData(base64Encoded: strImage, options: NSData.Base64DecodingOptions(rawValue: 0))!
-                let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
-                firsImage!.image=decodedimage
+                firsImage?.image=image
+            }
+            else{
+                print("<#T##items: Any...##Any#>")
             }
         }
         else if(selectedImage==2){
