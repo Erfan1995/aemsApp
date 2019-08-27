@@ -22,7 +22,7 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus(){
             case .notDetermined, .restricted, .denied :
-                print("no ACCESSSSSSSSSS >>>>>>>>>>>>>>.")
+                locationManager.requestWhenInUseAuthorization()
                 
             case .authorizedAlways:
                 print("accesss >>>>>>>>>>>>")
@@ -31,10 +31,20 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
             @unknown default:
                 print("<#T##items: Any...##Any#>")
             }
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
         }else{
             turnOnLocationSerives()
         }
         
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("unable to get location")
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("locationn-----------------------\(locations)")
+        print("latitude >>>>>>>>>>>>>>>>>>>\(locations[0].coordinate.latitude)")
+        print("longtitude >>>>>>>>>>>>>>>>>\(locations[0].coordinate.longitude)")
     }
     func turnOnLocationSerives(){
         let alertController = UIAlertController(title: "Location Permission is required", message: "please enable your location service in settings", preferredStyle: UIAlertController.Style.alert)
