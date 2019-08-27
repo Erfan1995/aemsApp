@@ -42,9 +42,9 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         print("unable to get location")
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("locationn-----------------------\(locations)")
-        print("latitude >>>>>>>>>>>>>>>>>>>\(locations[0].coordinate.latitude)")
-        print("longtitude >>>>>>>>>>>>>>>>>\(locations[0].coordinate.longitude)")
+        var longtitude = locations[0].coordinate.longitude
+        var latitude = locations[0].coordinate.latitude
+       
     }
     func turnOnLocationSerives(){
         let alertController = UIAlertController(title: "Location Permission is required", message: "please enable your location service in settings", preferredStyle: UIAlertController.Style.alert)
@@ -52,7 +52,10 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
             (action)->Void in
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (action)->Void in
+            self.turnOnLocationSerives()
+        })
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
