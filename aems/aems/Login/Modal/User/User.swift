@@ -60,7 +60,7 @@ class User {
         if let savedPerson = defaults.object(forKey: LOGIN_USER_DEFAULT) as? Data {
             let decoder = JSONDecoder()
             if let loadedPerson = try? decoder.decode(LoginData.self, from: savedPerson) {
-                loginData = LoginData(complete_name: loadedPerson.complete_name, observer_id: loadedPerson.observer_id, polling_center_id: loadedPerson.polling_center_id, province_id: loadedPerson.province_id, token: loadedPerson.token, pc_amount_of_vote: loadedPerson.pc_amount_of_vote)
+                loginData = LoginData(complete_name: loadedPerson.complete_name, observer_id: loadedPerson.observer_id, polling_center_id: loadedPerson.polling_center_id, province_id: loadedPerson.province_id, token: loadedPerson.token, pc_station_number: loadedPerson.pc_station_number)
             }
         }
         return loginData

@@ -15,4 +15,5 @@ class NewReportHeaderView: UICollectionReusableView {
     @IBOutlet weak var correctVote: UITextField!
     @IBOutlet weak var wrongVote: UITextField!
     @IBOutlet weak var whiteVote: UITextField!
+    @IBOutlet weak var pollingCenter: UITextField!
 }

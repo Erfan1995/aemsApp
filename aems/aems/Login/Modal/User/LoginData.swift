@@ -14,14 +14,14 @@ class LoginData: Codable {
     var polling_center_id : Int
     var province_id : Int
     var token : String
-    var pc_amount_of_vote : Int
+    var pc_station_number : Int
     
-    init(complete_name:String,observer_id:Int,polling_center_id:Int,province_id:Int,token:String,pc_amount_of_vote:Int) {
+    init(complete_name:String,observer_id:Int,polling_center_id:Int,province_id:Int,token:String,pc_station_number:Int) {
         self.complete_name=complete_name
         self.observer_id=observer_id
         self.polling_center_id=polling_center_id
         self.province_id=province_id
         self.token=token
-        self.pc_amount_of_vote=pc_amount_of_vote
+        self.pc_station_number=pc_station_number
     }
 }

@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
 
             }
             else{
-                var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_amount_of_vote: 0)
+                var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
             }
         }
         hideKeyboardWhenTappedAround()
@@ -76,7 +76,7 @@ class LoginViewController: UIViewController {
           let json=JSON(response.value)
                 if json["response"]==1{
                     var responseData = json["data"]
-                    var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
+                    var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_vote"].intValue)
                     User().setLoginUserDefault(loginData: loginData)
                     
                     let tabBarViewController =

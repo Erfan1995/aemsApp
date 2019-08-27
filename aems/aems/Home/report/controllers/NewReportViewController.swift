@@ -26,11 +26,14 @@ class NewReportViewController: UIViewController {
     let candidateImage = #imageLiteral(resourceName: "user (2)")
     var firsImage : UIImageView?
     var secondImage: UIImageView?
-
+    var pollingCenter: UITextField?
+    let picker = UIPickerView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        
+      
+        
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
@@ -92,51 +95,105 @@ class NewReportViewController: UIViewController {
 }
 
     @objc func tapButton(){
+
+
+        var files : Array<UIImage> = Array();
+        
+        var arr = [[Int]](repeating: [Int](repeating: 0, count: 2), count: candidateVoteNumber.count)
+     
+        
+        var index : Int = 0
+        for value in candidateVoteNumber{
+            if value != -1 && index != 0{
+               arr[index]=[index,value]
+            }
+            index=index+1
+        }
+        
+        print(arr)
+        
+        saveImageToDocumentDirectory(image: firsImage!.image!)
+        firsImage?.image=loadImageFromDocumentDirectory(nameOfImage: "image002.png")
+        
+//        let firstImageData = (firsImage!.image?.jpegData(compressionQuality: 0))!
+//        let secondImageData = (secondImage!.image?.jpegData(compressionQuality: 0))
 //
-//        for value in candidateVoteNumber{
-//            print("candidate index  \(value)")
-//        }
-        
-        let imageData = (firsImage!.image?.jpegData(compressionQuality: 0.8))!
-
         // https://stackoverflow.com/a/40521003
-
-        let parameters = ["polling_center_id": 1, "pc_station_number": 1,"observer_id":12,"void_vote":120,"white_vote":200,"right_vote":30,"latitude":793.3,"longitude":47.4,"province_id":1]
-        
         
         let headers: HTTPHeaders = [
             "authorization": User().getLoginUserDefault()!.token
         ]
 
+    
+        let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: 10, void_vote: 100, white_vote: 2, right_vote: 1, province_id: 1, polling_center_id: 3, pc_station_nummber: 2, date_time: "2019-01-02")
         
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
-            multipartFormData.append(imageData, withName: "image2", fileName: "test2.jpg", mimeType: "image/jpg");
-            multipartFormData.append("ali".data(using: String.Encoding.utf8)!, withName: "name")
-            
-        },
-                         
-                         
-                         to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
-            switch result {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (progress) in
-                    print("Upload Progress: \(progress.fractionCompleted)")
-                })
-                
-                upload.responseJSON { response in
-                    print("Success")
-                    print(response.result.value)
-                }
-                
-            case .failure(let encodingError):
-                print("Error")
-                print(encodingError)
+        let candidateData = try? JSONSerialization.data(withJSONObject: arr, options: [])
+        
+
+        
+        
+        
+
+//        Alamofire.upload(multipartFormData: { (multipartFormData) in
+//            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
+//            multipartFormData.append(candidateData!, withName: "candidates");
+//            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+//            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+//            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+//            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+//            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+//            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+//            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+//            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+//            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+//        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+//            switch result {
+//            case .success(let upload, _, _):
+//                upload.uploadProgress(closure: { (progress) in
+//                    print("Upload Progress: \(progress.fractionCompleted)")
+//                })
+//
+//                upload.responseJSON { response in
+//                    print("Success")
+//                    print(response.result.value)
+//                }
+//
+//            case .failure(let encodingError):
+//                print("Error")
+//                print(encodingError)
+//            }
+//        }
+        
+   
+    }
+    
+    
+    func saveImageToDocumentDirectory(image: UIImage ) {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileName = "image002.png" // name of the image to be saved
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
+            do {
+                try data.write(to: fileURL)
+                print("file saved")
+            } catch {
+                print("error saving file:", error)
             }
         }
     }
-        
-        
+    
+    
+    func loadImageFromDocumentDirectory(nameOfImage : String) -> UIImage {
+        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        if let dirPath = paths.first{
+            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(nameOfImage)
+            let image    = UIImage(contentsOfFile: imageURL.path)
+            return image!
+        }
+        return UIImage.init(named: "default.png")!
+    }
     
 }
 
@@ -156,7 +213,7 @@ extension NewReportViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -204,11 +261,19 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         headerView.pickFirstImage.addGestureRecognizer(firstImageTap)
         headerView.pickSecondImage.isUserInteractionEnabled = true
         headerView.pickSecondImage.addGestureRecognizer(secondImageTap)
+        self.pollingCenter = headerView.pollingCenter
+        pollingCenter?.delegate = self
+//        let pollingCenterTap = UITapGestureRecognizer(target: self, action: #selector(choosePollingCenter))
+//        pollingCenter?.addGestureRecognizer(pollingCenterTap)
+        createPollingCenterPicker()
         return headerView
     }
     
-    
-    
+    func createPollingCenterPicker(){
+        picker.delegate = self as? UIPickerViewDelegate
+        pollingCenter?.inputView = picker
+        picker.backgroundColor = .gray
+    }
     
     //Action
     @IBAction func tapFirstDetected(_sender: UIView) {
@@ -220,7 +285,9 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         self.selectedImage = 2
         self.imagePicker.present(from: _sender)
     }
-
+    @objc func choosePollingCenter(){
+        
+    }
     
 }
 extension NewReportViewController:  ImagePickerDelegate{
@@ -255,6 +322,33 @@ extension NewReportViewController:  ImagePickerDelegate{
    
     
     
+}
+extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return candidateName.count
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pollingCenter?.text = candidateName[row]
+        
+    }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var label: UILabel
+        if let view = view as? UILabel{
+            label = view
+        }else{
+            label = UILabel()
+        }
+        label.textColor = .green
+        label.textAlignment = .center
+        label.text = candidateName[row]
+        return label
+    }
+    
+   
 }
 
 

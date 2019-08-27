@@ -39,6 +39,19 @@ class Report {
     var is_sent:Bool?;
     
     
+    init(latitude:Double?,longitude:Double?,observer_id:Int?,void_vote:Int?,white_vote:Int?,right_vote:Int?,province_id:Int?,polling_center_id:Int?,pc_station_nummber:Int?,date_time:String?) {
+        self.latitude=latitude
+        self.longitude=longitude
+        self.observer_id=observer_id
+        self.void_vote=void_vote
+        self.white_vote=white_vote
+        self.right_vote=right_vote
+        self.province_id=province_id
+        self.polling_center_id=polling_center_id
+        self.pc_station_number=pc_station_nummber
+        self.date_time=date_time
+    }
+    
     static let CREATE_TABLE=" CREATE TABLE IF NOT EXISTS \(TABLE_NAME) ( \(COL_ID) INTEGER PRIMARY KEY AUTOINCREMENT ,\(COL_POLLING_CENTER) INTEGER , \(COL_STATION) INTEGER , \(COL_OBSERVER_ID) INTEGER , \(COL_VOID_VOTE) INTEGER , \(COL_WHITE_VOTE) INTEGER ,\(COL_RIGHT_VOTE) INTEGER , \(COL_DATE_TIME) TIMESTAMP , \(COL_LATITUDE) DOUBLE , \(COL_LONGITUDE) DOUBLE , \(COL_PROVINCE_ID) INTEGER , \(COL_IS_SENT) BOOLEAN DEFAULT FALSE ); "
 
 
