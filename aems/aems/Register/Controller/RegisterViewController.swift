@@ -31,7 +31,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var provinces : Array<Province> = Array();
     var districts : Array<District> = Array();
     var centers : Array<PollingCenter> = Array();
-    
+    let login = LoginViewController()
     var selectedDaty:String?
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         for province in provinces{
             provincePickerData.append(province.name!)
         }
- 
+       
         hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
@@ -111,7 +111,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
    
     
     @IBAction func register(_ sender: Any) {
-       
+        Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
         var province_id : Int32 = 0
         var pollingCenter_id : Int32 = 0
         let complete_name : String = fullName.text!
@@ -139,6 +139,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     guard response.result.isSuccess else {
                         return
                     }
+                    Loader.stop()
                     let json=JSON(response.value)
                     if  json["response"]==1{
                         Helper.showSnackBar(messageString: "you registred successfuly")

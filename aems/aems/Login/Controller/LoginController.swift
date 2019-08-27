@@ -16,10 +16,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var txtDownload: UIButton!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
-    
+//     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
@@ -33,6 +33,11 @@ class LoginViewController: UIViewController {
             }
         }
         hideKeyboardWhenTappedAround()
+//        activityIndicator.center = self.view.center
+//        activityIndicator.hidesWhenStopped = true
+//        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        
+//        self.view.addSubview(activityIndicator)
     
     }
     
@@ -57,14 +62,14 @@ class LoginViewController: UIViewController {
         }
         
     }
-    
+   
 
 
     @IBAction func loginBtnPressed(_ sender: Any) {
-
+        
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
-        
+        Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
         Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
                           method: .post,
                           parameters: ["phone": phone,"password":password])
@@ -74,23 +79,28 @@ class LoginViewController: UIViewController {
                     return
                 }
           let json=JSON(response.value)
+                    Loader.stop()
                 if json["response"]==1{
                     var responseData = json["data"]
                     var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
                     User().setLoginUserDefault(loginData: loginData)
-                    
+                   
                     let tabBarViewController =
                                 self.storyboard?.instantiateViewController(
                                     withIdentifier: "TabBarViewController") as! TabBarViewController
                               self.present(tabBarViewController, animated: true, completion: nil)
                 }
                 else if json["response"]==2{
+                    
                     Helper.showSnackBar(messageString: "yout acount not approved ")
                 }
                 else if json["response"]==3{
+                    
+                    
                      Helper.showSnackBar(messageString: "your phone or password in wrong")
                 }
                 else if json["response"]==4{
+                    
                     Helper.showSnackBar(messageString: "occured some problem try again")
                 }
         }
@@ -100,6 +110,7 @@ class LoginViewController: UIViewController {
     
     
     func downloadFiles() {
+        Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
         Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
                           method: .get)
             .validate()
@@ -107,7 +118,7 @@ class LoginViewController: UIViewController {
                 guard response.result.isSuccess else {
                     return
                 }
-                
+                Loader.stop()
                 let json=JSON(response.value)
                 var condidateData : Array<Candidate> = Array()
                 var provinceData : Array<Province> = Array()
@@ -166,6 +177,8 @@ extension UIViewController{
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+  
 
 }
 
