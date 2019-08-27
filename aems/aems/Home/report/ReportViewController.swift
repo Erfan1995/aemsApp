@@ -20,16 +20,10 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)));        newReportView.addGestureRecognizer(newReportTapGetsture)
         if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus(){
-            case .notDetermined, .restricted, .denied :
+            if CLLocationManager.authorizationStatus() == .restricted ||
+                CLLocationManager.authorizationStatus() == .denied ||
+                CLLocationManager.authorizationStatus() == .notDetermined{
                 locationManager.requestWhenInUseAuthorization()
-                
-            case .authorizedAlways:
-                print("accesss >>>>>>>>>>>>")
-            case .authorizedWhenInUse:
-                print("Access >>>>>>>>>>>>>>>>>>")
-            @unknown default:
-                print("<#T##items: Any...##Any#>")
             }
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
