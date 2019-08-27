@@ -19,7 +19,6 @@ class LoginViewController: UIViewController {
 //     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
@@ -69,40 +68,45 @@ class LoginViewController: UIViewController {
         
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
-        Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
-                          method: .post,
-                          parameters: ["phone": phone,"password":password])
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    return
-                }
-          let json=JSON(response.value)
+        if CheckInternetConnection.isConnectedToInternet(){
+            Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
+            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
+                              method: .post,
+                              parameters: ["phone": phone,"password":password])
+                .validate()
+                .responseJSON { response in
+                    guard response.result.isSuccess else {
+                        return
+                    }
+                    let json=JSON(response.value)
                     Loader.stop()
-                if json["response"]==1{
-                    var responseData = json["data"]
-                    var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
-                    User().setLoginUserDefault(loginData: loginData)
-                   
-                    let tabBarViewController =
-                                self.storyboard?.instantiateViewController(
-                                    withIdentifier: "TabBarViewController") as! TabBarViewController
-                              self.present(tabBarViewController, animated: true, completion: nil)
-                }
-                else if json["response"]==2{
-                    
-                    Helper.showSnackBar(messageString: "yout acount not approved ")
-                }
-                else if json["response"]==3{
-                    
-                    
-                     Helper.showSnackBar(messageString: "your phone or password in wrong")
-                }
-                else if json["response"]==4{
-                    
-                    Helper.showSnackBar(messageString: "occured some problem try again")
-                }
+                    if json["response"]==1{
+                        var responseData = json["data"]
+                        var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_amount_of_vote: responseData["pc_amount_of_vote"].intValue)
+                        User().setLoginUserDefault(loginData: loginData)
+                        
+                        let tabBarViewController =
+                            self.storyboard?.instantiateViewController(
+                                withIdentifier: "TabBarViewController") as! TabBarViewController
+                        self.present(tabBarViewController, animated: true, completion: nil)
+                    }
+                    else if json["response"]==2{
+                        
+                        Helper.showSnackBar(messageString: "yout acount not approved ")
+                    }
+                    else if json["response"]==3{
+                        
+                        
+                        Helper.showSnackBar(messageString: "your phone or password in wrong")
+                    }
+                    else if json["response"]==4{
+                        
+                        Helper.showSnackBar(messageString: "occured some problem try again")
+                    }
+            }
+        }
+        else{
+            Helper.showSnackBar(messageString: "connect to the internt first")
         }
     }
     
@@ -110,47 +114,51 @@ class LoginViewController: UIViewController {
     
     
     func downloadFiles() {
-        Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
-                          method: .get)
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    return
-                }
-                Loader.stop()
-                let json=JSON(response.value)
-                var condidateData : Array<Candidate> = Array()
-                var provinceData : Array<Province> = Array()
-                var districtData : Array<District> = Array();
-                var pollingCenterData : Array<PollingCenter> = Array();
-                
-                json["candidates"].array?.forEach({
-                    (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
-                    condidateData.append(condidate)
-                })
-                
-                json["provinces"].array?.forEach({
-                    (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
-                    provinceData.append(province)
-                })
-                
-                
-                json["districts"].array?.forEach({
-                    (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
-                    districtData.append(district)
-                })
-                
-                
-                json["polling_centers"].array?.forEach({
-                    (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
-                    pollingCenterData.append(center)
-                })
-                
-                AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
-                
-        }
+        if CheckInternetConnection.isConnectedToInternet(){
+            Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
+            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
+                              method: .get)
+                .validate()
+                .responseJSON { response in
+                    guard response.result.isSuccess else {
+                        return
+                    }
+                    Loader.stop()
+                    let json=JSON(response.value)
+                    var condidateData : Array<Candidate> = Array()
+                    var provinceData : Array<Province> = Array()
+                    var districtData : Array<District> = Array();
+                    var pollingCenterData : Array<PollingCenter> = Array();
+                    
+                    json["candidates"].array?.forEach({
+                        (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
+                        condidateData.append(condidate)
+                    })
+                    
+                    json["provinces"].array?.forEach({
+                        (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
+                        provinceData.append(province)
+                    })
+                    
+                    
+                    json["districts"].array?.forEach({
+                        (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
+                        districtData.append(district)
+                    })
+                    
+                    
+                    json["polling_centers"].array?.forEach({
+                        (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
+                        pollingCenterData.append(center)
+                    })
+                    
+                    AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
+                    
+            }
 
+        }else{
+            Helper.showSnackBar(messageString: "Connect to the internet first")
+        }
     }
     @IBAction func downloadPressed(_ sender: Any) {
         if !Candidate().getCondidateUserDefault() && !Province().getProvinceUserDefault() && !District().getDistrictUserDefault() && !PollingCenter().getPollingCenterUserDefault() {

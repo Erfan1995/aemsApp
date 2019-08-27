@@ -82,14 +82,7 @@ class NewReportViewController: UIViewController {
         buttonSend.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         
         let barButtonSend = UIBarButtonItem(customView: buttonSend)
-        let buttonAttach = UIButton(type: .custom)
-        buttonAttach.setImage(UIImage(named: "icon (3)"), for: .normal)
-        buttonAttach.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
-
-        buttonAttach.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        
-        let barButtonAttach = UIBarButtonItem(customView: buttonAttach)
-        self.navigationItem.rightBarButtonItems = [barButtonSend, barButtonAttach]
+        self.navigationItem.rightBarButtonItem = barButtonSend
 }
 
     @objc func tapButton(){
@@ -245,7 +238,7 @@ extension NewReportViewController:  ImagePickerDelegate{
                 let myImage = UIImage(data: compressImage!)
                 if let data = myImage?.jpegData(compressionQuality: 0){
                     let fileSizeString = ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: ByteCountFormatter.CountStyle.memory)
-                    print("file size >>>>>>>>\(fileSizeString)")
+                    
                 }
                  secondImage?.image = myImage
             }

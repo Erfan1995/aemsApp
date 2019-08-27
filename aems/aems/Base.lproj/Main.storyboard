@@ -368,6 +368,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="49a-WE-Exb"/>
                     <connections>
+                        <outlet property="draftReportView" destination="e44-uX-pUp" id="AEc-e5-hfW"/>
                         <outlet property="newReportView" destination="FoD-Vf-Skl" id="q8g-CG-3oK"/>
                         <outlet property="sentReportView" destination="70i-4K-kji" id="MPL-FK-QTp"/>
                     </connections>
@@ -408,7 +409,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="محمد اشرف غنی" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79n-EG-yr3">
-                                                    <rect key="frame" x="6" y="125" width="145" height="21"/>
+                                                    <rect key="frame" x="6" y="124.5" width="145" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="145" id="xtr-Ia-nTX"/>
                                                     </constraints>
@@ -585,16 +586,58 @@
             </objects>
             <point key="canvasLocation" x="-1476" y="3140.7796101949029"/>
         </scene>
-        <!--View Controller-->
+        <!--Draft Report View Controller-->
         <scene sceneID="CJH-IV-ndp">
             <objects>
-                <viewController id="GZx-Hh-p2Q" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DraftReportViewController" id="GZx-Hh-p2Q" customClass="DraftReportViewController" customModule="aems" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ScZ-44-zuu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-uh-tCA">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DraftTableViewCell" id="wdO-eM-Pbc" customClass="DraftTableViewCell" customModule="aems" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="1" width="375" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wdO-eM-Pbc" id="ROf-3a-vTi">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="vc5-YW-WRR">
+                                                    <rect key="frame" x="310" y="5" width="60" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="محل اول" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NgG-7J-ssJ">
+                                                    <rect key="frame" x="39" y="16" width="253" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="draftImage" destination="vc5-YW-WRR" id="SBv-Yf-ckz"/>
+                                            <outlet property="locationName" destination="NgG-7J-ssJ" id="WPk-lv-U1e"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mqk-Au-LOa" firstAttribute="bottom" secondItem="FT8-uh-tCA" secondAttribute="bottom" id="E7w-rv-S2s"/>
+                            <constraint firstItem="FT8-uh-tCA" firstAttribute="leading" secondItem="mqk-Au-LOa" secondAttribute="leading" id="Fwz-f8-TdK"/>
+                            <constraint firstItem="mqk-Au-LOa" firstAttribute="trailing" secondItem="FT8-uh-tCA" secondAttribute="trailing" id="Zrp-if-Aq1"/>
+                            <constraint firstItem="FT8-uh-tCA" firstAttribute="top" secondItem="mqk-Au-LOa" secondAttribute="top" id="z5d-Wf-xyD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="mqk-Au-LOa"/>
                     </view>
+                    <connections>
+                        <outlet property="draftTable" destination="FT8-uh-tCA" id="6iJ-eE-euJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SlP-0L-t9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

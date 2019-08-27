@@ -111,31 +111,32 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
    
     
     @IBAction func register(_ sender: Any) {
-        Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
-        var province_id : Int32 = 0
-        var pollingCenter_id : Int32 = 0
-        let complete_name : String = fullName.text!
-        let observer_code : String = pollsterCode.text!
-        let phone : String = phoneNumber.text!
-        let pass : String = password.text!
-        
-        for pro in provinces{
-            if pro.name == province.text!{
-                province_id=pro.province_id!
+        if CheckInternetConnection.isConnectedToInternet(){
+            Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
+            var province_id : Int32 = 0
+            var pollingCenter_id : Int32 = 0
+            let complete_name : String = fullName.text!
+            let observer_code : String = pollsterCode.text!
+            let phone : String = phoneNumber.text!
+            let pass : String = password.text!
+            
+            for pro in provinces{
+                if pro.name == province.text!{
+                    province_id=pro.province_id!
+                }
             }
-        }
-        
-        for cen in centers{
-            if cen.polling_center_code == pollingCenter.text!{
-                pollingCenter_id=cen.polling_center_id!
+            
+            for cen in centers{
+                if cen.polling_center_code == pollingCenter.text!{
+                    pollingCenter_id=cen.polling_center_id!
+                }
             }
-        }
-        
-    
-        
-        let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
-        Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
-            .responseJSON { response in
+            
+            
+            
+            let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
+            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
+                .responseJSON { response in
                     guard response.result.isSuccess else {
                         return
                     }
@@ -152,6 +153,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         Helper.showSnackBar(messageString: "occured some problem ")
                     }
             }
+        }else{
+            Helper.showSnackBar(messageString: "Connect to the internet first")
+        }
      }
 }
 

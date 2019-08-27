@@ -10,15 +10,20 @@ import UIKit
 import CoreLocation
 class ReportViewController: UIViewController, CLLocationManagerDelegate {
 
+    @IBOutlet weak var draftReportView: UIView!
     @IBOutlet weak var newReportView: UIView!
     @IBOutlet weak var sentReportView: UIView!
     
-    let locationManager = CLLocationManager()
     
+    let locationManager = CLLocationManager()
     override func viewDidLoad() {
      
         super.viewDidLoad()
         let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)));        newReportView.addGestureRecognizer(newReportTapGetsture)
+        let sentReportTapGesture = UITapGestureRecognizer(target: self, action: #selector(sentReportTap(sender:)))
+            sentReportView.addGestureRecognizer(sentReportTapGesture)
+        let draftReportTapGesture = UITapGestureRecognizer(target: self, action: #selector(draftReportTap(sender:)));
+        draftReportView.addGestureRecognizer(draftReportTapGesture)
         if CLLocationManager.locationServicesEnabled() {
             if CLLocationManager.authorizationStatus() == .restricted ||
                 CLLocationManager.authorizationStatus() == .denied ||
@@ -65,6 +70,24 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         }
         navigationController?.pushViewController(newReportViewController, animated: true)
 
+    }
+    @objc func sentReportTap(sender: UITapGestureRecognizer){
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        guard let sentReportViewController = mainStoryboard.instantiateViewController(withIdentifier: "SentReportViewController") as? SentReportViewController else {
+            print("couldn't find the view controller")
+            return
+        }
+        navigationController?.pushViewController(sentReportViewController, animated: true)
+        
+    }
+    @objc func draftReportTap(sender: UITapGestureRecognizer){
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        guard let draftReportViewController = mainStoryboard.instantiateViewController(withIdentifier: "DraftReportViewController") as? DraftReportViewController else {
+            print("couldn't find the view controller")
+            
+            return
+        }
+        navigationController?.pushViewController(draftReportViewController, animated: true)
     }
 
  
