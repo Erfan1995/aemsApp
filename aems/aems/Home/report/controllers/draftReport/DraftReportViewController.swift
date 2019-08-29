@@ -44,7 +44,6 @@ extension DraftReportViewController
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected row \(indexPath)")
         let vc = storyboard?.instantiateViewController(withIdentifier: "DraftDetailsViewController") as! DraftDetailsViewController
         vc.locName = String(setLocationName[indexPath.row])
         self.navigationController?.pushViewController(vc, animated: true)
