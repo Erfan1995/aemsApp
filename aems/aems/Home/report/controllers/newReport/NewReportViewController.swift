@@ -97,7 +97,7 @@ class NewReportViewController: UIViewController {
 
     @objc func tapButton(){
 
-        var station_id = Int(pollingCenter!.text!)
+        var station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
         files.removeAll()
         var candidatesVote:Dictionary<String, Int> = [:]
@@ -119,142 +119,160 @@ class NewReportViewController: UIViewController {
         }
         
         
-        if selectedFiles.count == 1{
-            if selectedFiles[0]==1{
-                if firsImage!.image != nil{
-                    var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                    saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
-                    files.append(ImageFile(fileName: image1, file: firsImage!.image!))
-                }
-            }
-            else if selectedFiles[0]==2{
-                if (secondImage!.image != nil){
-                    var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                    saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
-                    files.append(ImageFile(fileName: image2, file: secondImage!.image!))
-                }
-            }
-        }
-        else if selectedFiles.count == 2 {
-            var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
-            saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
-            files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+        if AppDatabase().isSentReport(station_id: station_id!){
+            print("you report id douplicate please choose other station")
+            let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                print("Yay! You brought your towel!")
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
             
-            var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
-            saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
-            files.append(ImageFile(fileName: image2, file: secondImage!.image!))
-        }
-        else {
-            Helper.showSnackBar(messageString: "plesase select your files")
-        }
-        
-        
-    
-        let headers: HTTPHeaders = [
-            "authorization": User().getLoginUserDefault()!.token
-        ]
-        
-       
-        let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
-    
-        
-        let candidateData = try? JSONSerialization.data(withJSONObject: candidatesVote , options: [])
-        
-  
-  
-        if files.count == 1{
-            if CheckInternetConnection.isConnectedToInternet(){
-                let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
-                Alamofire.upload(multipartFormData: { (multipartFormData) in
-                    multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
-                    multipartFormData.append(candidateData!, withName: "candidates");
-                    multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
-                    multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
-                    multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
-                    multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
-                    multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
-                    multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
-                    multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
-                    multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
-                    multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
-                },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
-                    switch result {
-                    case .success(let upload, _, _):
-                        upload.uploadProgress(closure: { (progress) in
-                            print("Upload Progress: \(progress.fractionCompleted)")
-                        })
-
-                        upload.responseJSON { response in
-                            print("Success")
-                            print(response.result.value)
-                    
-                            report.is_sent=true
-                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
-                        }
-
-                    case .failure(let encodingError):
-                        print("Error")
-                        print(encodingError)
-                    }
-                }
-                
-    
-            }
-            else{
-                report.is_sent=false
-                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
-                Helper.showSnackBar(messageString: "your report stored in draft")
-            }
-        }
-        else if files.count == 2{
-            if CheckInternetConnection.isConnectedToInternet(){
-            let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
-            let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
-                    Alamofire.upload(multipartFormData: { (multipartFormData) in
-                        multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
-                        multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
-                        multipartFormData.append(candidateData!, withName: "candidates");
-                        multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
-                        multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
-                        multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
-                        multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
-                        multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
-                        multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
-                        multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
-                        multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
-                        multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
-                    },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
-                        switch result {
-                        case .success(let upload, _, _):
-                            upload.uploadProgress(closure: { (progress) in
-                                print("Upload Progress: \(progress.fractionCompleted)")
-                            })
             
-                            upload.responseJSON { response in
-                                print("Success")
-                                print(response.result.value)
-                                report.is_sent=false
-                                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
-                                Helper.showSnackBar(messageString: "your report stored in draft")
-                            }
-            
-                        case .failure(let encodingError):
-                            print("Error")
-                            print(encodingError)
-                        }
-                    }
-             }
-            else{
-                report.is_sent=false
-                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
-                Helper.showSnackBar(messageString: "your report stored in draft")
-            }
         }
         else{
-            print("please select file ")
+            
+            if selectedFiles.count == 1{
+                if selectedFiles[0]==1{
+                    if firsImage!.image != nil{
+                        var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                        ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+                        files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+                    }
+                }
+                else if selectedFiles[0]==2{
+                    if (secondImage!.image != nil){
+                        var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                        ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+                        files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+                    }
+                }
+            }
+            else if selectedFiles.count == 2 {
+                var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+                files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+                
+                var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+                files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+            }
+            else {
+                Helper.showSnackBar(messageString: "plesase select your files")
+            }
+            
+            
+            
+            let headers: HTTPHeaders = [
+                "authorization": User().getLoginUserDefault()!.token
+            ]
+            
+            
+            let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
+            
+            
+            let candidateData = try? JSONSerialization.data(withJSONObject: candidatesVote , options: [])
+            
+            
+            //start if
+        
+                if files.count == 1{
+                    if CheckInternetConnection.isConnectedToInternet(){
+                        let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
+                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                            multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                            multipartFormData.append(candidateData!, withName: "candidates");
+                            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                                    print("Success")
+                                    print(response.result.value)
+                                    
+                                    report.is_sent=true
+                                    AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                                }
+                                
+                            case .failure(let encodingError):
+                                print("Error")
+                                print(encodingError)
+                            }
+                        }
+                        
+                        
+                    }
+                    else{
+                        report.is_sent=false
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                        Helper.showSnackBar(messageString: "your report stored in draft")
+                    }
+                }
+                else if files.count == 2{
+                    if CheckInternetConnection.isConnectedToInternet(){
+                        let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
+                        let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
+                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                            multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                            multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
+                            multipartFormData.append(candidateData!, withName: "candidates");
+                            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                                    print("Success")
+                                    print(response.result.value)
+                                    report.is_sent=false
+                                    AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                                    Helper.showSnackBar(messageString: "your report stored in draft")
+                                }
+                                
+                            case .failure(let encodingError):
+                                print("Error")
+                                print(encodingError)
+                            }
+                        }
+                    }
+                    else{
+                        report.is_sent=false
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                        Helper.showSnackBar(messageString: "your report stored in draft")
+                    }
+                }
+                else{
+                    print("please select file ")
+                }
+                
+                //end if
+
         }
-
-
+        
+        
         selectedFiles.removeAll()
    
     }

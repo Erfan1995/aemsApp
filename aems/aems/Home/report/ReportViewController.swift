@@ -13,6 +13,7 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var draftReportView: UIView!
     @IBOutlet weak var newReportView: UIView!
     @IBOutlet weak var sentReportView: UIView!
+   
     
     
     let locationManager = CLLocationManager()
