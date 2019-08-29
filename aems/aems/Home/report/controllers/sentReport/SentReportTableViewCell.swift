@@ -14,7 +14,7 @@ class SentReportTableViewCell: UITableViewCell {
     
     func setSentReports(sentReport: DraftAndSentReportContent)
     {
-        iconImage.image = sentReport.iconImage
+        iconImage.image = #imageLiteral(resourceName: "station_image")
         locationName.text = sentReport.locationName
     }
 

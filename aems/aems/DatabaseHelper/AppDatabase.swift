@@ -28,7 +28,7 @@ class AppDatabase: NSObject {
                     try database!.executeUpdate(ReportImage.CREATE_TABLE, values: nil)
                     
                 }catch{
-                    print( "TABLE INSERTION ERROR \(error)")
+                    print( " TABLE INSERTION ERROR \(error) ")
                 }
             }
         }
@@ -240,11 +240,11 @@ class AppDatabase: NSObject {
     }
     
     
-    func getReport(report_id:Int) -> Array<Report> {
+    func getReport(station_id:Int) -> Report?{
         let con = openDatabase()
         con!.open()
-        var reportLists : Array<Report> = Array()
-        let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_ID)='\(report_id)'"
+        var report : Report?
+        let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)'"
         let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
         while fmresult!.next()
         {
@@ -259,13 +259,49 @@ class AppDatabase: NSObject {
             let latitude = fmresult!.double(forColumn: "\(Report.COL_LATITUDE)")
             let longitude = fmresult!.double(forColumn: "\(Report.COL_LONGITUDE)")
             let province_id = fmresult!.int(forColumn: "\(Report.COL_PROVINCE_ID)")
-            let report : Report = Report(latitude: latitude, longitude: longitude, observer_id: Int(observer_id), void_vote: Int(void_vote), white_vote:Int(white_vote), right_vote: Int(right_vote), province_id: Int(province_id), polling_center_id: Int(polling_center_id), pc_station_nummber: Int(station_id), date_time: date_time)
-            reportLists.append(report)
+            report = Report(id:Int(id),latitude: latitude, longitude: longitude, observer_id: Int(observer_id), void_vote: Int(void_vote), white_vote:Int(white_vote), right_vote: Int(right_vote), province_id: Int(province_id), polling_center_id: Int(polling_center_id), pc_station_nummber: Int(station_id), date_time: date_time)
         }
         if con!.isOpen{
             con!.close()
         }
-        return reportLists
+        return report
+    }
+    
+    
+    func getCandidateReport(report_id:Int) -> Dictionary<String, Int> {
+        let con = openDatabase()
+        con!.open()
+        var candidates : Dictionary<String, Int> = [:]
+        let selectStatment = "SELECT * FROM \(ReportCondidates.TABLE_NAME) WHERE \(ReportCondidates.COL_REPORT_ID)='\(report_id)'"
+        let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next()
+        {
+            let number_of_vote = fmresult!.int(forColumn: "\(ReportCondidates.COL_NUMBER_OF_VOTE)")
+            let candidate_number = fmresult!.int(forColumn: "\(ReportCondidates.COL_CONDIDATE_NUMBER)")
+            candidates[String(candidate_number)]=Int(number_of_vote)
+        }
+        if con!.isOpen{
+            con!.close()
+        }
+        return candidates
+    }
+    
+    
+    func getImageReport(report_id:Int) -> Array<String> {
+        let con = openDatabase()
+        con!.open()
+        var images : Array<String> = Array()
+        let selectStatment = "SELECT * FROM \(ReportImage.TABLE_NAME) WHERE \(ReportImage.COL_REPORT_ID)='\(report_id)'"
+        let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next()
+        {
+            let image_path = fmresult!.string(forColumn: "\(ReportImage.COL_IMAGE_PATH)")
+            images.append(image_path!)
+        }
+        if con!.isOpen{
+            con!.close()
+        }
+        return images
     }
     
     

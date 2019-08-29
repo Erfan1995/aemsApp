@@ -14,7 +14,7 @@ class DraftTableViewCell: UITableViewCell {
     @IBOutlet weak var locationName: UILabel!
     
     func setDraftReports(draftReport: DraftAndSentReportContent){
-        draftImage.image = draftReport.iconImage
+        draftImage.image = #imageLiteral(resourceName: "station_image")
         locationName.text = draftReport.locationName
         
     }
