@@ -52,6 +52,9 @@
 		22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE32152303D6A000CFD4BF /* SentReportViewController.swift */; };
 		22AE321A2304189800CFD4BF /* NewReportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE32192304189800CFD4BF /* NewReportCollectionViewCell.swift */; };
 		22BA2FD22307B9DA00412FFB /* NewReportHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2FD12307B9DA00412FFB /* NewReportHeaderView.swift */; };
+		22D2131E231598E300BD3A53 /* DraftDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D2131D231598E300BD3A53 /* DraftDetailsViewController.swift */; };
+		22D2132023159F4500BD3A53 /* SentReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D2131F23159F4500BD3A53 /* SentReportTableViewCell.swift */; };
+		22D213232315A43D00BD3A53 /* sentReportDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D213222315A43D00BD3A53 /* sentReportDetailsViewController.swift */; };
 		22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC5DF022F953410025AE5E /* RegisterViewController.swift */; };
 		265382E8C4B6687FBCA7D9E4 /* Pods_aems.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E620151C4D21FC0B6AD134BA /* Pods_aems.framework */; };
 /* End PBXBuildFile section */
@@ -113,6 +116,9 @@
 		22AE32152303D6A000CFD4BF /* SentReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentReportViewController.swift; sourceTree = "<group>"; };
 		22AE32192304189800CFD4BF /* NewReportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportCollectionViewCell.swift; sourceTree = "<group>"; };
 		22BA2FD12307B9DA00412FFB /* NewReportHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportHeaderView.swift; sourceTree = "<group>"; };
+		22D2131D231598E300BD3A53 /* DraftDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftDetailsViewController.swift; sourceTree = "<group>"; };
+		22D2131F23159F4500BD3A53 /* SentReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentReportTableViewCell.swift; sourceTree = "<group>"; };
+		22D213222315A43D00BD3A53 /* sentReportDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sentReportDetailsViewController.swift; sourceTree = "<group>"; };
 		22EC5DF022F953410025AE5E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		630D8939929694D25DE545C0 /* Pods-aems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aems.release.xcconfig"; path = "Target Support Files/Pods-aems/Pods-aems.release.xcconfig"; sourceTree = "<group>"; };
 		E620151C4D21FC0B6AD134BA /* Pods_aems.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aems.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,7 +275,9 @@
 		22061D6E2315398C00ED900A /* sentReport */ = {
 			isa = PBXGroup;
 			children = (
+				22D213212315A41400BD3A53 /* sentReportDetails */,
 				22AE32152303D6A000CFD4BF /* SentReportViewController.swift */,
+				22D2131F23159F4500BD3A53 /* SentReportTableViewCell.swift */,
 			);
 			path = sentReport;
 			sourceTree = "<group>";
@@ -277,6 +285,7 @@
 		22061D6F231539A900ED900A /* draftReport */ = {
 			isa = PBXGroup;
 			children = (
+				22D2131C2315982800BD3A53 /* drafDetails */,
 				22061D70231539CA00ED900A /* DraftReportViewController.swift */,
 				22061D722315421700ED900A /* DraftTableViewCell.swift */,
 			);
@@ -385,6 +394,22 @@
 				22061D74231544FF00ED900A /* DraftAndSentReportContent.swift */,
 			);
 			path = controllers;
+			sourceTree = "<group>";
+		};
+		22D2131C2315982800BD3A53 /* drafDetails */ = {
+			isa = PBXGroup;
+			children = (
+				22D2131D231598E300BD3A53 /* DraftDetailsViewController.swift */,
+			);
+			path = drafDetails;
+			sourceTree = "<group>";
+		};
+		22D213212315A41400BD3A53 /* sentReportDetails */ = {
+			isa = PBXGroup;
+			children = (
+				22D213222315A43D00BD3A53 /* sentReportDetailsViewController.swift */,
+			);
+			path = sentReportDetails;
 			sourceTree = "<group>";
 		};
 		22D569AE22F982D80075F41D /* Home */ = {
@@ -577,6 +602,7 @@
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
 				17F60F2E230E51BB002B4035 /* Helper.swift in Sources */,
 				174703A9230912FB0030AD28 /* FMDatabase.m in Sources */,
+				22D2132023159F4500BD3A53 /* SentReportTableViewCell.swift in Sources */,
 				22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */,
 				2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */,
 				171BAB22231396CF00EAEC8B /* ReportCondidates.swift in Sources */,
@@ -588,6 +614,7 @@
 				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
+				22D2131E231598E300BD3A53 /* DraftDetailsViewController.swift in Sources */,
 				228B3A5B230D1F9500E50EA8 /* UserInfoViewController.swift in Sources */,
 				22AE32142303D67700CFD4BF /* NewReportViewController.swift in Sources */,
 				22061D732315421700ED900A /* DraftTableViewCell.swift in Sources */,
@@ -603,6 +630,7 @@
 				174703C2230928690030AD28 /* District.swift in Sources */,
 				220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */,
 				171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */,
+				22D213232315A43D00BD3A53 /* sentReportDetailsViewController.swift in Sources */,
 				2288E27F23110E6C00701FE4 /* HelpViewController.swift in Sources */,
 				174703C623092A610030AD28 /* Report.swift in Sources */,
 				174703BE230922900030AD28 /* Candidate.swift in Sources */,
@@ -748,14 +776,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2G9632HX9;
+				DEVELOPMENT_TEAM = 334CU6SKU6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
@@ -771,14 +799,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2G9632HX9;
+				DEVELOPMENT_TEAM = 334CU6SKU6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

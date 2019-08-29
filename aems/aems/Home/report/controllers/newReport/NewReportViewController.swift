@@ -30,7 +30,7 @@ class NewReportViewController: UIViewController {
     let picker = UIPickerView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
       
         

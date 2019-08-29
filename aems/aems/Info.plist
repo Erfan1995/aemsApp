@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We want to have your location</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,6 +26,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app wants to take pictures.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We want to have your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app wants to use your photos</string>
 	<key>UILaunchStoryboardName</key>

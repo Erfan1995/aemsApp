@@ -42,4 +42,9 @@ extension DraftReportViewController
         cell.setDraftReports(draftReport: draftContent[indexPath.row])
         return cell
     }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DraftDetailsViewController") as! DraftDetailsViewController
+        vc.locName = setLocationName[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
