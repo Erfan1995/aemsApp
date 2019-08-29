@@ -18,6 +18,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         super.viewDidLoad()
         draftViewCollection.dataSource = self
         draftViewCollection.delegate = self
+        
         addBarButton()
     }
     func addBarButton(){
@@ -37,15 +38,19 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
 extension DraftDetailsViewController{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return candidateName.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DraftCollectionViewCell", for: indexPath) as! DraftCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DraftCollectionViewCell", for: indexPath) as! DraftCollectionViewCell
+      
         cell.candidatName.text = candidateName[indexPath.row]
-        cell.numberOfVoote.text  = numberOfVotes[indexPath.row]
+        
+        cell.numberOfVoote.text = numberOfVotes[indexPath.row]
         cell.layer.borderWidth = 0.3
         cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

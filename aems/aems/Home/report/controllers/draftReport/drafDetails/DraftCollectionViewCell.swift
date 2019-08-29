@@ -10,7 +10,6 @@ import UIKit
 
 class DraftCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var candidatName: UILabel!
-    
     @IBOutlet weak var numberOfVoote: UILabel!
     
 }
