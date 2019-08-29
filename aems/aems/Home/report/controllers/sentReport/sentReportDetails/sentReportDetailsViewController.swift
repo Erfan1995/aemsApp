@@ -16,28 +16,14 @@ class sentReportDetailsViewController: UIViewController, UICollectionViewDelegat
     let numberOfVotes = ["3","4","12","23","23","12","43","23",]
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         sentReportCollection.dataSource = self
         sentReportCollection.delegate = self
-        addBarButton()
+        
     }
- 
 
-    func addBarButton(){
-        let buttonSend = UIButton(type: .custom)
-        buttonSend.setImage(UIImage(named: "send-button (3)"), for: .normal)
-        buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
-        buttonSend.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        
-        let barButtonSend = UIBarButtonItem(customView: buttonSend)
-        self.navigationItem.rightBarButtonItem = barButtonSend
-    }
-    @objc func tapButton(){
-        
-    }
 }
 
-extension sentReportDetailsViewController: UIScrollViewDelegate{
+extension sentReportDetailsViewController{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return candidateName.count

@@ -59,6 +59,8 @@
 		22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC5DF022F953410025AE5E /* RegisterViewController.swift */; };
 		22FEE7FE23179A52009B2E97 /* SentReportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEE7FD23179A52009B2E97 /* SentReportCollectionViewCell.swift */; };
 		22FEE80023179A93009B2E97 /* SentReportCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEE7FF23179A93009B2E97 /* SentReportCollectionReusableView.swift */; };
+		22FEE8022317D02C009B2E97 /* DraftCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEE8012317D02C009B2E97 /* DraftCollectionReusableView.swift */; };
+		22FEE8042317D04F009B2E97 /* DraftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEE8032317D04F009B2E97 /* DraftCollectionViewCell.swift */; };
 		265382E8C4B6687FBCA7D9E4 /* Pods_aems.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E620151C4D21FC0B6AD134BA /* Pods_aems.framework */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +128,8 @@
 		22EC5DF022F953410025AE5E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		22FEE7FD23179A52009B2E97 /* SentReportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentReportCollectionViewCell.swift; sourceTree = "<group>"; };
 		22FEE7FF23179A93009B2E97 /* SentReportCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentReportCollectionReusableView.swift; sourceTree = "<group>"; };
+		22FEE8012317D02C009B2E97 /* DraftCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftCollectionReusableView.swift; sourceTree = "<group>"; };
+		22FEE8032317D04F009B2E97 /* DraftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftCollectionViewCell.swift; sourceTree = "<group>"; };
 		630D8939929694D25DE545C0 /* Pods-aems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aems.release.xcconfig"; path = "Target Support Files/Pods-aems/Pods-aems.release.xcconfig"; sourceTree = "<group>"; };
 		E620151C4D21FC0B6AD134BA /* Pods_aems.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aems.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -407,6 +411,8 @@
 			isa = PBXGroup;
 			children = (
 				22D2131D231598E300BD3A53 /* DraftDetailsViewController.swift */,
+				22FEE8012317D02C009B2E97 /* DraftCollectionReusableView.swift */,
+				22FEE8032317D04F009B2E97 /* DraftCollectionViewCell.swift */,
 			);
 			path = drafDetails;
 			sourceTree = "<group>";
@@ -602,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22FEE8042317D04F009B2E97 /* DraftCollectionViewCell.swift in Sources */,
 				22061D71231539CA00ED900A /* DraftReportViewController.swift in Sources */,
 				174703B1230919C00030AD28 /* AppDatabase.swift in Sources */,
 				174703AD230913340030AD28 /* FMDatabaseQueue.m in Sources */,
@@ -642,6 +649,7 @@
 				171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */,
 				22FEE7FE23179A52009B2E97 /* SentReportCollectionViewCell.swift in Sources */,
 				22D213232315A43D00BD3A53 /* sentReportDetailsViewController.swift in Sources */,
+				22FEE8022317D02C009B2E97 /* DraftCollectionReusableView.swift in Sources */,
 				2288E27F23110E6C00701FE4 /* HelpViewController.swift in Sources */,
 				174703C623092A610030AD28 /* Report.swift in Sources */,
 				17FDB63E23169E4400031B04 /* ImageFile.swift in Sources */,
