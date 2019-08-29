@@ -29,7 +29,7 @@ extension sentReportDetailsViewController{
         return candidateName.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SentReportCollectionViewCell", for: indexPath) as! SentReportCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SentReportCollectionViewCell", for: indexPath) as! SentReportCollectionViewCell
         cell.candidateName.text = candidateName[indexPath.row]
         cell.numberOfVote.text  = numberOfVotes[indexPath.row]
         cell.layer.borderWidth = 0.3
