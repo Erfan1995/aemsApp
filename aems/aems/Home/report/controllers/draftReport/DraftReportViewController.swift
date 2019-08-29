@@ -11,18 +11,19 @@ import UIKit
 class DraftReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var draftTable: UITableView!
     var draftContent: [DraftAndSentReportContent] = []
-    var setLocationName = ["محل شماره 1","محل شماره دوم","محل شماره سوم","محل شماره جهارم","محل شماره پنچم","محل شماره ششم","هفتم","هشتم","نهم","دهم","یازدهم"]
+    var setLocationName : Array<Int> = Array()
     override func viewDidLoad() {
         super.viewDidLoad()
         draftTable.delegate = self
         draftTable.dataSource = self
+        setLocationName=AppDatabase().getDraftOrSentReports(isSent: 0)
        draftContent = creatArry()
         // Do any additional setup after loading the view.
     }
     func creatArry()->[DraftAndSentReportContent]{
         var temptDraft: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
-            temptDraft.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: setLocationName[indedx]))
+            temptDraft.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: " محل شماره \(setLocationName[indedx])"))
         }
         return temptDraft
     }
@@ -44,7 +45,7 @@ extension DraftReportViewController
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DraftDetailsViewController") as! DraftDetailsViewController
-        vc.locName = setLocationName[indexPath.row]
+        vc.locName = String(setLocationName[indexPath.row])
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

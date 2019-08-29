@@ -35,15 +35,14 @@ class NewReportViewController: UIViewController {
     let picker = UIPickerView()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
-    
-        
+
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
         let numberOfStation = User().getLoginUserDefault()!.pc_station_number
         for stationNumber in 1...numberOfStation{
@@ -327,13 +326,90 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! NewReportCollectionViewCell
-        cell.candidateImage.image = candidateImage
+        
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
         cell.txtVoteNumber.text = String(candidateVoteNumber[Int(candidateNumber[indexPath.row])])
         cell.layer.borderWidth = 1.0
         cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         cell.txtVoteNumber.addTarget(self, action: #selector(textFieldOnChange(_sender:)), for: .editingChanged)
+        
+        switch candidateNumber[indexPath.row] {
+        case 1:
+            cell.candidateImage.image = #imageLiteral(resourceName: "rahmatulah_nabil")
+            break
+            
+        case 2:
+            cell.candidateImage.image = #imageLiteral(resourceName: "nurolah_jalili")
+            break
+            
+            
+        case 3:
+            cell.candidateImage.image = #imageLiteral(resourceName: "faramarz_tamana")
+            break
+            
+        case 4:
+            cell.candidateImage.image = #imageLiteral(resourceName: "shida_mohamad_abdali")
+            break
+            
+        case 5:
+            cell.candidateImage.image = #imageLiteral(resourceName: "ahmad_wali_masod")
+            break
+            
+        case 6:
+            cell.candidateImage.image = #imageLiteral(resourceName: "noor_rahman_lival")
+            break
+            
+        case 7:
+            cell.candidateImage.image = #imageLiteral(resourceName: "mohamad_shahab")
+            break
+            
+        case 8:
+            cell.candidateImage.image = #imageLiteral(resourceName: "ashraf_ghani")
+            break
+            
+        case 9:
+            cell.candidateImage.image = #imageLiteral(resourceName: "andulah_abdulah")
+            break
+            
+        case 10:
+            cell.candidateImage.image = #imageLiteral(resourceName: "hakim_torsan")
+            break
+            
+        case 11:
+            cell.candidateImage.image = #imageLiteral(resourceName: "golbodin")
+            break
+            
+        case 12:
+            cell.candidateImage.image = #imageLiteral(resourceName: "latif_pedram")
+            break
+            
+        case 13:
+            cell.candidateImage.image = #imageLiteral(resourceName: "noorul_haq")
+            break
+            
+        case 14:
+            cell.candidateImage.image = #imageLiteral(resourceName: "abrahim_alikozay")
+            break
+            
+        case 15:
+            cell.candidateImage.image = #imageLiteral(resourceName: "gholam_faroq")
+            break
+            
+        case 16:
+            cell.candidateImage.image = #imageLiteral(resourceName: "enayat_hafiz")
+            break
+            
+        case 17:
+            cell.candidateImage.image = #imageLiteral(resourceName: "hanif_atmar")
+            break
+            
+        case 18:
+            cell.candidateImage.image = #imageLiteral(resourceName: "zalmay_rasol")
+            break
+        default:
+            cell.candidateImage.image = #imageLiteral(resourceName: "user (2)")
+        }
         
         return cell
     }
@@ -386,12 +462,13 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
     @IBAction func tapFirstDetected(_sender: UIView) {
         self.selectedImage = 1
         self.imagePicker.present(from: _sender)
-        
     }
+    
     @IBAction func tapSecondDetected(_sender: UIView){
         self.selectedImage = 2
         self.imagePicker.present(from: _sender)
     }
+    
     @objc func choosePollingCenter(){
         
     }
