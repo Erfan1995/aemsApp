@@ -19,6 +19,11 @@ class NewReportViewController: UIViewController {
     var cellMarginSize = 5.0
     var candidateName : Array<String> = Array()
     var candidateNumber : Array<Int32> = Array()
+    var txtWrongVote : UITextField?
+    var txtWhiteVote : UITextField?
+    var txtCorrectVote : UITextField?
+    var stationList : Array<Int> = Array()
+    var selectedFiles : Array<Int> = Array()
     var candidateVoteNumber = Array(repeating: 0, count: 19)
     public var imagePickerController: UIImagePickerController?
     var imagePicker: ImagePicker!
@@ -32,15 +37,19 @@ class NewReportViewController: UIViewController {
         super.viewDidLoad()
 //        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
-      
-        
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
+    
         
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
+        let numberOfStation = User().getLoginUserDefault()!.pc_station_number
+        for stationNumber in 1...numberOfStation{
+            stationList.append(stationNumber)
+        }
+        
         
         for x in 1...18{
             var match : Bool = false
@@ -89,88 +98,189 @@ class NewReportViewController: UIViewController {
 
     @objc func tapButton(){
 
-
-        var files : Array<UIImage> = Array();
+        var station_id = Int(pollingCenter!.text!)
+        var files : Array<ImageFile> = Array();
+        files.removeAll()
+        var candidatesVote:Dictionary<String, Int> = [:]
         
-        var arr = [[Int]](repeating: [Int](repeating: 0, count: 2), count: candidateVoteNumber.count)
-     
+        let whiteVote=Int(txtWhiteVote!.text ?? "0")
+        let correctVote=Int(txtCorrectVote!.text ?? "0")
+        let wrongVote=Int(txtWrongVote!.text ?? "0")
+        let polling_center_id = User().getLoginUserDefault()?.polling_center_id
+        let observer_id = User().getLoginUserDefault()?.observer_id
+        let provice_id = User().getLoginUserDefault()?.province_id
         
-        var index : Int = 0
+        
+        var index=0
         for value in candidateVoteNumber{
             if value != -1 && index != 0{
-               arr[index]=[index,value]
+                candidatesVote[String(index)]=value
             }
             index=index+1
         }
         
-        print(arr)
         
-        saveImageToDocumentDirectory(image: firsImage!.image!)
-        firsImage?.image=loadImageFromDocumentDirectory(nameOfImage: "image002.png")
+        if selectedFiles.count == 1{
+            if selectedFiles[0]==1{
+                if firsImage!.image != nil{
+                    var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                    saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+                    files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+                }
+            }
+            else if selectedFiles[0]==2{
+                if (secondImage!.image != nil){
+                    var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                    saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+                    files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+                }
+            }
+        }
+        else if selectedFiles.count == 2 {
+            var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+            saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+            files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+            
+            var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+            saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+            files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+        }
+        else {
+            Helper.showSnackBar(messageString: "plesase select your files")
+        }
         
-//        let firstImageData = (firsImage!.image?.jpegData(compressionQuality: 0))!
-//        let secondImageData = (secondImage!.image?.jpegData(compressionQuality: 0))
-//
-        // https://stackoverflow.com/a/40521003
         
+    
         let headers: HTTPHeaders = [
             "authorization": User().getLoginUserDefault()!.token
         ]
-
+        
+       
+        let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
     
-        let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: 10, void_vote: 100, white_vote: 2, right_vote: 1, province_id: 1, polling_center_id: 3, pc_station_nummber: 2, date_time: "2019-01-02")
         
-        let candidateData = try? JSONSerialization.data(withJSONObject: arr, options: [])
+        let candidateData = try? JSONSerialization.data(withJSONObject: candidatesVote , options: [])
         
+  
+  
+        if files.count == 1{
+            if CheckInternetConnection.isConnectedToInternet(){
+                let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
+                Alamofire.upload(multipartFormData: { (multipartFormData) in
+                    multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                    multipartFormData.append(candidateData!, withName: "candidates");
+                    multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                    multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                    multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                    multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                    multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                    multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                    multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                    multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                    multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                    switch result {
+                    case .success(let upload, _, _):
+                        upload.uploadProgress(closure: { (progress) in
+                            print("Upload Progress: \(progress.fractionCompleted)")
+                        })
 
-        
-        
-        
+                        upload.responseJSON { response in
+                            print("Success")
+                            print(response.result.value)
+                    
+                            report.is_sent=true
+                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                        }
 
-//        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            multipartFormData.append(imageData, withName: "image1", fileName: "test1.jpg", mimeType: "image/jpg");
-//            multipartFormData.append(candidateData!, withName: "candidates");
-//            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
-//            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
-//            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
-//            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
-//            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
-//            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
-//            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
-//            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
-//            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
-//        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
-//            switch result {
-//            case .success(let upload, _, _):
-//                upload.uploadProgress(closure: { (progress) in
-//                    print("Upload Progress: \(progress.fractionCompleted)")
-//                })
-//
-//                upload.responseJSON { response in
-//                    print("Success")
-//                    print(response.result.value)
-//                }
-//
-//            case .failure(let encodingError):
-//                print("Error")
-//                print(encodingError)
-//            }
-//        }
-        
+                    case .failure(let encodingError):
+                        print("Error")
+                        print(encodingError)
+                    }
+                }
+                
+    
+            }
+            else{
+                report.is_sent=false
+                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                Helper.showSnackBar(messageString: "your report stored in draft")
+            }
+        }
+        else if files.count == 2{
+            if CheckInternetConnection.isConnectedToInternet(){
+            let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
+            let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
+                    Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                        multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
+                        multipartFormData.append(candidateData!, withName: "candidates");
+                        multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                        multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                        multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                        multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                        multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                        multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                        multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                        multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                        multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                    },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                        switch result {
+                        case .success(let upload, _, _):
+                            upload.uploadProgress(closure: { (progress) in
+                                print("Upload Progress: \(progress.fractionCompleted)")
+                            })
+            
+                            upload.responseJSON { response in
+                                print("Success")
+                                print(response.result.value)
+                                report.is_sent=false
+                                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                                Helper.showSnackBar(messageString: "your report stored in draft")
+                            }
+            
+                        case .failure(let encodingError):
+                            print("Error")
+                            print(encodingError)
+                        }
+                    }
+             }
+            else{
+                report.is_sent=false
+                AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                Helper.showSnackBar(messageString: "your report stored in draft")
+            }
+        }
+        else{
+            print("please select file ")
+        }
+
+
+        selectedFiles.removeAll()
    
+    }
+   
+    
+   
+    
+    func getCurrentDate() -> String {
+        let currentDateTime = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        formatter.dateStyle = .long
+       return formatter.string(from: currentDateTime)
     }
     
     
-    func saveImageToDocumentDirectory(image: UIImage ) {
+    func saveImageToDocumentDirectory(image: UIImage,fileName:String ) {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileName = "image002.png" // name of the image to be saved
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
         if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
             do {
                 try data.write(to: fileURL)
                 print("file saved")
             } catch {
-                print("error saving file:", error)
+                Helper.showSnackBar(messageString: "save file has error")
             }
         }
     }
@@ -254,6 +364,10 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         headerView.pickFirstImage.addGestureRecognizer(firstImageTap)
         headerView.pickSecondImage.isUserInteractionEnabled = true
         headerView.pickSecondImage.addGestureRecognizer(secondImageTap)
+
+        self.txtWhiteVote=headerView.whiteVote
+        self.txtWrongVote=headerView.wrongVote
+        self.txtCorrectVote=headerView.correctVote
         self.pollingCenter = headerView.pollingCenter
         pollingCenter?.delegate = self
 //        let pollingCenterTap = UITapGestureRecognizer(target: self, action: #selector(choosePollingCenter))
@@ -289,43 +403,30 @@ extension NewReportViewController:  ImagePickerDelegate{
         if selectedImage==1{
             if firsImage != nil{
                 firsImage?.image=image
-            }
-            else{
-                print("<#T##items: Any...##Any#>")
+                selectedFiles.append(1)
             }
         }
         else if(selectedImage==2){
             if secondImage != nil{
-               
-                let compressImage = image?.jpegData(compressionQuality: 0)
-                let myImage = UIImage(data: compressImage!)
-                if let data = myImage?.jpegData(compressionQuality: 0){
-                    let fileSizeString = ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: ByteCountFormatter.CountStyle.memory)
-                    
-                }
-                 secondImage?.image = myImage
-            }
-            else{
-                print("<#T##items: Any...##Any#>")
+                 secondImage?.image = image
+                 selectedFiles.append(2)
             }
         }
       
     }
-    
-   
-    
-    
 }
+
+
 extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return candidateName.count
+        return stationList.count
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pollingCenter?.text = candidateName[row]
+        pollingCenter?.text = String(stationList[row])
         
     }
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -337,7 +438,7 @@ extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         }
         label.textColor = .green
         label.textAlignment = .center
-        label.text = candidateName[row]
+        label.text = String(stationList[row])
         return label
     }
     

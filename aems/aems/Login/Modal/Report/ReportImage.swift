@@ -10,7 +10,7 @@ import Foundation
 
 class ReportImage {
     
-    static let TABLE_NAME="reports";
+    static let TABLE_NAME="report_images";
     static let COL_ID="id";
     static let COL_REPORT_ID="report_id";
     static let COL_IMAGE_PATH="image_path"
@@ -18,7 +18,7 @@ class ReportImage {
     var id : Int?
     var report_id : Int?
     var image_path : String?
-    
-    static let CREATE_TABLE=" CREATE TABLE IF NOT EXISTS \(TABLE_NAME) ( \(COL_ID) INTEGER PRIMARY KEY AUTOINCREMENT ,\(COL_REPORT_ID) INTEGER , \(COL_IMAGE_PATH) TEXT , FOREIGN KEY ( \(COL_REPORT_ID) ) REFERENCES \(Report.TABLE_NAME) (\(Report.COL_ID)) ON DELETE CASCADE ); "
+ 
+    static let CREATE_TABLE=" CREATE TABLE IF NOT EXISTS \(TABLE_NAME) ( \(COL_ID) INTEGER PRIMARY KEY AUTOINCREMENT ,\(COL_REPORT_ID) INTEGER , \(COL_IMAGE_PATH) TEXT , FOREIGN KEY ( \(COL_REPORT_ID) ) REFERENCES \(Report.TABLE_NAME) (\(Report.COL_ID)) ON DELETE CASCADE )"
     
 }

@@ -24,10 +24,11 @@ class AppDatabase: NSObject {
                     try database!.executeUpdate(District.CREATE_TABLE, values: nil)
                     try database!.executeUpdate(PollingCenter.CREATE_TABLE, values: nil)
                     try database!.executeUpdate(Report.CREATE_TABLE, values: nil)
-                    try database!.executeUpdate(ReportCondidates.TABLE_NAME, values: nil)
-                    try database!.executeUpdate(ReportImage.TABLE_NAME, values: nil)
+                    try database!.executeUpdate(ReportCondidates.CREATE_TABLE, values: nil)
+                    try database!.executeUpdate(ReportImage.CREATE_TABLE, values: nil)
+                    
                 }catch{
-                    print( error)
+                    print( "TABLE INSERTION ERROR \(error)")
                 }
             }
         }
@@ -237,6 +238,134 @@ class AppDatabase: NSObject {
         }
         return pollingCenterLists
     }
+    
+    
+    func getReport(report_id:Int) -> Array<Report> {
+        let con = openDatabase()
+        con!.open()
+        var reportLists : Array<Report> = Array()
+        let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_ID)='\(report_id)'"
+        let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next()
+        {
+            let id = fmresult!.int(forColumn: "\(Report.COL_ID)")
+            let polling_center_id = fmresult!.int(forColumn: "\(Report.COL_POLLING_CENTER)")
+            let station_id = fmresult!.int(forColumn: "\(Report.COL_STATION)")
+            let observer_id = fmresult!.int(forColumn: "\(Report.COL_OBSERVER_ID)")
+            let void_vote = fmresult!.int(forColumn: "\(Report.COL_VOID_VOTE)")
+            let white_vote = fmresult!.int(forColumn: "\(Report.COL_RIGHT_VOTE)")
+            let right_vote = fmresult!.int(forColumn: "\(Report.COL_RIGHT_VOTE)")
+            let date_time = fmresult!.string(forColumn: "\(Report.COL_DATE_TIME)")
+            let latitude = fmresult!.double(forColumn: "\(Report.COL_LATITUDE)")
+            let longitude = fmresult!.double(forColumn: "\(Report.COL_LONGITUDE)")
+            let province_id = fmresult!.int(forColumn: "\(Report.COL_PROVINCE_ID)")
+            let report : Report = Report(latitude: latitude, longitude: longitude, observer_id: Int(observer_id), void_vote: Int(void_vote), white_vote:Int(white_vote), right_vote: Int(right_vote), province_id: Int(province_id), polling_center_id: Int(polling_center_id), pc_station_nummber: Int(station_id), date_time: date_time)
+            reportLists.append(report)
+        }
+        if con!.isOpen{
+            con!.close()
+        }
+        return reportLists
+    }
+    
+    
+    func isSentReport(station_id:Int) -> Bool {
+        
+        let con = openDatabase()
+        con!.open()
+        var result=false
+        var reportLists : Array<Report> = Array()
+        let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)' AND \(Report.COL_IS_SENT)='1'"
+        let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next(){
+            result=true
+        }
+        if con!.isOpen{
+            con!.close()
+        }
+        return result
+    }
+    
+    
+    func deleteReport(station_id:Int) {
+        
+        let con = openDatabase()
+        con!.open()
+        var result=false
+        var reportLists : Array<Report> = Array()
+        let selectStatment = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)'"
+        con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        if con!.isOpen{
+            con!.close()
+        }
+   
+    }
+    
+    
+    func getDraftOrSentReports(isSent:Int) -> Array<Int> {
+        let con = openDatabase()
+        con!.open()
+        var reportLists : Array<Int> = Array()
+        let selectStatment = "SELECT \(Report.COL_STATION) FROM \(Report.TABLE_NAME) WHERE \(Report.COL_IS_SENT)='\(isSent)' "
+        let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next()
+        {
+            let station_id = fmresult!.int(forColumn: "\(Report.COL_STATION)")
+            reportLists.append(Int(station_id))
+        }
+        if con!.isOpen{
+            con!.close()
+        }
+        return reportLists
+    }
+    
+    
+    
+    func getLastReportId(con:FMDatabase) -> Int32 {
+        var id : Int32 = 0
+        let selectStatment = "SELECT \(Report.COL_ID) FROM \(Report.TABLE_NAME) WHERE \(Report.COL_ID) = (SELECT MAX(\(Report.COL_ID))  FROM \(Report.TABLE_NAME) )"
+        let fmresult = con.executeQuery(selectStatment, withParameterDictionary: nil)
+        while fmresult!.next()
+        {
+            id = fmresult!.int(forColumn: "\(Report.COL_ID)")
+        }
+        return id
+    }
+    
+    
+ 
+    
+    func storeFileToLocal(files : Array<ImageFile>,report:Report,candidatesVote:Dictionary<String, Int>) {
+        let con = openDatabase()
+        con!.open()
+
+        let insertStatment = " INSERT INTO  \(Report.TABLE_NAME) ( \(Report.COL_POLLING_CENTER),\(Report.COL_STATION),\(Report.COL_OBSERVER_ID),\(Report.COL_VOID_VOTE),\(Report.COL_WHITE_VOTE),\(Report.COL_RIGHT_VOTE),\(Report.COL_DATE_TIME),\(Report.COL_LATITUDE),\(Report.COL_LONGITUDE),\(Report.COL_IS_SENT),\(Report.COL_PROVINCE_ID) ) VALUES ( \(report.polling_center_id!),\(report.pc_station_number!),\(report.observer_id!),\(report.void_vote!),\(report.white_vote!),\(report.right_vote!),'\(report.date_time!)',\(report.latitude!),\(report.longitude!),\(report.is_sent!),\(report.province_id!) );"
+        
+        do{
+            try con!.executeUpdate(insertStatment, values: nil)
+            var report_id=getLastReportId(con: con!)
+            
+            
+            for file in files{
+                let fileInsertStatment = " INSERT INTO  \(ReportImage.TABLE_NAME) ( \(ReportImage.COL_IMAGE_PATH),\(ReportImage.COL_REPORT_ID)) VALUES ( '\(file.fileName!)',\(report_id));"
+                try con!.executeUpdate(fileInsertStatment, values: nil)
+            }
+            
+            
+            for candidate in candidatesVote{
+                let candidateInsertStatment = " INSERT INTO  \(ReportCondidates.TABLE_NAME) ( \(ReportCondidates.COL_NUMBER_OF_VOTE),\(ReportCondidates.COL_CONDIDATE_NUMBER),\(ReportCondidates.COL_REPORT_ID)) VALUES ( \(candidate.value),\(Int(candidate.key)!),\(report_id) );"
+                try con!.executeUpdate(candidateInsertStatment, values: nil)
+            }
+            
+       
+        }catch{
+            print( error)
+            print("storeLocaleFile your insertion field ")
+        }
+        con!.close()
+    }
+    
+    
     
     
     func downloadFileFromServer(condidates : Array<Candidate> = Array(),provinces : Array<Province> = Array(),districts : Array<District> = Array(),centers : Array<PollingCenter> = Array())  {

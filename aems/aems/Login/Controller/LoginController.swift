@@ -82,7 +82,8 @@ class LoginViewController: UIViewController {
                     Loader.stop()
                     if json["response"]==1{
                         var responseData = json["data"]
-                        var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_vote"].intValue)
+                        var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+            
                         User().setLoginUserDefault(loginData: loginData)
                         
                         let tabBarViewController =
