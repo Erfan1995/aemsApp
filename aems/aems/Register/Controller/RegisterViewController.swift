@@ -41,7 +41,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var centers : Array<PollingCenter> = Array();
     let login = LoginViewController()
     var selectedDaty:String?
-    var passwordText: String?
+    var passwordText: String? = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         provinces = AppDatabase().getProvinces()
@@ -55,10 +55,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         district.addTarget(self, action: #selector(validateDistrict(_sender:)), for: .editingChanged )
         pollingCenter.addTarget(self, action: #selector(validatePollingCenter(_sender:)), for: .editingChanged )
         password.addTarget(self, action: #selector(validatePassword(_sender:)), for: .editingChanged )
-        
-      
-            confirmPassword.addTarget(self, action: #selector(validateConfPassword(_sender:)), for: .editingChanged )
-        
+        confirmPassword.addTarget(self, action: #selector(validateConfPassword(_sender:)), for: .editingChanged )
         hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
@@ -82,7 +79,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
             let keyboardRect = keyboardFrame.cgRectValue
             
-            view.frame.origin.y = -30
+            view.frame.origin.y = -100
             
         }else{
             view.frame.origin.y = 0
@@ -205,7 +202,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         do{
             try _sender.validatedText(validationType: ValidatorType.password)
             self.passwordText = _sender.text
-            print("passsssssssssss\(passwordText)")
             _sender.layer.borderColor = UIColor.gray.cgColor
             passwordLabel.text = nil
         }catch(let error){

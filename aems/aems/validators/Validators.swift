@@ -22,7 +22,6 @@ enum ValidatorType {
     case password
     case matchPassword(password: String)
     case username
-    case voteNumber
     case requiredField(field: String)
     case phone
     case pollsterCode
@@ -33,7 +32,6 @@ enum VaildatorFactory {
         case .password: return PasswordValidator()
         case .matchPassword(let password): return matchPasswordValidator(password)
         case .username: return UserNameValidator()
-        case .voteNumber: return voteNumberValidator()
         case .requiredField(let fieldName): return RequiredFieldValidator(fieldName)
         case .phone: return phoneValidator()
         case .pollsterCode: return pollsterCodeValidator()
@@ -43,10 +41,10 @@ enum VaildatorFactory {
 struct pollsterCodeValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else {throw
-            ValidationError(" pollster code  is required")
+            ValidationError(" کود مرکز رای دهی ضروری است!")
         }
         guard let voteNumber = Int(value) else{throw
-            ValidationError("pollster code must be a number")
+            ValidationError("کود مرکز رای دهی باید عدد باشد!")
         }
         return value
     }
@@ -59,36 +57,20 @@ struct matchPasswordValidator: ValidatorConvertible {
     }
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else {
-            throw ValidationError("confirm password cannot be empty")
+            throw ValidationError("تکرار کلمه عبور ضروری می باشد!")
         }
         guard firstPassword == value else {
-            throw ValidationError("passwords don't match")
+            throw ValidationError("کلمات عبور باهم تطابق ندارد!")
         }
         return value
     }
 }
-struct voteNumberValidator: ValidatorConvertible {
-    func validated(_ value: String) throws -> String {
-        guard value.count > 0 else {throw
-            ValidationError(" vote number is required")
-        }
-        guard let voteNumber = Int(value) else{throw
-            ValidationError("vote must be a number")
-        }
-        guard value.count > 200 else {throw
-            ValidationError("vote can't be more than 200")
-        }
-        
-        return value
-    }
-}
-
 
 class phoneValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard value.count > 0 else {throw ValidationError("Phone is required")}
-        guard let phone = Int(value) else {throw ValidationError("Phone must be a number!")}
-        guard value.count == 10 else {throw ValidationError("phone number should be 10 digits")}
+        guard value.count > 0 else {throw ValidationError("شماره تماس ضروری می باشد!")}
+        guard let phone = Int(value) else {throw ValidationError("شماره تماس باشد عدد باشد!")}
+        guard value.count == 10 else {throw ValidationError("شماره تماس باید ۱۰ عدد باشد!")}
        
         return value
     }
@@ -103,7 +85,7 @@ struct RequiredFieldValidator: ValidatorConvertible {
     
     func validated(_ value: String) throws -> String {
         guard !value.isEmpty else {
-            throw ValidationError("Required field " + fieldName)
+            throw ValidationError("فورم نباید خالی باشد! " + fieldName)
         }
         return value
     }
@@ -112,13 +94,13 @@ struct RequiredFieldValidator: ValidatorConvertible {
 struct UserNameValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else{
-            throw ValidationError("Username is required")
+            throw ValidationError("نام ضروری می باشد!")
         }
         guard value.count >= 3 else {
-            throw ValidationError("Username must contain more than three characters" )
+            throw ValidationError("نام باید بیشتر از سه حرف داشته باشد!" )
         }
         guard value.count < 18 else {
-            throw ValidationError("Username shoudn't conain more than 18 characters" )
+            throw ValidationError("نام باید کمتر از ۱۸ حرف داشته باشد!" )
         }
         
         return value
@@ -127,8 +109,8 @@ struct UserNameValidator: ValidatorConvertible {
 
 struct PasswordValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard value != "" else {throw ValidationError("Password is Required")}
-        guard value.count >= 6 else { throw ValidationError("Password must have at least 6 characters") }
+        guard value != "" else {throw ValidationError("کلمه عبور ضروری می باشد!")}
+        guard value.count >= 6 else { throw ValidationError("کلمه عبور حداقل باید ۶ حرف باشد!") }
         return value
     }
 }
