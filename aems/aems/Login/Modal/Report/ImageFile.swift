@@ -17,4 +17,8 @@ class ImageFile {
         self.file=file
         self.fileName=fileName
     }
+    
+    init(fileName:String) {
+        self.fileName=fileName
+    }
 }

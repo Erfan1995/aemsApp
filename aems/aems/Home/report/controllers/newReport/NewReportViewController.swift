@@ -33,15 +33,21 @@ class NewReportViewController: UIViewController {
     var secondImage: UIImageView?
     var pollingCenter: UITextField?
     let picker = UIPickerView()
+    var languageBundle : Bundle?
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+
+       self.imagePicker = ImagePicker(presentationController: self, delegate: self)
       
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
+        
+        language()
+
 
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
         let numberOfStation = User().getLoginUserDefault()!.pc_station_number
@@ -49,6 +55,9 @@ class NewReportViewController: UIViewController {
             stationList.append(stationNumber)
         }
         
+        
+        
+   
         
         for x in 1...18{
             var match : Bool = false
@@ -98,6 +107,33 @@ class NewReportViewController: UIViewController {
         }
     }
     
+    
+    func language() {
+        let languageCode = UserDefaults.standard
+        if UserDefaults.standard.value(forKey: "language") != nil {
+            let language = languageCode.string(forKey: "language")!
+            if let path  = Bundle.main.path(forResource: language, ofType: "lproj") {
+                languageBundle =  Bundle(path: path)
+            }
+            else{
+                languageBundle = Bundle(path: Bundle.main.path(forResource: "en", ofType: "lproj")!)
+            }
+        }
+        else {
+            languageCode.set("en", forKey: "language")
+            languageCode.synchronize()
+            let language = languageCode.string(forKey: "language")!
+            if let path  = Bundle.main.path(forResource: language, ofType: "lproj") {
+                languageBundle =  Bundle(path: path)
+            }
+            else{
+                languageBundle = Bundle(path: Bundle.main.path(forResource: "en", ofType: "lproj")!)
+            }
+        }
+    }
+    
+    
+    
     func setupGrid(){
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
@@ -117,11 +153,12 @@ class NewReportViewController: UIViewController {
 
     @objc func tapButton(){
 
-
-        var station_id = Int(pollingCenter!.text ?? "0")
+        var tootalVote = 0
+        let station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
         files.removeAll()
         var candidatesVote:Dictionary<String, Int> = [:]
+        
         
         let whiteVote=Int(txtWhiteVote!.text ?? "0")
         let correctVote=Int(txtCorrectVote!.text ?? "0")
@@ -131,73 +168,72 @@ class NewReportViewController: UIViewController {
         let provice_id = User().getLoginUserDefault()?.province_id
         
         
+        var candidateArray = Array(repeating: Array(repeating: 0, count: 2), count: 19)
+        
         var index=0
         for value in candidateVoteNumber{
             if value != -1 && index != 0{
-                candidatesVote[String(index)]=value
+                //candidatesVote[String(index)]=value
+                tootalVote=tootalVote+value
+                candidateArray[index][0]=index
+                candidateArray[index][1]=value
             }
             index=index+1
         }
         
         
+        
+        if tootalVote>=450 || tootalVote>=(whiteVote!+wrongVote!+correctVote!){
+            Helper.showSnackBar(messageString: "your report is wrong please correct your report ")
+        }else{
+        if selectedFiles.count == 1{
+            if selectedFiles[0]==1{
+                if firsImage!.image != nil{
+                    let image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                    ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+                    files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+                }
+            }
+            else if selectedFiles[0]==2{
+                if (secondImage!.image != nil){
+                    let image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+                    ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+                    files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+                }
+            }
+        }
+        else if selectedFiles.count == 2 {
+            let image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
+            ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
+            files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+            let image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
+            ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
+            files.append(ImageFile(fileName: image2, file: secondImage!.image!))
+        }
+        else {
+            Helper.showSnackBar(messageString: "plesase select your files")
+        }
+        
+        
+        
+        let headers: HTTPHeaders = [
+            "authorization": User().getLoginUserDefault()!.token
+        ]
+        
+        
+            let report : Report = Report(latitude: ReportViewController.latitude, longitude: ReportViewController.longitude, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
+        
+        
+        let candidateData = try? JSONSerialization.data(withJSONObject: candidateArray , options: [])
+        
+        
+        
         if AppDatabase().isSentReport(station_id: station_id!){
             print("you report id douplicate please choose other station")
-            let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-                print("Yay! You brought your towel!")
-            }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-            self.present(alert, animated: true)
-            
-            
-        }
-
-        else{
-            
-            if selectedFiles.count == 1{
-                if selectedFiles[0]==1{
-                    if firsImage!.image != nil{
-                        var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                        ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
-                        files.append(ImageFile(fileName: image1, file: firsImage!.image!))
-                    }
-                }
-                else if selectedFiles[0]==2{
-                    if (secondImage!.image != nil){
-                        var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                        ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
-                        files.append(ImageFile(fileName: image2, file: secondImage!.image!))
-                    }
-                }
-            }
-            else if selectedFiles.count == 2 {
-                var image1="image1_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                ReportImage().saveImageToDocumentDirectory(image: firsImage!.image!, fileName: image1)
-                files.append(ImageFile(fileName: image1, file: firsImage!.image!))
+            let alert = UIAlertController(title: "گزارش تکراری", message: "گزارش شما از این مرکز یک بار ارسال شده آیا میخواهید دوباره ارسال کنید ؟", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "بله", style: .default, handler: { action in
                 
-                var image2="image2_name_\(Int(round(Date().timeIntervalSince1970))).png"
-                ReportImage().saveImageToDocumentDirectory(image: secondImage!.image!, fileName: image2)
-                files.append(ImageFile(fileName: image2, file: secondImage!.image!))
-            }
-            else {
-                Helper.showSnackBar(messageString: "plesase select your files")
-            }
-            
-            
-            
-            let headers: HTTPHeaders = [
-                "authorization": User().getLoginUserDefault()!.token
-            ]
-            
-            
-            let report : Report = Report(latitude: 30.302, longitude: 92.736, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
-            
-            
-            let candidateData = try? JSONSerialization.data(withJSONObject: candidatesVote , options: [])
-            
-            
-            //start if
-        
+                
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
@@ -221,24 +257,27 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                                    print("Success")
-                                    print(response.result.value)
+                                    var res = response.result.value as? Int
+                                    if  res == 1{
+                                        AppDatabase().deleteReport(station_id: station_id!)
+                                        report.is_sent=true
+                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                        Helper.showSnackBar(messageString: "your report sent")
+                                    }
                                     
-                                    report.is_sent=true
-                                    AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
                                 }
                                 
                             case .failure(let encodingError):
-                                print("Error")
-                                print(encodingError)
+                                Helper.showSnackBar(messageString: "occured some error . Please try again ")
                             }
                         }
                         
                         
                     }
                     else{
+                        AppDatabase().deleteReport(station_id: station_id!)
                         report.is_sent=false
-                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: "your report stored in draft")
                     }
                 }
@@ -267,35 +306,144 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                                    print("Success")
-                                    print(response.result.value)
-                                    report.is_sent=false
-                                    AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
-                                    Helper.showSnackBar(messageString: "your report stored in draft")
+                                    var res = response.result.value as? Int
+                                    if  res == 1{
+                                        AppDatabase().deleteReport(station_id: station_id!)
+                                        report.is_sent=true
+                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                        Helper.showSnackBar(messageString: "your report stored in sent report")
+                                    }
                                 }
                                 
                             case .failure(let encodingError):
-                                print("Error")
-                                print(encodingError)
+                                Helper.showSnackBar(messageString: "occure some problem . Please try again")
+                            }
+                        }
+                    }
+                    else{
+                        AppDatabase().deleteReport(station_id: station_id!)
+                        report.is_sent=false
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                        Helper.showSnackBar(messageString: "your report stored in draft")
+                    }
+                }
+                else{
+                    Helper.showSnackBar(messageString: "please select image file ")
+                }
+                
+                //end if
+                
+                
+            }))
+            alert.addAction(UIAlertAction(title: "نخیر", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            
+        }
+        else{
+            
+                if files.count == 1{
+                    if CheckInternetConnection.isConnectedToInternet(){
+                        let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
+                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                            multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                            multipartFormData.append(candidateData!, withName: "candidates");
+                            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                                    
+                                    var response = response.result.value as? Int
+                                    if  response == 1{
+                                        report.is_sent=true
+                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                        Helper.showSnackBar(messageString: "your report stored ")
+                                    }
+                                }
+                                
+                            case .failure(let encodingError):
+                                Helper.showSnackBar(messageString: "occured some error .Please try again")
+                            }
+                        }
+                        
+                        
+                    }
+                    else{
+                        report.is_sent=false
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                        Helper.showSnackBar(messageString: "your report stored in draft")
+                    }
+                }
+                else if files.count == 2{
+                    if CheckInternetConnection.isConnectedToInternet(){
+                        let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
+                        let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
+                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                            multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
+                            multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
+                            multipartFormData.append(candidateData!, withName: "candidates");
+                            multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
+                            multipartFormData.append(String(report.observer_id!).data(using: String.Encoding.utf8)!, withName: "observer_id");
+                            multipartFormData.append(String(report.right_vote!).data(using: String.Encoding.utf8)!, withName: "right_vote");
+                            multipartFormData.append(String(report.void_vote!).data(using: String.Encoding.utf8)!, withName: "void_vote");
+                            multipartFormData.append(String(report.latitude!).data(using: String.Encoding.utf8)!, withName: "latitude");
+                            multipartFormData.append(String(report.white_vote!).data(using: String.Encoding.utf8)!, withName: "white_vote");
+                            multipartFormData.append(String(report.polling_center_id!).data(using: String.Encoding.utf8)!, withName: "polling_center_id");
+                            multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
+                            multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
+                        },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                        
+                                    
+                                    var response = response.result.value as? Int
+                                    if  response == 1{
+                                        report.is_sent=true
+                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                        Helper.showSnackBar(messageString: "your report stored in dent report")
+                                    }
+                                    
+                                }
+                                
+                            case .failure(let encodingError):
+                                Helper.showSnackBar(messageString: "occured some problem . Please try agian")
                             }
                         }
                     }
                     else{
                         report.is_sent=false
-                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidatesVote)
+                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: "your report stored in draft")
                     }
                 }
                 else{
-                    print("please select file ")
+                    Helper.showSnackBar(messageString: "please select image files")
                 }
                 
                 //end if
 
+            }
+        
         }
-        
-        
-        selectedFiles.removeAll()
+        //selectedFiles.removeAll()
    
     }
    
@@ -317,7 +465,6 @@ class NewReportViewController: UIViewController {
         if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
             do {
                 try data.write(to: fileURL)
-                print("file saved")
             } catch {
                 Helper.showSnackBar(messageString: "save file has error")
             }
@@ -562,4 +709,11 @@ extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
    
 }
 
-
+extension String {
+    func localized(_ lang:String) ->String {
+        
+        let path = Bundle.main.path(forResource: lang, ofType: "lproj")
+        let bundle = Bundle(path: path!)
+        
+        return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
+    }}

@@ -13,6 +13,8 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var draftReportView: UIView!
     @IBOutlet weak var newReportView: UIView!
     @IBOutlet weak var sentReportView: UIView!
+    static var latitude : Double = 0.0
+    static var longitude : Double = 0.0
     
     let locationManager = CLLocationManager()
     override func viewDidLoad() {
@@ -41,7 +43,8 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         print("unable to get location")
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-       
+        ReportViewController.longitude = locations[0].coordinate.longitude
+        ReportViewController.latitude = locations[0].coordinate.latitude
        
     }
     func turnOnLocationSerives(){
