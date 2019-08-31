@@ -46,8 +46,6 @@
 		2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521C2302E00E00F5AEFF /* NotificationViewController.swift */; };
 		228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521F2302E19F00F5AEFF /* NotificationTab.swift */; };
 		2288E27F23110E6C00701FE4 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288E27E23110E6C00701FE4 /* HelpViewController.swift */; };
-		228B3A5B230D1F9500E50EA8 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B3A5A230D1F9500E50EA8 /* UserInfoViewController.swift */; };
-		228B3A5D230D1FC500E50EA8 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B3A5C230D1FC500E50EA8 /* ChangePasswordViewController.swift */; };
 		22AA79FD22F952BB0050298A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FC22F952BB0050298A /* AppDelegate.swift */; };
 		22AA79FF22F952BB0050298A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FE22F952BB0050298A /* LoginController.swift */; };
 		22AA7A0222F952BB0050298A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22AA7A0022F952BB0050298A /* Main.storyboard */; };
@@ -126,8 +124,6 @@
 		2288521C2302E00E00F5AEFF /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		2288521F2302E19F00F5AEFF /* NotificationTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTab.swift; sourceTree = "<group>"; };
 		2288E27E23110E6C00701FE4 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		228B3A5A230D1F9500E50EA8 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
-		228B3A5C230D1FC500E50EA8 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		22AA79F922F952BB0050298A /* aems.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aems.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AA79FC22F952BB0050298A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22AA79FE22F952BB0050298A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -377,8 +373,6 @@
 			children = (
 				228852142302995B00F5AEFF /* SettingsViewController.swift */,
 				226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */,
-				228B3A5A230D1F9500E50EA8 /* UserInfoViewController.swift */,
-				228B3A5C230D1FC500E50EA8 /* ChangePasswordViewController.swift */,
 				2288E27E23110E6C00701FE4 /* HelpViewController.swift */,
 			);
 			path = controller;
@@ -655,7 +649,6 @@
 				174703AD230913340030AD28 /* FMDatabaseQueue.m in Sources */,
 				174703AC230913260030AD28 /* FMDatabaseAdditions.m in Sources */,
 				2203A1C923196DEE000BF7BD /* TextfieldValidationExtension.swift in Sources */,
-				228B3A5D230D1FC500E50EA8 /* ChangePasswordViewController.swift in Sources */,
 				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
 				17F60F2E230E51BB002B4035 /* Helper.swift in Sources */,
@@ -675,7 +668,6 @@
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
 				22D2131E231598E300BD3A53 /* DraftDetailsViewController.swift in Sources */,
-				228B3A5B230D1F9500E50EA8 /* UserInfoViewController.swift in Sources */,
 				22AE32142303D67700CFD4BF /* NewReportViewController.swift in Sources */,
 				22061D732315421700ED900A /* DraftTableViewCell.swift in Sources */,
 				22061D75231544FF00ED900A /* DraftAndSentReportContent.swift in Sources */,

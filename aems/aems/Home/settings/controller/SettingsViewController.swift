@@ -12,8 +12,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var settingsTableView: UITableView!
     var settings: [SettingsContent] = []
-    var setName = ["مشخصات","راهنما","تغییر رمز","خروج"]
-    var setImage = [#imageLiteral(resourceName: "user (2)"),#imageLiteral(resourceName: "questions-circular-button"),#imageLiteral(resourceName: "lock (4)"),#imageLiteral(resourceName: "logout (3)")]
+    var setName = ["راهنما","خروج"]
+    var setImage = [#imageLiteral(resourceName: "questions-circular-button"),#imageLiteral(resourceName: "logout (3)")]
     override func viewDidLoad() {
         super.viewDidLoad()
         settingsTableView.delegate = self
@@ -44,16 +44,16 @@ extension SettingsViewController{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         var index = indexPath.row
+//        if(index == 0){
+//            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            guard let userInfoViewController = mainStoryboard.instantiateViewController(withIdentifier: "UserInfoViewController") as? UserInfoViewController else {
+//                print("couldn't find the view controller")
+//             return
+//
+//            }
+//            navigationController?.pushViewController(userInfoViewController, animated: true)
+//        }
         if(index == 0){
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let userInfoViewController = mainStoryboard.instantiateViewController(withIdentifier: "UserInfoViewController") as? UserInfoViewController else {
-                print("couldn't find the view controller")
-             return
-                
-            }
-            navigationController?.pushViewController(userInfoViewController, animated: true)
-        }
-        if(index == 1){
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             guard let helpViewController = mainStoryboard.instantiateViewController(withIdentifier: "HelpViewController") as? HelpViewController else {
                 print("couldn't find the view controller")
@@ -63,16 +63,16 @@ extension SettingsViewController{
             navigationController?.pushViewController(helpViewController, animated: true)
         }
         
-            if(index == 2){
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let changePasswordViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as? ChangePasswordViewController else {
-                    print("couldn't find the view controller")
-                    return
-                    
-                }
-                navigationController?.pushViewController(changePasswordViewController, animated: true)
-        }
-            if(index == 3){
+//            if(index == 2){
+//                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                guard let changePasswordViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as? ChangePasswordViewController else {
+//                    print("couldn't find the view controller")
+//                    return
+//
+//                }
+//                navigationController?.pushViewController(changePasswordViewController, animated: true)
+//        }
+            if(index == 1){
                 let dialogMessage = UIAlertController(title: "خروج", message: "آیا می خواهید خارج شوید؟ ", preferredStyle: .alert)
                 let ok = UIAlertAction(title: "بلی", style: .default, handler:{
                     (action)->Void in
