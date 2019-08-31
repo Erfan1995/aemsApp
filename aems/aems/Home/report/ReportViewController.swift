@@ -13,12 +13,14 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var draftReportView: UIView!
     @IBOutlet weak var newReportView: UIView!
     @IBOutlet weak var sentReportView: UIView!
-    
+    public var longtitude = 0.0
+    public var latitude = 0.0
     
     let locationManager = CLLocationManager()
     override func viewDidLoad() {
      
         super.viewDidLoad()
+      
         let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)));        newReportView.addGestureRecognizer(newReportTapGetsture)
         let sentReportTapGesture = UITapGestureRecognizer(target: self, action: #selector(sentReportTap(sender:)))
             sentReportView.addGestureRecognizer(sentReportTapGesture)
@@ -41,8 +43,8 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         print("unable to get location")
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        var longtitude = locations[0].coordinate.longitude
-        var latitude = locations[0].coordinate.latitude
+        self.longtitude = locations[0].coordinate.longitude
+        self.latitude = locations[0].coordinate.latitude
        
     }
     func turnOnLocationSerives(){

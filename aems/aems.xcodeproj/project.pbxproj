@@ -28,6 +28,9 @@
 		174703C623092A610030AD28 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C523092A610030AD28 /* Report.swift */; };
 		17F60F2E230E51BB002B4035 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F60F2D230E51BB002B4035 /* Helper.swift */; };
 		17FDB63E23169E4400031B04 /* ImageFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDB63D23169E4400031B04 /* ImageFile.swift */; };
+		2203A1C623196991000BF7BD /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203A1C523196991000BF7BD /* Validators.swift */; };
+		2203A1C923196DEE000BF7BD /* TextfieldValidationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203A1C823196DEE000BF7BD /* TextfieldValidationExtension.swift */; };
+		2203A1CB23196EC4000BF7BD /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203A1CA23196EC4000BF7BD /* HideKeyboardExtension.swift */; };
 		22061D692314F4A000ED900A /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D682314F4A000ED900A /* Loader.swift */; };
 		22061D6C2315290500ED900A /* CheckInternetConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D6B2315290500ED900A /* CheckInternetConnection.swift */; };
 		22061D71231539CA00ED900A /* DraftReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D70231539CA00ED900A /* DraftReportViewController.swift */; };
@@ -95,6 +98,9 @@
 		174703C523092A610030AD28 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		17F60F2D230E51BB002B4035 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		17FDB63D23169E4400031B04 /* ImageFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFile.swift; sourceTree = "<group>"; };
+		2203A1C523196991000BF7BD /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		2203A1C823196DEE000BF7BD /* TextfieldValidationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldValidationExtension.swift; sourceTree = "<group>"; };
+		2203A1CA23196EC4000BF7BD /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		22061D682314F4A000ED900A /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		22061D6B2315290500ED900A /* CheckInternetConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInternetConnection.swift; sourceTree = "<group>"; };
 		22061D70231539CA00ED900A /* DraftReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftReportViewController.swift; sourceTree = "<group>"; };
@@ -262,6 +268,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		2203A1C42318F428000BF7BD /* validators */ = {
+			isa = PBXGroup;
+			children = (
+				2203A1C523196991000BF7BD /* Validators.swift */,
+			);
+			path = validators;
+			sourceTree = "<group>";
+		};
+		2203A1C723196C30000BF7BD /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2203A1C823196DEE000BF7BD /* TextfieldValidationExtension.swift */,
+				2203A1CA23196EC4000BF7BD /* HideKeyboardExtension.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		22061D6A2314FA7700ED900A /* shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +404,8 @@
 		22AA79FB22F952BB0050298A /* aems */ = {
 			isa = PBXGroup;
 			children = (
+				2203A1C723196C30000BF7BD /* extensions */,
+				2203A1C42318F428000BF7BD /* validators */,
 				22061D6A2314FA7700ED900A /* shared */,
 				174703AF230919690030AD28 /* DatabaseHelper */,
 				22D569AE22F982D80075F41D /* Home */,
@@ -609,10 +634,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				22FEE8042317D04F009B2E97 /* DraftCollectionViewCell.swift in Sources */,
+				2203A1C623196991000BF7BD /* Validators.swift in Sources */,
 				22061D71231539CA00ED900A /* DraftReportViewController.swift in Sources */,
 				174703B1230919C00030AD28 /* AppDatabase.swift in Sources */,
 				174703AD230913340030AD28 /* FMDatabaseQueue.m in Sources */,
 				174703AC230913260030AD28 /* FMDatabaseAdditions.m in Sources */,
+				2203A1C923196DEE000BF7BD /* TextfieldValidationExtension.swift in Sources */,
 				228B3A5D230D1FC500E50EA8 /* ChangePasswordViewController.swift in Sources */,
 				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
@@ -629,6 +656,7 @@
 				171BAB2023125D5A00EAEC8B /* ImagePicker.swift in Sources */,
 				22061D6C2315290500ED900A /* CheckInternetConnection.swift in Sources */,
 				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
+				2203A1CB23196EC4000BF7BD /* HideKeyboardExtension.swift in Sources */,
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
 				22D2131E231598E300BD3A53 /* DraftDetailsViewController.swift in Sources */,

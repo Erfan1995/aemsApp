@@ -32,19 +32,32 @@ class LoginViewController: UIViewController {
             }
         }
         hideKeyboardWhenTappedAround()
-//        activityIndicator.center = self.view.center
-//        activityIndicator.hidesWhenStopped = true
-//        activityIndicator.style = UIActivityIndicatorView.Style.gray
-        
-//        self.view.addSubview(activityIndicator)
-    
+        appearKeyboard()
+    }
+    func appearKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+       
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @objc func keyboardWillShow(notification: Notification){
+ 
+        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
+            return
+        }
+        if notification.name == UIResponder.keyboardWillShowNotification ||
+            notification.name == UIResponder.keyboardWillChangeFrameNotification{
+            let keyboardRect = keyboardFrame.cgRectValue
+            
+            view.frame.origin.y = -30
+            
+        }else{
+            view.frame.origin.y = 0
+        }
+    }
 
-    }
+
     
     @IBAction func registerBtnPressed(_ sender: Any) {
         
@@ -61,54 +74,61 @@ class LoginViewController: UIViewController {
         }
         
     }
-   
-
 
     @IBAction func loginBtnPressed(_ sender: Any) {
         
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
-        if CheckInternetConnection.isConnectedToInternet(){
-            Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
-            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
-                              method: .post,
-                              parameters: ["phone": phone,"password":password])
-                .validate()
-                .responseJSON { response in
-                    guard response.result.isSuccess else {
-                        return
-                    }
-                    let json=JSON(response.value)
-                    Loader.stop()
-                    if json["response"]==1{
-                        var responseData = json["data"]
-                        var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+        do{
+           let phones =  try txtPhone.validatedText(validationType: ValidatorType.phone)
+        
             
-                        User().setLoginUserDefault(loginData: loginData)
-                        
-                        let tabBarViewController =
-                            self.storyboard?.instantiateViewController(
-                                withIdentifier: "TabBarViewController") as! TabBarViewController
-                        self.present(tabBarViewController, animated: true, completion: nil)
-                    }
-                    else if json["response"]==2{
-                        
-                        Helper.showSnackBar(messageString: "yout acount not approved ")
-                    }
-                    else if json["response"]==3{
-                        
-                        
-                        Helper.showSnackBar(messageString: "your phone or password in wrong")
-                    }
-                    else if json["response"]==4{
-                        
-                        Helper.showSnackBar(messageString: "occured some problem try again")
-                    }
+            let pass =   try txtPassword.validatedText(validationType: ValidatorType.password)
+            if CheckInternetConnection.isConnectedToInternet(){
+                Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
+                Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
+                                  method: .post,
+                                  parameters: ["phone": phone,"password":password])
+                    .validate()
+                    .responseJSON { response in
+                        guard response.result.isSuccess else {
+                            return
+                        }
+                        let json=JSON(response.value)
+                        Loader.stop()
+                        if json["response"]==1{
+                            var responseData = json["data"]
+                            var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+                            
+                            User().setLoginUserDefault(loginData: loginData)
+                            
+                            let tabBarViewController =
+                                self.storyboard?.instantiateViewController(
+                                    withIdentifier: "TabBarViewController") as! TabBarViewController
+                            self.present(tabBarViewController, animated: true, completion: nil)
+                        }
+                        else if json["response"]==2{
+                            
+                            Helper.showSnackBar(messageString: "yout acount not approved ")
+                        }
+                        else if json["response"]==3{
+                            
+                            
+                            Helper.showSnackBar(messageString: "your phone or password in wrong")
+                        }
+                        else if json["response"]==4{
+                            
+                            Helper.showSnackBar(messageString: "occured some problem try again")
+                        }
+                }
             }
+            else{
+                Helper.showSnackBar(messageString: "connect to the internt first")
+            }
+        }catch(let error){
+            Helper.showSnackBar(messageString: "enter correcto phone and password")
         }
-        else{
-            Helper.showSnackBar(messageString: "connect to the internt first")
-        }
+        
     }
     
     
@@ -175,19 +195,4 @@ class LoginViewController: UIViewController {
 
     
 
-extension UIViewController{
-   
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-  
-
-}
 

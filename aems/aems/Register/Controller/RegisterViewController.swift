@@ -23,6 +23,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var polesterCodeLabel: UILabel!
+    @IBOutlet weak var provinceLabel: UILabel!
+    @IBOutlet weak var pollingCenterLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var confirmPassLabel: UILabel!
+    @IBOutlet weak var districtLabel: UILabel!
+    @IBOutlet weak var phoneNumberLabel: UILabel!
     var provincePickerData : Array<String> = Array()
     var districtPickerData : Array<String> = Array()
     var pollingCenterData : Array<String> = Array()
@@ -33,39 +41,52 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var centers : Array<PollingCenter> = Array();
     let login = LoginViewController()
     var selectedDaty:String?
-    
+    var passwordText: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         provinces = AppDatabase().getProvinces()
         for province in provinces{
             provincePickerData.append(province.name!)
         }
-       
+        fullName.addTarget(self, action: #selector(validateFullName), for: .editingChanged )
+        pollsterCode.addTarget(self, action: #selector(validatePollsterCode(_sender:)), for: .editingChanged )
+        phoneNumber.addTarget(self, action: #selector(validatePhoneNumber(_sender:)), for: .editingChanged )
+        province.addTarget(self, action: #selector(validateProvince(_sender:)), for: .editingChanged )
+        district.addTarget(self, action: #selector(validateDistrict(_sender:)), for: .editingChanged )
+        pollingCenter.addTarget(self, action: #selector(validatePollingCenter(_sender:)), for: .editingChanged )
+        password.addTarget(self, action: #selector(validatePassword(_sender:)), for: .editingChanged )
+        
+      
+            confirmPassword.addTarget(self, action: #selector(validateConfPassword(_sender:)), for: .editingChanged )
+        
         hideKeyboardWhenTappedAround()
         province.delegate = self
         district.delegate = self
         pollingCenter.delegate = self
         creatProvincePicker()
         createToolbar()
-//        scrollForKeyboard(scrollView: self.scrollView)
         scrollForKeyboard()
     }
-    
+    // moves the the view up so the the textfield be visible while the keyboard appears
     func scrollForKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillHideNotification , object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillChangeFrameNotification , object:  nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification , object:  nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc func Keyboard(notification: Notification){
-        let userInfo = notification.userInfo
-        let keyboardScreenEndFrame = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        if notification.name == UIResponder.keyboardWillHideNotification{
-            scrollView.contentInset = UIEdgeInsets.zero
-        }else{
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+    @objc func keyboardWillShow(notification: Notification){
+        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
+            return
         }
-        scrollView.scrollIndicatorInsets = scrollView.contentInset
+        if notification.name == UIResponder.keyboardWillShowNotification ||
+            notification.name == UIResponder.keyboardWillChangeFrameNotification{
+            let keyboardRect = keyboardFrame.cgRectValue
+            
+            view.frame.origin.y = -30
+            
+        }else{
+            view.frame.origin.y = 0
+        }
     }
     
     
@@ -108,54 +129,164 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             activeTextField = 0
         }
     }
-   
-    
-    @IBAction func register(_ sender: Any) {
-        if CheckInternetConnection.isConnectedToInternet(){
-            Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
-            var province_id : Int32 = 0
-            var pollingCenter_id : Int32 = 0
-            let complete_name : String = fullName.text!
-            let observer_code : String = pollsterCode.text!
-            let phone : String = phoneNumber.text!
-            let pass : String = password.text!
-            
-            for pro in provinces{
-                if pro.name == province.text!{
-                    province_id=pro.province_id!
-                }
-            }
-            
-            for cen in centers{
-                if cen.polling_center_code == pollingCenter.text!{
-                    pollingCenter_id=cen.polling_center_id!
-                }
-            }
-            
-            
-            
-            let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
-            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
-                .responseJSON { response in
-                    guard response.result.isSuccess else {
-                        return
-                    }
-                    Loader.stop()
-                    let json=JSON(response.value)
-                    if  json["response"]==1{
-                        Helper.showSnackBar(messageString: "you registred successfuly")
-                        self.dismiss( animated: true, completion: nil)
-                    }
-                    else if json["response"]==2{
-                        Helper.showSnackBar(messageString: "your user is exists")
-                    }
-                    else if json["response"]==3{
-                        Helper.showSnackBar(messageString: "occured some problem ")
-                    }
-            }
-        }else{
-            Helper.showSnackBar(messageString: "Connect to the internet first")
+    @IBAction func validateFullName( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.username)
+            fullNameLabel.text = nil
+            _sender.layer.borderColor = UIColor.gray.cgColor
+        }catch(let error){
+            _sender.layer.borderWidth = 1.0
+            _sender.layer.borderColor = UIColor.red.cgColor
+            fullNameLabel.textColor = .red
+            fullNameLabel.text = (error as! ValidationError ).message
         }
+    }
+    @IBAction func validatePollsterCode( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.pollsterCode)
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            polesterCodeLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            polesterCodeLabel.textColor = .red
+            polesterCodeLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validatePhoneNumber( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.phone)
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            phoneNumberLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            phoneNumberLabel.textColor = .red
+            phoneNumberLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validateProvince( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            provinceLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            provinceLabel.textColor = .red
+            provinceLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validateDistrict( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            districtLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            districtLabel.textColor = .red
+            districtLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validatePollingCenter( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            pollingCenterLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            pollingCenterLabel.textColor = .red
+            pollingCenterLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validatePassword( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.password)
+            self.passwordText = _sender.text
+            print("passsssssssssss\(passwordText)")
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            passwordLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            passwordLabel.textColor = .red
+            passwordLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func validateConfPassword( _sender: UITextField){
+        do{
+            try _sender.validatedText(validationType: ValidatorType.matchPassword(password: passwordText!))
+            _sender.layer.borderColor = UIColor.gray.cgColor
+            confirmPassLabel.text = nil
+        }catch(let error){
+            _sender.layer.borderColor = UIColor.red.cgColor
+            _sender.layer.borderWidth = 1.0
+            confirmPassLabel.textColor = .red
+            confirmPassLabel.text = (error as! ValidationError ).message
+        }
+    }
+    @IBAction func register(_ sender: Any) {
+        do{
+            let userName  = try fullName.validatedText(validationType: ValidatorType.username)
+            let pollster = try pollsterCode.validatedText(validationType: ValidatorType.pollsterCode)
+            let phone = try phoneNumber.validatedText(validationType: ValidatorType.phone)
+            let provinceName = try province.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            let districtName = try district.validatedText(validationType: ValidatorType.requiredField(field: "District"))
+            let pollingCenterName = try pollingCenter.validatedText(validationType: ValidatorType.requiredField(field: "polling center"))
+            let pass = try password.validatedText(validationType: ValidatorType.password)
+            let confPass = try confirmPassword.validatedText(validationType: ValidatorType.matchPassword(password: pass))
+            if CheckInternetConnection.isConnectedToInternet(){
+                Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
+                var province_id : Int32 = 0
+                var pollingCenter_id : Int32 = 0
+                let complete_name : String = fullName.text!
+                let observer_code : String = pollsterCode.text!
+                let phone : String = phoneNumber.text!
+                let pass : String = password.text!
+                
+                for pro in provinces{
+                    if pro.name == province.text!{
+                        province_id=pro.province_id!
+                    }
+                }
+                
+                for cen in centers{
+                    if cen.polling_center_code == pollingCenter.text!{
+                        pollingCenter_id=cen.polling_center_id!
+                    }
+                }
+                
+                
+                
+                let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
+                Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
+                    .responseJSON { response in
+                        guard response.result.isSuccess else {
+                            return
+                        }
+                        Loader.stop()
+                        let json=JSON(response.value)
+                        if  json["response"]==1{
+                            Helper.showSnackBar(messageString: "you registred successfuly")
+                            self.dismiss( animated: true, completion: nil)
+                        }
+                        else if json["response"]==2{
+                            Helper.showSnackBar(messageString: "your user is exists")
+                        }
+                        else if json["response"]==3{
+                            Helper.showSnackBar(messageString: "occured some problem ")
+                        }
+                }
+            }else{
+                Helper.showSnackBar(messageString: "Connect to the internet first")
+            }
+            
+        }catch(let error){
+            Helper.showSnackBar(messageString: (error as! ValidationError).message)
+        }
+       
      }
 }
 

@@ -36,7 +36,7 @@ class NewReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-        
+      
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
@@ -74,9 +74,29 @@ class NewReportViewController: UIViewController {
             candidateNumber.append(candidate.election_no!)
         }
         setupGrid()
-
+        scrollForKeyboard()
+    }
+      // moves the the view up so the the textfield be visible while the keyboard appears
+    func scrollForKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification , object:  nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @objc func keyboardWillShow(notification: Notification){
+        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
+            return
+        }
+        if notification.name == UIResponder.keyboardWillShowNotification ||
+            notification.name == UIResponder.keyboardWillChangeFrameNotification{
+            let keyboardRect = keyboardFrame.cgRectValue
+            
+            view.frame.origin.y = -30
+            
+        }else{
+            view.frame.origin.y = 0
+        }
+    }
     
     func setupGrid(){
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
@@ -96,7 +116,7 @@ class NewReportViewController: UIViewController {
 }
 
     @objc func tapButton(){
-
+        
         var station_id = Int(pollingCenter!.text!)
         var files : Array<ImageFile> = Array();
         files.removeAll()
@@ -165,6 +185,7 @@ class NewReportViewController: UIViewController {
         if files.count == 1{
             if CheckInternetConnection.isConnectedToInternet(){
                 let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
+                Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
                 Alamofire.upload(multipartFormData: { (multipartFormData) in
                     multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
                     multipartFormData.append(candidateData!, withName: "candidates");
@@ -178,6 +199,7 @@ class NewReportViewController: UIViewController {
                     multipartFormData.append(String(report.pc_station_number!).data(using: String.Encoding.utf8)!, withName: "pc_station_number");
                     multipartFormData.append(String(report.longitude!).data(using: String.Encoding.utf8)!, withName: "longitude");
                 },to: "\(AppDatabase.DOMAIN_ADDRESS)/api/finalresult/register",method: .post,headers:headers ) { (result) in
+                    Loader.stop()
                     switch result {
                     case .success(let upload, _, _):
                         upload.uploadProgress(closure: { (progress) in
