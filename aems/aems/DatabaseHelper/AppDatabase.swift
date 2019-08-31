@@ -10,8 +10,8 @@ import UIKit
 
 class AppDatabase: NSObject {
     
-    static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
-    //static let DOMAIN_ADDRESS="http://192.168.1.55:3000";
+    //static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
+    static let DOMAIN_ADDRESS="http://192.168.1.135:3000";
     
     override init() {
         do{
@@ -253,7 +253,7 @@ class AppDatabase: NSObject {
             let station_id = fmresult!.int(forColumn: "\(Report.COL_STATION)")
             let observer_id = fmresult!.int(forColumn: "\(Report.COL_OBSERVER_ID)")
             let void_vote = fmresult!.int(forColumn: "\(Report.COL_VOID_VOTE)")
-            let white_vote = fmresult!.int(forColumn: "\(Report.COL_RIGHT_VOTE)")
+            let white_vote = fmresult!.int(forColumn: "\(Report.COL_WHITE_VOTE)")
             let right_vote = fmresult!.int(forColumn: "\(Report.COL_RIGHT_VOTE)")
             let date_time = fmresult!.string(forColumn: "\(Report.COL_DATE_TIME)")
             let latitude = fmresult!.double(forColumn: "\(Report.COL_LATITUDE)")
@@ -268,22 +268,24 @@ class AppDatabase: NSObject {
     }
     
     
-    func getCandidateReport(report_id:Int) -> Dictionary<String, Int> {
+    func getCandidateReport(report_id:Int) -> [[Int]] {
         let con = openDatabase()
         con!.open()
-        var candidates : Dictionary<String, Int> = [:]
+         var candidateArray = Array(repeating: Array(repeating: 0, count: 2), count: 19)
         let selectStatment = "SELECT * FROM \(ReportCondidates.TABLE_NAME) WHERE \(ReportCondidates.COL_REPORT_ID)='\(report_id)'"
         let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
         while fmresult!.next()
         {
+            
             let number_of_vote = fmresult!.int(forColumn: "\(ReportCondidates.COL_NUMBER_OF_VOTE)")
             let candidate_number = fmresult!.int(forColumn: "\(ReportCondidates.COL_CONDIDATE_NUMBER)")
-            candidates[String(candidate_number)]=Int(number_of_vote)
+            candidateArray[Int(candidate_number)][0]=Int(candidate_number)
+            candidateArray[Int(candidate_number)][1]=Int(number_of_vote)
         }
         if con!.isOpen{
             con!.close()
         }
-        return candidates
+        return candidateArray
     }
     
     
@@ -327,10 +329,15 @@ class AppDatabase: NSObject {
         
         let con = openDatabase()
         con!.open()
-        var result=false
-        var reportLists : Array<Report> = Array()
-        let selectStatment = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)'"
-        con!.executeQuery(selectStatment, withParameterDictionary: nil)
+        var sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
+        do{
+            try con!.executeUpdate(sqlStatement, values: nil)
+            print("successfuly deleted ")
+        }catch{
+            
+            print("problem in deletion")
+            print( error)
+        }
         if con!.isOpen{
             con!.close()
         }
@@ -371,7 +378,7 @@ class AppDatabase: NSObject {
     
  
     
-    func storeFileToLocal(files : Array<ImageFile>,report:Report,candidatesVote:Dictionary<String, Int>) {
+    func storeFileToLocal(files : Array<ImageFile>,report:Report,candidatesVote: [[Int]]) {
         let con = openDatabase()
         con!.open()
 
@@ -389,7 +396,7 @@ class AppDatabase: NSObject {
             
             
             for candidate in candidatesVote{
-                let candidateInsertStatment = " INSERT INTO  \(ReportCondidates.TABLE_NAME) ( \(ReportCondidates.COL_NUMBER_OF_VOTE),\(ReportCondidates.COL_CONDIDATE_NUMBER),\(ReportCondidates.COL_REPORT_ID)) VALUES ( \(candidate.value),\(Int(candidate.key)!),\(report_id) );"
+                let candidateInsertStatment = " INSERT INTO  \(ReportCondidates.TABLE_NAME) ( \(ReportCondidates.COL_NUMBER_OF_VOTE),\(ReportCondidates.COL_CONDIDATE_NUMBER),\(ReportCondidates.COL_REPORT_ID)) VALUES ( \(candidate[1]),\(candidate[0]),\(report_id) );"
                 try con!.executeUpdate(candidateInsertStatment, values: nil)
             }
             

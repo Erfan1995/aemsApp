@@ -254,8 +254,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="گزارش جدید" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugk-Ny-nYs">
                                         <rect key="frame" x="0.0" y="145" width="375" height="40"/>
-                                        <color key="backgroundColor" red="0.32941176470588235" green="0.47843137254901957" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <color key="tintColor" red="0.32941176470588235" green="0.47843137254901957" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.56425254957458326" green="0.58422354432287993" blue="0.96333307027816772" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="mYK-NW-h8F"/>
                                         </constraints>
@@ -271,7 +270,7 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.2627450980392157" green="0.38039215686274508" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.47828582866322339" green="0.53047813200993976" blue="0.96851998567581177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="Md9-cF-4i0" firstAttribute="leading" secondItem="FoD-Vf-Skl" secondAttribute="leading" constant="135" id="1Sv-7g-3IZ"/>
                                     <constraint firstAttribute="trailing" secondItem="Md9-cF-4i0" secondAttribute="trailing" constant="135" id="BgG-dE-TJb"/>
@@ -294,7 +293,7 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پیش نویس " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erv-dm-f6e">
                                         <rect key="frame" x="0.0" y="145" width="375" height="40"/>
-                                        <color key="backgroundColor" red="0.37254901960784315" green="0.49019607843137253" blue="0.83137254901960778" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.56425254960000004" green="0.58422354430000001" blue="0.96333307030000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9Z9-CQ-43s"/>
                                         </constraints>
@@ -303,7 +302,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.29803921568627451" green="0.39215686274509803" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="1gv-I4-fEN" firstAttribute="leading" secondItem="e44-uX-pUp" secondAttribute="leading" constant="134" id="0Eb-yi-rc6"/>
                                     <constraint firstAttribute="trailing" secondItem="1gv-I4-fEN" secondAttribute="trailing" constant="136" id="3QF-sF-1jC"/>
@@ -319,7 +318,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ارسال شده ها" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HP0-1B-n3r">
                                         <rect key="frame" x="0.0" y="145" width="375" height="40"/>
-                                        <color key="backgroundColor" red="0.32941176470588235" green="0.47843137254901957" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.56425254960000004" green="0.58422354430000001" blue="0.96333307030000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="eZ7-nH-Doi"/>
                                         </constraints>
@@ -335,7 +334,7 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.2627450980392157" green="0.38039215686274508" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="HP0-1B-n3r" secondAttribute="bottom" id="96R-tt-Z7A"/>
                                     <constraint firstItem="HP0-1B-n3r" firstAttribute="leading" secondItem="70i-4K-kji" secondAttribute="leading" id="Bjo-kV-pou"/>

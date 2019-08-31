@@ -21,79 +21,96 @@ class sentReportDetailsViewController: UIViewController, UICollectionViewDelegat
         sentReportCollection.delegate = self
         report=AppDatabase().getReport(station_id: Int(locName)!)
         for candidte in AppDatabase().getCandidateReport(report_id: report!.id!){
-            numberOfVotes.append(String(candidte.value))
-            switch(Int(candidte.key)){
-
+            
+            switch(Int(candidte[0])){
             case 1:
                 candidateName.append("رحمت الله نبیل")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 2:
                 candidateName.append("دوکتور نورالله جلیلی")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 3:
                 candidateName.append("دکتور فرامز تمنا")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 4:
                 candidateName.append("شیدا محمد ابدالی")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 5:
                 candidateName.append("احمدولی مسعود")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 6:
                 candidateName.append("نورحمان لیوال")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 7:
                 candidateName.append("محمد شهاب حکیمی")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 8:
                 candidateName.append("محمد اشرف غنی")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 9:
                 candidateName.append("دکتور عبدالله عبدالله")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 10:
                 candidateName.append("محمد حکیم تورسن")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 11:
                 candidateName.append("گلبدین حکتمیار")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 12:
                 candidateName.append("عبدالطیف پدرام")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 13:
                 candidateName.append("نورالحق علومی ")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 14:
                 candidateName.append("حاجی محمد ابراهیم الکوزی ")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 15:
                 candidateName.append("پوهاند پروفیسوردکتورغلام فاروق نجرابی")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 16:
                 candidateName.append("عنایت الله حفیظ")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 17:
                 candidateName.append("محمد حنیف اتمر")
+                numberOfVotes.append(String(candidte[1]))
                 break
                 
             case 18:
                 candidateName.append("داکتر زلمی رسول")
+                numberOfVotes.append(String(candidte[1]))
                 break
         
             default:
