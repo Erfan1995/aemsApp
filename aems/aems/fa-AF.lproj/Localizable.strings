@@ -34,7 +34,7 @@
 "downloadFile" = "ابتدا فایل های ضروری را دانلود کنید ";
 "accountNotApproved" = "حساب شما تایید نشده ";
 "wrongUsernameAndPassword" = "نام کاربری و یا کلمه عبور شما اشتباه است";
-"occuredSomeProblem" = "مشکل در اتصال دوباره کوشش کنید ";
+"occuredSomeProblem" = "مشکل در ارسال گزارش دوباره کوشش کنید  ";
 "checkInternetConnection" = "اتصال انترنت خود را چک کنید ";
 "enterCorrectPasswordAndUsername" = "نام کاربری و یا کلمه عبور را درست وارد کنید ";
 "completeDownloadOperation" = "عملیه دانلود موفقانه انجام شد";
@@ -60,6 +60,25 @@
 "locationPermission" = "اجازه دسترسی به مکان ضروری می باشد";
 "locatioMessage" = "لطفا به تنظیمات رفته خدمات مکان موبایل خود را فعال کنید ";
 
+
+"addImage" = "اضافه نمودن عکس";
+"publicInfo" = "معلومات عمومی مرکز";
+"pollingCenter" = "محل رای دهی";
+"correctVote" = "آرای صحیح";
+"whiteVote" = "آرای باطل";
+"wrongVote" = "آرای سفید";
+"amountVote" = "تعداد رای";
+
+
+"correctReport" = "گزارش شما نادرست است .لطفا گزارش خود را اصلاح کنید";
+"selectFile" = "لطفا تصاویر را انتخاب کنید";
+"duplicateReport" = "گزارش تکراری";
+"duplicateMessage" = "گزارش شما یک بار از این محل ارسال آیا میخواهید دوباره ارسال کنید ؟";
+"yes" = "بله";
+"no" = "نخیر";
+"storedToDraft" = "گزارش شما در بخش پیش نویس ذخیره شد ";
+"storedToSent" = "گزارش شما در بخش ارسالی ذخیره شد";
+"pollingCenterNo" = "محل شماره ";
 
 
 

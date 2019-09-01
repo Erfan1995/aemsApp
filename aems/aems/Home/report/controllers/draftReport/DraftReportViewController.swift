@@ -23,7 +23,7 @@ class DraftReportViewController: UIViewController, UITableViewDelegate, UITableV
     func creatArry()->[DraftAndSentReportContent]{
         var temptDraft: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
-            temptDraft.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: " محل شماره \(setLocationName[indedx])"))
+            temptDraft.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: " \(AppLanguage().Locale(text: "pollingCenterNo")) \(setLocationName[indedx])"))
         }
         return temptDraft
     }
