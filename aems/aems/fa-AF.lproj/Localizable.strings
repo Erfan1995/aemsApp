@@ -7,4 +7,83 @@
 //
 
 
-"appName" = "your app in persion ";
+
+"download" = "دانلود";
+"loginTitle" = "فورم ورودی ";
+"phone" = "شماره تماس";
+"password" = " کلمه عبور ";
+"register" = " ایجاد حساب جدید ";
+"login" = " ورود به حساب ";
+"downloadTitle" = " قبل از راجستر کردن ";
+"selectLanguage" = " انتخاب زبان سیستم ";
+"dari" = "دری ";
+"pashto" = " پشتو ";
+
+
+
+"registerTitle" = " فورم ثبت نام";
+"completeName" = "نام مکمل";
+"observerCode" = " کد ناظر";
+"province" = " ولایت ";
+"district" = " ولسوالی ";
+"pollingCenter" = " مرکز رای دهی ";
+"confirmPassword" = " تکرار کلمه عبور";
+"save" = " ثبت ";
+
+
+"downloadFile" = "ابتدا فایل های ضروری را دانلود کنید ";
+"accountNotApproved" = "حساب شما تایید نشده ";
+"wrongUsernameAndPassword" = "نام کاربری و یا کلمه عبور شما اشتباه است";
+"occuredSomeProblem" = "مشکل در ارسال گزارش دوباره کوشش کنید  ";
+"checkInternetConnection" = "اتصال انترنت خود را چک کنید ";
+"enterCorrectPasswordAndUsername" = "نام کاربری و یا کلمه عبور را درست وارد کنید ";
+"completeDownloadOperation" = "عملیه دانلود موفقانه انجام شد";
+
+
+"required" = "ضروری";
+"number" = " فقط نمبر";
+"donotMatch" = "تایید کلمه عبور نادرست است";
+"size10" = "باید ۱۰ حرف باشد ";
+"min3" = "حد اقل باید ۳ حرف باشد ";
+"max18" = " حداکثر باید ۱۸ حرف باشد ";
+"min6" = "حد اقل باید ۶ حرف باشد";
+
+
+"registredSuccessfuly" = " شما موفقانه راجستر نمودید . منتظر باشید تا حساب شما تایید گردد";
+"duplicatePhone" = "شماره تماس شما تکراری می باشد ";
+
+"newReport" = "گزارش جدید";
+"draft" = "پیش نویس";
+"sent" = "ارسال شده ها";
+"settings" = "تنظیمات";
+"cancel" = "لغو";
+"locationPermission" = "اجازه دسترسی به مکان ضروری می باشد";
+"locatioMessage" = "لطفا به تنظیمات رفته خدمات مکان موبایل خود را فعال کنید ";
+
+
+"addImage" = "اضافه نمودن عکس";
+"publicInfo" = "معلومات عمومی مرکز";
+"pollingCenter" = "محل رای دهی";
+"correctVote" = "آرای صحیح";
+"whiteVote" = "آرای باطل";
+"wrongVote" = "آرای سفید";
+"amountVote" = "تعداد رای";
+
+
+"correctReport" = "گزارش شما نادرست است .لطفا گزارش خود را اصلاح کنید";
+"selectFile" = "لطفا تصاویر را انتخاب کنید";
+"duplicateReport" = "گزارش تکراری";
+"duplicateMessage" = "گزارش شما یک بار از این محل ارسال آیا میخواهید دوباره ارسال کنید ؟";
+"yes" = "بله";
+"no" = "نخیر";
+"storedToDraft" = "گزارش شما در بخش پیش نویس ذخیره شد ";
+"storedToSent" = "گزارش شما در بخش ارسالی ذخیره شد";
+"pollingCenterNo" = "محل شماره ";
+
+
+
+
+
+
+
+

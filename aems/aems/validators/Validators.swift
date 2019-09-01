@@ -41,10 +41,10 @@ enum VaildatorFactory {
 struct pollsterCodeValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else {throw
-            ValidationError(" کود مرکز رای دهی ضروری است!")
+            ValidationError(AppLanguage().Locale(text: "required"))
         }
         guard let voteNumber = Int(value) else{throw
-            ValidationError("کود مرکز رای دهی باید عدد باشد!")
+            ValidationError(AppLanguage().Locale(text: "min3"))
         }
         return value
     }
@@ -57,10 +57,10 @@ struct matchPasswordValidator: ValidatorConvertible {
     }
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else {
-            throw ValidationError("تکرار کلمه عبور ضروری می باشد!")
+            throw ValidationError(AppLanguage().Locale(text: "required"))
         }
         guard firstPassword == value else {
-            throw ValidationError("کلمات عبور باهم تطابق ندارد!")
+            throw ValidationError(AppLanguage().Locale(text: "donotMatch"))
         }
         return value
     }
@@ -68,9 +68,9 @@ struct matchPasswordValidator: ValidatorConvertible {
 
 class phoneValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard value.count > 0 else {throw ValidationError("شماره تماس ضروری می باشد!")}
-        guard let phone = Int(value) else {throw ValidationError("شماره تماس باشد عدد باشد!")}
-        guard value.count == 10 else {throw ValidationError("شماره تماس باید ۱۰ عدد باشد!")}
+        guard value.count > 0 else {throw ValidationError(AppLanguage().Locale(text: "requied"))}
+        guard let phone = Int(value) else {throw ValidationError(AppLanguage().Locale(text: "number"))}
+        guard value.count == 10 else {throw ValidationError(AppLanguage().Locale(text: "size10"))}
        
         return value
     }
@@ -85,7 +85,7 @@ struct RequiredFieldValidator: ValidatorConvertible {
     
     func validated(_ value: String) throws -> String {
         guard !value.isEmpty else {
-            throw ValidationError("فورم نباید خالی باشد! " + fieldName)
+            throw ValidationError("\(AppLanguage().Locale(text: "required"))" + fieldName)
         }
         return value
     }
@@ -94,13 +94,13 @@ struct RequiredFieldValidator: ValidatorConvertible {
 struct UserNameValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else{
-            throw ValidationError("نام ضروری می باشد!")
+            throw ValidationError(AppLanguage().Locale(text: "requied"))
         }
         guard value.count >= 3 else {
-            throw ValidationError("نام باید بیشتر از سه حرف داشته باشد!" )
+            throw ValidationError(AppLanguage().Locale(text: "min3"))
         }
         guard value.count < 18 else {
-            throw ValidationError("نام باید کمتر از ۱۸ حرف داشته باشد!" )
+            throw ValidationError(AppLanguage().Locale(text: "max18") )
         }
         
         return value
@@ -109,8 +109,8 @@ struct UserNameValidator: ValidatorConvertible {
 
 struct PasswordValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard value != "" else {throw ValidationError("کلمه عبور ضروری می باشد!")}
-        guard value.count >= 6 else { throw ValidationError("کلمه عبور حداقل باید ۶ حرف باشد!") }
+        guard value != "" else {throw ValidationError(AppLanguage().Locale(text: "required"))}
+        guard value.count >= 6 else { throw ValidationError(AppLanguage().Locale(text: "min6")) }
         return value
     }
 }

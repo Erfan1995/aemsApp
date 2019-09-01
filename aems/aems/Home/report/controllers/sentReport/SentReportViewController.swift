@@ -24,7 +24,7 @@ class SentReportViewController: UIViewController,UITableViewDataSource,UITableVi
     func creatArry()->[DraftAndSentReportContent]{
         var temptSent: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
-            temptSent.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: " محل شماره \(setLocationName[indedx])"))
+            temptSent.append(DraftAndSentReportContent(iconImage: #imageLiteral(resourceName: "image"), locationName: " \(AppLanguage().Locale(text: "pollingCenterNo")) \(setLocationName[indedx])"))
         }
         return temptSent
     }

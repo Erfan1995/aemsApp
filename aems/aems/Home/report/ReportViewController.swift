@@ -10,6 +10,9 @@ import UIKit
 import CoreLocation
 class ReportViewController: UIViewController, CLLocationManagerDelegate {
 
+    @IBOutlet weak var lblSent: UILabel!
+    @IBOutlet weak var lblDraft: UILabel!
+    @IBOutlet weak var lblNewReport: UILabel!
     @IBOutlet weak var draftReportView: UIView!
     @IBOutlet weak var newReportView: UIView!
     @IBOutlet weak var sentReportView: UIView!
@@ -20,7 +23,8 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
      
         super.viewDidLoad()
-      
+        localized()
+        
         let newReportTapGetsture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)));        newReportView.addGestureRecognizer(newReportTapGetsture)
         let sentReportTapGesture = UITapGestureRecognizer(target: self, action: #selector(sentReportTap(sender:)))
             sentReportView.addGestureRecognizer(sentReportTapGesture)
@@ -39,6 +43,14 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
         }
         
     }
+    
+    
+    func localized() {
+        lblSent.text=AppLanguage().Locale(text: "sent")
+        lblDraft.text=AppLanguage().Locale(text: "draft")
+        lblNewReport.text=AppLanguage().Locale(text: "newReport")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("unable to get location")
     }
@@ -48,12 +60,12 @@ class ReportViewController: UIViewController, CLLocationManagerDelegate {
        
     }
     func turnOnLocationSerives(){
-        let alertController = UIAlertController(title: "Location Permission is required", message: "please enable your location service in settings", preferredStyle: UIAlertController.Style.alert)
-        let okAction = UIAlertAction(title: "settings", style: .default, handler:  {
+        let alertController = UIAlertController(title: AppLanguage().Locale(text: "locationPermission"), message: AppLanguage().Locale(text: "locatioMessage"), preferredStyle: UIAlertController.Style.alert)
+        let okAction = UIAlertAction(title: AppLanguage().Locale(text: "settings"), style: .default, handler:  {
             (action)->Void in
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: AppLanguage().Locale(text: "cancel"), style: .cancel, handler: {
             (action)->Void in
             self.turnOnLocationSerives()
         })

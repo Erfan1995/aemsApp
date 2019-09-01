@@ -36,15 +36,13 @@ class NewReportViewController: UIViewController {
     var languageBundle : Bundle?
     override func viewDidLoad() {
         super.viewDidLoad()
-       // self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
-        
-        language()
-
 
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
         let numberOfStation = User().getLoginUserDefault()!.pc_station_number
@@ -52,9 +50,6 @@ class NewReportViewController: UIViewController {
             stationList.append(stationNumber)
         }
         
-        
-        
-   
         
         for x in 1...18{
             var match : Bool = false
@@ -82,6 +77,8 @@ class NewReportViewController: UIViewController {
         setupGrid()
         scrollForKeyboard()
     }
+    
+    
       // moves the the view up so the the textfield be visible while the keyboard appears
     func scrollForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification , object: nil)
@@ -104,30 +101,6 @@ class NewReportViewController: UIViewController {
         }
     }
     
-    
-    func language() {
-        let languageCode = UserDefaults.standard
-        if UserDefaults.standard.value(forKey: "language") != nil {
-            let language = languageCode.string(forKey: "language")!
-            if let path  = Bundle.main.path(forResource: language, ofType: "lproj") {
-                languageBundle =  Bundle(path: path)
-            }
-            else{
-                languageBundle = Bundle(path: Bundle.main.path(forResource: "en", ofType: "lproj")!)
-            }
-        }
-        else {
-            languageCode.set("en", forKey: "language")
-            languageCode.synchronize()
-            let language = languageCode.string(forKey: "language")!
-            if let path  = Bundle.main.path(forResource: language, ofType: "lproj") {
-                languageBundle =  Bundle(path: path)
-            }
-            else{
-                languageBundle = Bundle(path: Bundle.main.path(forResource: "en", ofType: "lproj")!)
-            }
-        }
-    }
     
     
     
@@ -153,7 +126,6 @@ class NewReportViewController: UIViewController {
         var tootalVote = 0
         let station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
-        files.removeAll()
         var candidatesVote:Dictionary<String, Int> = [:]
         
         
@@ -170,7 +142,6 @@ class NewReportViewController: UIViewController {
         var index=0
         for value in candidateVoteNumber{
             if value != -1 && index != 0{
-                //candidatesVote[String(index)]=value
                 tootalVote=tootalVote+value
                 candidateArray[index][0]=index
                 candidateArray[index][1]=value
@@ -180,8 +151,8 @@ class NewReportViewController: UIViewController {
         
         
         
-        if tootalVote>=450 || tootalVote>=(whiteVote!+wrongVote!+correctVote!){
-            Helper.showSnackBar(messageString: "your report is wrong please correct your report ")
+        if tootalVote>=450 || tootalVote==0 || tootalVote>=(whiteVote!+wrongVote!+correctVote!){
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "correctReport"))
         }else{
         if selectedFiles.count == 1{
             if selectedFiles[0]==1{
@@ -208,7 +179,7 @@ class NewReportViewController: UIViewController {
             files.append(ImageFile(fileName: image2, file: secondImage!.image!))
         }
         else {
-            Helper.showSnackBar(messageString: "plesase select your files")
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectFile"))
         }
         
         
@@ -226,9 +197,9 @@ class NewReportViewController: UIViewController {
         
         
         if AppDatabase().isSentReport(station_id: station_id!){
-            print("you report id douplicate please choose other station")
-            let alert = UIAlertController(title: "گزارش تکراری", message: "گزارش شما از این مرکز یک بار ارسال شده آیا میخواهید دوباره ارسال کنید ؟", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "بله", style: .default, handler: { action in
+            
+            let alert = UIAlertController(title:AppLanguage().Locale(text: "duplicateReport"), message: AppLanguage().Locale(text: "duplicateMessage"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler: { action in
                 
                 
                 if files.count == 1{
@@ -254,18 +225,21 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                                    var res = response.result.value as? Int
-                                    if  res == 1{
-                                        AppDatabase().deleteReport(station_id: station_id!)
-                                        report.is_sent=true
-                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                                        Helper.showSnackBar(messageString: "your report sent")
+        
+                                    if let json = response.result.value {
+                                        if  JSON(json)["response"]==1{
+                                            AppDatabase().deleteReport(station_id: station_id!)
+                                            report.is_sent=true
+                                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                            _ = self.navigationController?.popViewController(animated: true)
+                                        }
                                     }
                                     
                                 }
                                 
                             case .failure(let encodingError):
-                                Helper.showSnackBar(messageString: "occured some error . Please try again ")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
                         
@@ -275,7 +249,7 @@ class NewReportViewController: UIViewController {
                         AppDatabase().deleteReport(station_id: station_id!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                        Helper.showSnackBar(messageString: "your report stored in draft")
+                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
                     }
                 }
                 else if files.count == 2{
@@ -303,17 +277,19 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                                    var res = response.result.value as? Int
-                                    if  res == 1{
-                                        AppDatabase().deleteReport(station_id: station_id!)
-                                        report.is_sent=true
-                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                                        Helper.showSnackBar(messageString: "your report stored in sent report")
+                                    if let json = response.result.value {
+                                        if  JSON(json)["response"]==1{
+                                            AppDatabase().deleteReport(station_id: station_id!)
+                                            report.is_sent=true
+                                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                            _ = self.navigationController?.popViewController(animated: true)
+                                        }
                                     }
                                 }
                                 
                             case .failure(let encodingError):
-                                Helper.showSnackBar(messageString: "occure some problem . Please try again")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
                     }
@@ -321,18 +297,18 @@ class NewReportViewController: UIViewController {
                         AppDatabase().deleteReport(station_id: station_id!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                        Helper.showSnackBar(messageString: "your report stored in draft")
+                        Helper.showSnackBar(messageString:AppLanguage().Locale(text: "storedToDraft"))
                     }
                 }
                 else{
-                    Helper.showSnackBar(messageString: "please select image file ")
+                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectFile"))
                 }
                 
                 //end if
                 
                 
             }))
-            alert.addAction(UIAlertAction(title: "نخیر", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "no"), style: .cancel, handler: nil))
             self.present(alert, animated: true)
             
             
@@ -362,17 +338,19 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                                    
-                                    var response = response.result.value as? Int
-                                    if  response == 1{
-                                        report.is_sent=true
-                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                                        Helper.showSnackBar(messageString: "your report stored ")
+        
+                                    if let json = response.result.value {
+                                        if  JSON(json)["response"]==1{
+                                            report.is_sent=true
+                                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                            _ = self.navigationController?.popViewController(animated: true)
+                                        }
                                     }
                                 }
                                 
                             case .failure(let encodingError):
-                                Helper.showSnackBar(messageString: "occured some error .Please try again")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
                         
@@ -381,7 +359,7 @@ class NewReportViewController: UIViewController {
                     else{
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                        Helper.showSnackBar(messageString: "your report stored in draft")
+                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
                     }
                 }
                 else if files.count == 2{
@@ -409,30 +387,30 @@ class NewReportViewController: UIViewController {
                                 })
                                 
                                 upload.responseJSON { response in
-                        
-                                    
-                                    var response = response.result.value as? Int
-                                    if  response == 1{
-                                        report.is_sent=true
-                                        AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                                        Helper.showSnackBar(messageString: "your report stored in dent report")
+
+                                    if let json = response.result.value {
+                                        if  JSON(json)["response"]==1{
+                                            report.is_sent=true
+                                            AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
+                                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                            _ = self.navigationController?.popViewController(animated: true)
+                                        }
                                     }
-                                    
                                 }
                                 
                             case .failure(let encodingError):
-                                Helper.showSnackBar(messageString: "occured some problem . Please try agian")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
                     }
                     else{
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
-                        Helper.showSnackBar(messageString: "your report stored in draft")
+                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
                     }
                 }
                 else{
-                    Helper.showSnackBar(messageString: "please select image files")
+                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectFile"))
                 }
                 
                 //end if
@@ -463,7 +441,7 @@ class NewReportViewController: UIViewController {
             do {
                 try data.write(to: fileURL)
             } catch {
-                Helper.showSnackBar(messageString: "save file has error")
+                
             }
         }
     }
@@ -519,6 +497,7 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateImage.layer.cornerRadius = cell.candidateImage.frame.height/2
         cell.layer.borderWidth = 1.0
         cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        cell.txtVoteNumber.placeholder=AppLanguage().Locale(text: "amountVote")
         cell.txtVoteNumber.addTarget(self, action: #selector(textFieldOnChange(_sender:)), for: .editingChanged)
         
         switch candidateNumber[indexPath.row] {
@@ -628,6 +607,13 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         headerView.pickSecondImage.isUserInteractionEnabled = true
         headerView.pickSecondImage.addGestureRecognizer(secondImageTap)
 
+        headerView.whiteVote.placeholder=AppLanguage().Locale(text: "whiteVote")
+        headerView.correctVote.placeholder=AppLanguage().Locale(text: "correctVote")
+        headerView.wrongVote.placeholder=AppLanguage().Locale(text: "wrongVote")
+        headerView.pollingCenter.placeholder=AppLanguage().Locale(text: "pollingCenter")
+        headerView.lblPublicInfo.text=AppLanguage().Locale(text: "publicInfo")
+        headerView.lblAddPhoto.text=AppLanguage().Locale(text: "addImage")
+        
         self.txtWhiteVote=headerView.whiteVote
         self.txtWrongVote=headerView.wrongVote
         self.txtCorrectVote=headerView.correctVote
@@ -709,11 +695,3 @@ extension NewReportViewController: UIPickerViewDelegate, UIPickerViewDataSource{
    
 }
 
-extension String {
-    func localized(_ lang:String) ->String {
-        
-        let path = Bundle.main.path(forResource: lang, ofType: "lproj")
-        let bundle = Bundle(path: path!)
-        
-        return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
-    }}

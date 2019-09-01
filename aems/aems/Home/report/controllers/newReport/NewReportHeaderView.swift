@@ -10,6 +10,8 @@ import UIKit
 
 class NewReportHeaderView: UICollectionReusableView {
    
+    @IBOutlet weak var lblAddPhoto: UILabel!
+    @IBOutlet weak var lblPublicInfo: UILabel!
     @IBOutlet weak var pickSecondImage: UIImageView!
     @IBOutlet weak var pickFirstImage: UIImageView!
     @IBOutlet weak var correctVote: UITextField!

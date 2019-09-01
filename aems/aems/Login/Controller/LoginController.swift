@@ -13,12 +13,24 @@ import SwiftyJSON
 class LoginViewController: UIViewController {
 
 
+   
     @IBOutlet weak var txtDownload: UIButton!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btnRegister: UIButton!
+    @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var formTitle: UILabel!
+    @IBOutlet weak var dobwloadTitle: UILabel!
+    @IBOutlet weak var lblSelectLanguage: UILabel!
+    @IBOutlet weak var lblDari: UIButton!
+    @IBOutlet weak var lblPashot: UIButton!
+    
+    
+    
 //     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
@@ -33,7 +45,43 @@ class LoginViewController: UIViewController {
         }
         hideKeyboardWhenTappedAround()
         appearKeyboard()
+
+        localizeLogin()
     }
+    
+    
+    
+    
+    @IBAction func btnDownload(_ sender: UIButton) {
+        downloadFiles()
+    }
+    
+    @IBAction func btnDari(_ sender: UIButton) {
+        AppLanguage().setLanguage(lang: "fa-AF")
+        viewDidLoad()
+        
+    }
+    
+    @IBAction func btnPashto(_ sender: UIButton) {
+        AppLanguage().setLanguage(lang: "ps-AF")
+        viewDidLoad()
+        
+    }
+    
+    
+    func localizeLogin() {
+        txtDownload.setTitle(AppLanguage().Locale(text: "download"), for: .normal)
+        formTitle.text=AppLanguage().Locale(text: "loginTitle")
+        txtPhone.placeholder=AppLanguage().Locale(text: "phone")
+        txtPassword.placeholder=AppLanguage().Locale(text: "password")
+        btnRegister.setTitle(AppLanguage().Locale(text: "register"), for: .normal)
+        btnLogin.setTitle(AppLanguage().Locale(text: "login"), for: .normal)
+        dobwloadTitle.text=AppLanguage().Locale(text: "downloadTitle")
+        lblSelectLanguage.text=AppLanguage().Locale(text: "selectLanguage")
+        lblDari.setTitle(AppLanguage().Locale(text: "dari"), for: .normal)
+        lblPashot.setTitle(AppLanguage().Locale(text: "pashto"), for: .normal)
+    }
+    
     func appearKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -64,13 +112,12 @@ class LoginViewController: UIViewController {
         if Candidate().getCondidateUserDefault() && Province().getProvinceUserDefault() && District().getDistrictUserDefault() && PollingCenter().getPollingCenterUserDefault() {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             guard let registerViewController = mainStoryboard.instantiateViewController(withIdentifier: "RegisterViewController" ) as? RegisterViewController else{
-                print("could not find controller")
                 return
             }
             navigationController?.pushViewController(registerViewController, animated: true)
         }
         else{
-            Helper.showSnackBar(messageString: "please download needed file at the first ")
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "downloadFile"))
         }
         
     }
@@ -109,28 +156,28 @@ class LoginViewController: UIViewController {
                         }
                         else if json["response"]==2{
                             
-                            Helper.showSnackBar(messageString: "yout acount not approved ")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "accountNotApproved"))
                         }
                         else if json["response"]==3{
                             
                             
-                            Helper.showSnackBar(messageString: "your phone or password in wrong")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "wrongUsernameAndPassword"))
                         }
                         else if json["response"]==4{
                             
-                            Helper.showSnackBar(messageString: "occured some problem try again")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                         }
                 }
             }
             else{
-                Helper.showSnackBar(messageString: "connect to the internt first")
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
             }
         }catch(let error){
-            Helper.showSnackBar(messageString: "enter correcto phone and password")
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "enterCorrectPasswordAndUsername"))
         }
         
     }
-    
+
     
     
     
@@ -178,7 +225,7 @@ class LoginViewController: UIViewController {
             }
 
         }else{
-            Helper.showSnackBar(messageString: "Connect to the internet first")
+            Helper.showSnackBar(messageString:AppLanguage().Locale(text: "checkInternetConnection"))
         }
     }
     @IBAction func downloadPressed(_ sender: Any) {
@@ -186,10 +233,15 @@ class LoginViewController: UIViewController {
             downloadFiles()
         }
         else{
-            Helper.showSnackBar(messageString: "download operation completed successfuly ")
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "completeDownloadOperation"))
         }
     }
+
+    
+
 }
+
+
 
 
 

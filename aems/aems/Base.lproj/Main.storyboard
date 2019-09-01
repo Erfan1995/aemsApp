@@ -66,6 +66,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pD7-Z0-SPf">
                                 <rect key="frame" x="155" y="558" width="30" height="30"/>
                                 <state key="normal" title="دری"/>
+                                <connections>
+                                    <action selector="btnDari:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jka-Ks-4Mj"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ld-SC-roz">
                                 <rect key="frame" x="139" y="567" width="5.5" height="20.5"/>
@@ -76,6 +79,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s34-e3-XxQ">
                                 <rect key="frame" x="96" y="561" width="30" height="30"/>
                                 <state key="normal" title="پشتو"/>
+                                <connections>
+                                    <action selector="btnPashto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="546-Ek-X7R"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="رمز عبور:" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-Qj-B88">
                                 <rect key="frame" x="57" y="360" width="260" height="35"/>
@@ -100,6 +106,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="دانلود"/>
                                 <connections>
+                                    <action selector="btnDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sqs-Te-G5l"/>
                                     <action selector="downloadPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bDn-yU-yWW"/>
                                 </connections>
                             </button>
@@ -160,6 +167,14 @@
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="9Yv-Ck-mds"/>
                     <connections>
+                        <outlet property="btnLogin" destination="3p3-KU-AS7" id="1ai-b4-4LQ"/>
+                        <outlet property="btnRegister" destination="Qsa-rP-lXh" id="hEI-u9-Obx"/>
+                        <outlet property="dobwloadTitle" destination="5Xz-KM-EU1" id="uPX-st-pdg"/>
+                        <outlet property="formTitle" destination="XvF-DD-58x" id="SPl-4Q-cvz"/>
+                        <outlet property="lblDari" destination="pD7-Z0-SPf" id="9z9-Qi-5gQ"/>
+                        <outlet property="lblPashot" destination="s34-e3-XxQ" id="TQX-Zt-dOK"/>
+                        <outlet property="lblSelectLanguage" destination="2eW-DK-Bsx" id="tHr-p0-L12"/>
+                        <outlet property="txtDownload" destination="Es3-pa-oV1" id="l6B-U1-45S"/>
                         <outlet property="txtPassword" destination="hsc-Qj-B88" id="fL5-if-A7m"/>
                         <outlet property="txtPhone" destination="2Ca-JT-rik" id="y6O-Gk-jXX"/>
                     </connections>
@@ -364,6 +379,9 @@
                     <navigationItem key="navigationItem" id="49a-WE-Exb"/>
                     <connections>
                         <outlet property="draftReportView" destination="e44-uX-pUp" id="AEc-e5-hfW"/>
+                        <outlet property="lblDraft" destination="erv-dm-f6e" id="HFo-jL-m8r"/>
+                        <outlet property="lblNewReport" destination="Ugk-Ny-nYs" id="NKq-ol-YcA"/>
+                        <outlet property="lblSent" destination="HP0-1B-n3r" id="Dum-Gb-kYt"/>
                         <outlet property="newReportView" destination="FoD-Vf-Skl" id="q8g-CG-3oK"/>
                         <outlet property="sentReportView" destination="70i-4K-kji" id="MPL-FK-QTp"/>
                     </connections>
@@ -536,6 +554,8 @@
                                     </constraints>
                                     <connections>
                                         <outlet property="correctVote" destination="wQM-Et-p3b" id="ET1-l4-KV1"/>
+                                        <outlet property="lblAddPhoto" destination="Qdt-Bv-EIa" id="C9X-jU-Bjn"/>
+                                        <outlet property="lblPublicInfo" destination="ZS0-So-Lbc" id="PzU-7x-ibh"/>
                                         <outlet property="pickFirstImage" destination="SDN-1a-w9j" id="PHJ-UL-khe"/>
                                         <outlet property="pickSecondImage" destination="OKg-E4-grY" id="ZJX-ld-kis"/>
                                         <outlet property="pollingCenter" destination="lpw-b8-Yl1" id="p7t-FA-GsI"/>
@@ -1280,12 +1300,14 @@
                         <viewLayoutGuide key="safeArea" id="bdX-St-oM2"/>
                     </view>
                     <connections>
+                        <outlet property="btnRegister" destination="lxf-aA-SfL" id="BPQ-nx-rcf"/>
                         <outlet property="confirmPassLabel" destination="bp5-d0-gg1" id="sjH-DL-YEj"/>
                         <outlet property="confirmPassword" destination="peI-gp-XXA" id="EJF-NO-iLm"/>
                         <outlet property="district" destination="oMn-ZQ-K1J" id="sBb-nO-i8g"/>
                         <outlet property="districtLabel" destination="mcJ-aQ-ZV4" id="HLZ-3i-tyC"/>
                         <outlet property="fullName" destination="S7D-0L-HUX" id="Tyt-c0-pgV"/>
                         <outlet property="fullNameLabel" destination="aPN-N8-uLE" id="3Rd-Nh-bOM"/>
+                        <outlet property="lblRegisterTitle" destination="SqD-Iw-koa" id="Dsu-Kb-eW1"/>
                         <outlet property="password" destination="UF7-gb-J5z" id="Qib-Rb-XDZ"/>
                         <outlet property="passwordLabel" destination="h7O-wR-s5j" id="7zH-Ey-am6"/>
                         <outlet property="phoneNumber" destination="kaq-Xa-lDo" id="Ra9-Du-QxN"/>
