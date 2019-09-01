@@ -37,14 +37,15 @@ class NewReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-      
-        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        //self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
+        
+        title = NSLocalizedString("appName", comment: "")
+        print("your language \(title!)")
         
         language()
 

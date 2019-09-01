@@ -15,6 +15,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var btnRegister: UIButton!
+    @IBOutlet weak var lblRegisterTitle: UILabel!
     @IBOutlet weak var province: UITextField!
     @IBOutlet weak var district: UITextField!
     @IBOutlet weak var pollingCenter: UITextField!
@@ -48,6 +51,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         for province in provinces{
             provincePickerData.append(province.name!)
         }
+        localize()
         fullName.addTarget(self, action: #selector(validateFullName), for: .editingChanged )
         pollsterCode.addTarget(self, action: #selector(validatePollsterCode(_sender:)), for: .editingChanged )
         phoneNumber.addTarget(self, action: #selector(validatePhoneNumber(_sender:)), for: .editingChanged )
@@ -63,8 +67,24 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         creatProvincePicker()
         createToolbar()
         scrollForKeyboard()
+        
     }
     // moves the the view up so the the textfield be visible while the keyboard appears
+    
+    
+    func localize() {
+        btnRegister.setTitle(AppLanguage().Locale(text: "save"), for: .normal)
+        lblRegisterTitle.text=AppLanguage().Locale(text: "registerTitle")
+        province.placeholder=AppLanguage().Locale(text: "province")
+        district.placeholder=AppLanguage().Locale(text: "district")
+        pollingCenter.placeholder=AppLanguage().Locale(text: "pollingCenter")
+        fullName.placeholder=AppLanguage().Locale(text: "completeName")
+        pollsterCode.placeholder=AppLanguage().Locale(text: "observerCode")
+        phoneNumber.placeholder=AppLanguage().Locale(text: "phone")
+        password.placeholder=AppLanguage().Locale(text: "password")
+        confirmPassword.placeholder=AppLanguage().Locale(text: "confirmPassword")
+    }
+    
     func scrollForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification , object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification , object:  nil)
@@ -126,6 +146,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             activeTextField = 0
         }
     }
+    
+    
     @IBAction func validateFullName( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.username)
@@ -138,6 +160,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             fullNameLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validatePollsterCode( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.pollsterCode)
@@ -150,6 +174,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             polesterCodeLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validatePhoneNumber( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.phone)
@@ -162,6 +188,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             phoneNumberLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validateProvince( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
@@ -174,6 +202,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             provinceLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validateDistrict( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
@@ -186,6 +216,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             districtLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validatePollingCenter( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
@@ -198,6 +230,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             pollingCenterLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validatePassword( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.password)
@@ -211,6 +245,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             passwordLabel.text = (error as! ValidationError ).message
         }
     }
+    
+    
     @IBAction func validateConfPassword( _sender: UITextField){
         do{
             try _sender.validatedText(validationType: ValidatorType.matchPassword(password: passwordText!))
@@ -223,6 +259,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             confirmPassLabel.text = (error as! ValidationError ).message
         }
     }
+    
     @IBAction func register(_ sender: Any) {
         do{
             let userName  = try fullName.validatedText(validationType: ValidatorType.username)
@@ -265,18 +302,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         Loader.stop()
                         let json=JSON(response.value)
                         if  json["response"]==1{
-                            Helper.showSnackBar(messageString: "you registred successfuly")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "registredSuccessfuly"))
                             self.dismiss( animated: true, completion: nil)
                         }
                         else if json["response"]==2{
-                            Helper.showSnackBar(messageString: "your user is exists")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "duplicatePhone"))
                         }
                         else if json["response"]==3{
-                            Helper.showSnackBar(messageString: "occured some problem ")
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                         }
                 }
             }else{
-                Helper.showSnackBar(messageString: "Connect to the internet first")
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
             }
             
         }catch(let error){

@@ -76,7 +76,8 @@ extension SettingsViewController{
                 let dialogMessage = UIAlertController(title: "خروج", message: "آیا می خواهید خارج شوید؟ ", preferredStyle: .alert)
                 let ok = UIAlertAction(title: "بلی", style: .default, handler:{
                     (action)->Void in
-                    print("ok button tapped")
+                    var loginData=LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                    User().setLoginUserDefault(loginData: loginData)
                     self.dismiss(animated: true, completion: nil)
                 })
                 let cancel = UIAlertAction(title: "خیر", style: .cancel)

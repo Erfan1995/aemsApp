@@ -28,6 +28,7 @@
 		174703C623092A610030AD28 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C523092A610030AD28 /* Report.swift */; };
 		17A1BD4D231980A600B8585B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 17A1BD4B231980A600B8585B /* Localizable.strings */; };
 		17F60F2E230E51BB002B4035 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F60F2D230E51BB002B4035 /* Helper.swift */; };
+		17F6D0D9231AE240000F58DD /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F6D0D8231AE240000F58DD /* AppLanguage.swift */; };
 		17FDB63E23169E4400031B04 /* ImageFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FDB63D23169E4400031B04 /* ImageFile.swift */; };
 		2203A1C623196991000BF7BD /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203A1C523196991000BF7BD /* Validators.swift */; };
 		2203A1C923196DEE000BF7BD /* TextfieldValidationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203A1C823196DEE000BF7BD /* TextfieldValidationExtension.swift */; };
@@ -100,14 +101,12 @@
 		17A1BD4C231980A600B8585B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		17A1BD4E231980AD00B8585B /* fa-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fa-AF"; path = "fa-AF.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		17A1BD4F231980B200B8585B /* ps-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ps-AF"; path = "ps-AF.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		17A1BD50231980EF00B8585B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		17F60F2D230E51BB002B4035 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		17F6D0D8231AE240000F58DD /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		17FC4E8E2319263F00223E7C /* fa-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fa-AF"; path = "fa-AF.lproj/Main.strings"; sourceTree = "<group>"; };
 		17FC4E8F2319263F00223E7C /* fa-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fa-AF"; path = "fa-AF.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		17FC4E9023192C2900223E7C /* ps-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ps-AF"; path = "ps-AF.lproj/Main.strings"; sourceTree = "<group>"; };
 		17FC4E9123192C2900223E7C /* ps-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ps-AF"; path = "ps-AF.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		17FC4E9223192CD700223E7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
-		17FC4E9323192CD700223E7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		17FDB63D23169E4400031B04 /* ImageFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFile.swift; sourceTree = "<group>"; };
 		2203A1C523196991000BF7BD /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
 		2203A1C823196DEE000BF7BD /* TextfieldValidationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldValidationExtension.swift; sourceTree = "<group>"; };
@@ -302,6 +301,7 @@
 				17F60F2D230E51BB002B4035 /* Helper.swift */,
 				22061D682314F4A000ED900A /* Loader.swift */,
 				22061D6B2315290500ED900A /* CheckInternetConnection.swift */,
+				17F6D0D8231AE240000F58DD /* AppLanguage.swift */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -567,10 +567,10 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				Base,
 				"fa-AF",
 				"ps-AF",
-				en,
 			);
 			mainGroup = 22AA79F022F952BB0050298A;
 			productRefGroup = 22AA79FA22F952BB0050298A /* Products */;
@@ -693,6 +693,7 @@
 				22FEE7FE23179A52009B2E97 /* SentReportCollectionViewCell.swift in Sources */,
 				22D213232315A43D00BD3A53 /* sentReportDetailsViewController.swift in Sources */,
 				22FEE8022317D02C009B2E97 /* DraftCollectionReusableView.swift in Sources */,
+				17F6D0D9231AE240000F58DD /* AppLanguage.swift in Sources */,
 				2288E27F23110E6C00701FE4 /* HelpViewController.swift in Sources */,
 				174703C623092A610030AD28 /* Report.swift in Sources */,
 				17FDB63E23169E4400031B04 /* ImageFile.swift in Sources */,
@@ -711,7 +712,6 @@
 				17A1BD4C231980A600B8585B /* Base */,
 				17A1BD4E231980AD00B8585B /* fa-AF */,
 				17A1BD4F231980B200B8585B /* ps-AF */,
-				17A1BD50231980EF00B8585B /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -722,7 +722,6 @@
 				22AA7A0122F952BB0050298A /* Base */,
 				17FC4E8E2319263F00223E7C /* fa-AF */,
 				17FC4E9023192C2900223E7C /* ps-AF */,
-				17FC4E9223192CD700223E7C /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -733,7 +732,6 @@
 				22AA7A0622F952BB0050298A /* Base */,
 				17FC4E8F2319263F00223E7C /* fa-AF */,
 				17FC4E9123192C2900223E7C /* ps-AF */,
-				17FC4E9323192CD700223E7C /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -858,14 +856,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 334CU6SKU6;
+				DEVELOPMENT_TEAM = Z2G9632HX9;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
+				PRODUCT_BUNDLE_IDENTIFIER = aems123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
@@ -881,14 +879,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 334CU6SKU6;
+				DEVELOPMENT_TEAM = Z2G9632HX9;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
+				PRODUCT_BUNDLE_IDENTIFIER = aems123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
