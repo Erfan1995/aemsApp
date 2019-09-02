@@ -44,15 +44,6 @@ extension SettingsViewController{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         var index = indexPath.row
-//        if(index == 0){
-//            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            guard let userInfoViewController = mainStoryboard.instantiateViewController(withIdentifier: "UserInfoViewController") as? UserInfoViewController else {
-//                print("couldn't find the view controller")
-//             return
-//
-//            }
-//            navigationController?.pushViewController(userInfoViewController, animated: true)
-//        }
         if(index == 0){
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             guard let helpViewController = mainStoryboard.instantiateViewController(withIdentifier: "HelpViewController") as? HelpViewController else {
@@ -62,16 +53,6 @@ extension SettingsViewController{
             }
             navigationController?.pushViewController(helpViewController, animated: true)
         }
-        
-//            if(index == 2){
-//                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                guard let changePasswordViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as? ChangePasswordViewController else {
-//                    print("couldn't find the view controller")
-//                    return
-//
-//                }
-//                navigationController?.pushViewController(changePasswordViewController, animated: true)
-//        }
             if(index == 1){
                 let dialogMessage = UIAlertController(title: AppLanguage().Locale(text: "logout"), message: AppLanguage().Locale(text: "logoutMessage"), preferredStyle: .alert)
                 let ok = UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler:{

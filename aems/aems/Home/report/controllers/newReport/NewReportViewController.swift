@@ -36,7 +36,7 @@ class NewReportViewController: UIViewController {
     var languageBundle : Bundle?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
 
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
@@ -502,6 +502,9 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.candidateName.text = candidateName[indexPath.row]
         cell.candidateNumber.text = String(candidateNumber[indexPath.row])
         cell.txtVoteNumber.text = String(candidateVoteNumber[Int(candidateNumber[indexPath.row])])
+        cell.candidateImage.layer.masksToBounds = false
+        cell.candidateImage.clipsToBounds = true
+        cell.candidateImage.layer.cornerRadius = cell.candidateImage.frame.height/2
         cell.layer.borderWidth = 1.0
         cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         cell.txtVoteNumber.placeholder=AppLanguage().Locale(text: "amountVote")
