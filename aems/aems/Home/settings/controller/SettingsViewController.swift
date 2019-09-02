@@ -12,7 +12,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var settingsTableView: UITableView!
     var settings: [SettingsContent] = []
-    var setName = ["راهنما","خروج"]
+    var setName = ["\(AppLanguage().Locale(text: "guide"))","\(AppLanguage().Locale(text: "logout"))"]
     var setImage = [#imageLiteral(resourceName: "questions-circular-button"),#imageLiteral(resourceName: "logout (3)")]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,17 +73,17 @@ extension SettingsViewController{
 //                navigationController?.pushViewController(changePasswordViewController, animated: true)
 //        }
             if(index == 1){
-                let dialogMessage = UIAlertController(title: "خروج", message: "آیا می خواهید خارج شوید؟ ", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "بلی", style: .default, handler:{
+                let dialogMessage = UIAlertController(title: AppLanguage().Locale(text: "logout"), message: AppLanguage().Locale(text: "logoutMessage"), preferredStyle: .alert)
+                let ok = UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler:{
                     (action)->Void in
                     var loginData=LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
                     User().setLoginUserDefault(loginData: loginData)
                     self.dismiss(animated: true, completion: nil)
                 })
-                let cancel = UIAlertAction(title: "خیر", style: .cancel)
+                let cancel = UIAlertAction(title: AppLanguage().Locale(text: "no"), style: .cancel)
                 {(action)->Void in
-                    print("cancel button tapped")
-                    
+            
+
                 }
                 dialogMessage.addAction(ok)
                 dialogMessage.addAction(cancel)

@@ -18,4 +18,8 @@ class DraftCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var correctVote: UILabel!
     @IBOutlet weak var whiteVote: UILabel!
     @IBOutlet weak var wrongVote: UILabel!
+    @IBOutlet weak var lblCorrectVote: UILabel!
+    @IBOutlet weak var lblWrongVote: UILabel!
+    @IBOutlet weak var lblWhiteVote: UILabel!
+    
 }
