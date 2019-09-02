@@ -553,6 +553,11 @@
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -848,11 +853,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2G9632HX9;
+				DEVELOPMENT_TEAM = 334CU6SKU6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
@@ -871,11 +876,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2G9632HX9;
+				DEVELOPMENT_TEAM = 334CU6SKU6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = aems/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = aems123;
+				PRODUCT_BUNDLE_IDENTIFIER = TIC.aems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
