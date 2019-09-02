@@ -39,13 +39,13 @@
 		22061D732315421700ED900A /* DraftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D722315421700ED900A /* DraftTableViewCell.swift */; };
 		22061D75231544FF00ED900A /* DraftAndSentReportContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D74231544FF00ED900A /* DraftAndSentReportContent.swift */; };
 		220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220C961B230282AC0096E5EA /* ReportViewController.swift */; };
+		22666248231CD109005D28D8 /* NotificationTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22666244231CD109005D28D8 /* NotificationTab.swift */; };
+		22666249231CD109005D28D8 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22666246231CD109005D28D8 /* NotificationTableViewCell.swift */; };
+		2266624A231CD109005D28D8 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22666247231CD109005D28D8 /* NotificationViewController.swift */; };
 		226A0B45230BFC59001B8BCD /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A0B44230BFC58001B8BCD /* SettingsContent.swift */; };
 		226A0B47230BFD0E001B8BCD /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */; };
 		22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22880ED222F9995E009E2B0D /* TabBarViewController.swift */; };
 		228852152302995B00F5AEFF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228852142302995B00F5AEFF /* SettingsViewController.swift */; };
-		2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521A2302DCD000F5AEFF /* NotificationTableViewCell.swift */; };
-		2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521C2302E00E00F5AEFF /* NotificationViewController.swift */; };
-		228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288521F2302E19F00F5AEFF /* NotificationTab.swift */; };
 		2288E27F23110E6C00701FE4 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288E27E23110E6C00701FE4 /* HelpViewController.swift */; };
 		22AA79FD22F952BB0050298A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FC22F952BB0050298A /* AppDelegate.swift */; };
 		22AA79FF22F952BB0050298A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA79FE22F952BB0050298A /* LoginController.swift */; };
@@ -115,13 +115,13 @@
 		22061D722315421700ED900A /* DraftTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftTableViewCell.swift; sourceTree = "<group>"; };
 		22061D74231544FF00ED900A /* DraftAndSentReportContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftAndSentReportContent.swift; sourceTree = "<group>"; };
 		220C961B230282AC0096E5EA /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		22666244231CD109005D28D8 /* NotificationTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTab.swift; sourceTree = "<group>"; };
+		22666246231CD109005D28D8 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		22666247231CD109005D28D8 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		226A0B44230BFC58001B8BCD /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		22880ED222F9995E009E2B0D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		228852142302995B00F5AEFF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		2288521A2302DCD000F5AEFF /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
-		2288521C2302E00E00F5AEFF /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		2288521F2302E19F00F5AEFF /* NotificationTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTab.swift; sourceTree = "<group>"; };
 		2288E27E23110E6C00701FE4 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		22AA79F922F952BB0050298A /* aems.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aems.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AA79FC22F952BB0050298A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -342,13 +342,23 @@
 			path = report;
 			sourceTree = "<group>";
 		};
-		22880ED622F9A76A009E2B0D /* Notifications */ = {
+		22666243231CD109005D28D8 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				2288521E2302E0A300F5AEFF /* controller */,
-				2288521F2302E19F00F5AEFF /* NotificationTab.swift */,
+				22666245231CD109005D28D8 /* controller */,
+				22666244231CD109005D28D8 /* NotificationTab.swift */,
 			);
-			path = Notifications;
+			name = Notifications;
+			path = "../../../../../../../../Volumes/WINDOW 10/Notifications";
+			sourceTree = "<group>";
+		};
+		22666245231CD109005D28D8 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				22666246231CD109005D28D8 /* NotificationTableViewCell.swift */,
+				22666247231CD109005D28D8 /* NotificationViewController.swift */,
+			);
+			path = controller;
 			sourceTree = "<group>";
 		};
 		22880ED822F9A803009E2B0D /* Resources */ = {
@@ -374,15 +384,6 @@
 				228852142302995B00F5AEFF /* SettingsViewController.swift */,
 				226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */,
 				2288E27E23110E6C00701FE4 /* HelpViewController.swift */,
-			);
-			path = controller;
-			sourceTree = "<group>";
-		};
-		2288521E2302E0A300F5AEFF /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				2288521C2302E00E00F5AEFF /* NotificationViewController.swift */,
-				2288521A2302DCD000F5AEFF /* NotificationTableViewCell.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -461,9 +462,9 @@
 		22D569AE22F982D80075F41D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				22666243231CD109005D28D8 /* Notifications */,
 				228852122302992000F5AEFF /* settings */,
 				220C9619230282910096E5EA /* report */,
-				22880ED622F9A76A009E2B0D /* Notifications */,
 				22880ED222F9995E009E2B0D /* TabBarViewController.swift */,
 			);
 			path = Home;
@@ -652,18 +653,18 @@
 				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
 				17F60F2E230E51BB002B4035 /* Helper.swift in Sources */,
+				2266624A231CD109005D28D8 /* NotificationViewController.swift in Sources */,
 				174703A9230912FB0030AD28 /* FMDatabase.m in Sources */,
 				22D2132023159F4500BD3A53 /* SentReportTableViewCell.swift in Sources */,
 				22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */,
-				2288521B2302DCD000F5AEFF /* NotificationTableViewCell.swift in Sources */,
 				171BAB22231396CF00EAEC8B /* ReportCondidates.swift in Sources */,
+				22666249231CD109005D28D8 /* NotificationTableViewCell.swift in Sources */,
+				22666248231CD109005D28D8 /* NotificationTab.swift in Sources */,
 				22FEE80023179A93009B2E97 /* SentReportCollectionReusableView.swift in Sources */,
 				174703BB23091E450030AD28 /* User.swift in Sources */,
 				22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */,
-				228852202302E19F00F5AEFF /* NotificationTab.swift in Sources */,
 				171BAB2023125D5A00EAEC8B /* ImagePicker.swift in Sources */,
 				22061D6C2315290500ED900A /* CheckInternetConnection.swift in Sources */,
-				2288521D2302E00E00F5AEFF /* NotificationViewController.swift in Sources */,
 				2203A1CB23196EC4000BF7BD /* HideKeyboardExtension.swift in Sources */,
 				174703C4230929550030AD28 /* PollingCenter.swift in Sources */,
 				22EC5DF122F953410025AE5E /* RegisterViewController.swift in Sources */,
@@ -855,7 +856,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = aems123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
@@ -878,7 +879,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = aems123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/habib/Desktop/aemsApp/aems/fmdb_header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/aemsaems/Desktop/ios/aems-app/aems/fmdb_header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
