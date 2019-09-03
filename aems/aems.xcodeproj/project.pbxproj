@@ -11,6 +11,7 @@
 		171BAB22231396CF00EAEC8B /* ReportCondidates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BAB21231396CF00EAEC8B /* ReportCondidates.swift */; };
 		171BAB242313994700EAEC8B /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BAB232313994700EAEC8B /* ReportImage.swift */; };
 		171ECC04230A7AE4005F7A38 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171ECC03230A7AE4005F7A38 /* LoginData.swift */; };
+		172F989D231E1DF700DFB9E1 /* newreport.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 172F989C231E1DF700DFB9E1 /* newreport.jpg */; };
 		174703A4230911E40030AD28 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A3230911E40030AD28 /* AVKit.framework */; };
 		174703A6230911F20030AD28 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A5230911F20030AD28 /* AVFoundation.framework */; };
 		174703A8230911FA0030AD28 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 174703A7230911FA0030AD28 /* libsqlite3.0.tbd */; };
@@ -87,6 +88,7 @@
 		171BAB21231396CF00EAEC8B /* ReportCondidates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCondidates.swift; sourceTree = "<group>"; };
 		171BAB232313994700EAEC8B /* ReportImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
 		171ECC03230A7AE4005F7A38 /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		172F989C231E1DF700DFB9E1 /* newreport.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = newreport.jpg; path = ../../../../newreport.jpg; sourceTree = "<group>"; };
 		17470395230910D00030AD28 /* FMDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		17470396230910D00030AD28 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		17470397230910D00030AD28 /* FMResultSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				22AA7A0322F952BB0050298A /* Assets.xcassets */,
+				172F989C231E1DF700DFB9E1 /* newreport.jpg */,
 				17FB65CF231D3853007503DB /* draft_image_fa.jpg */,
 				17FB65CE231D3853007503DB /* draft_image_ps.jpg */,
 				17FB65C4231D3852007503DB /* final_result_image_fa.jpg */,
@@ -636,6 +639,7 @@
 				17FB65D4231D3853007503DB /* register_image_ps.jpg in Resources */,
 				17FB65D7231D3853007503DB /* notification_image_fa.jpg in Resources */,
 				17FB65DD231D3853007503DB /* draft_image_fa.jpg in Resources */,
+				172F989D231E1DF700DFB9E1 /* newreport.jpg in Resources */,
 				17FB65D6231D3853007503DB /* final_result_image_ps.jpg in Resources */,
 				17FB65DA231D3853007503DB /* sent_image_fa.jpg in Resources */,
 				22AA7A0422F952BB0050298A /* Assets.xcassets in Resources */,
