@@ -113,7 +113,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="دانلود"/>
                                 <connections>
-                                    <action selector="btnDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sqs-Te-G5l"/>
                                     <action selector="downloadPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bDn-yU-yWW"/>
                                 </connections>
                             </button>
@@ -350,7 +349,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user (2)" translatesAutoresizingMaskIntoConstraints="NO" id="NKz-wG-lzk">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sent" translatesAutoresizingMaskIntoConstraints="NO" id="NKz-wG-lzk">
                                         <rect key="frame" x="143" y="32" width="89" height="65"/>
                                     </imageView>
                                 </subviews>
@@ -1937,6 +1936,7 @@
         <image name="notification" width="16" height="16"/>
         <image name="notification_image_fa" width="419" height="623"/>
         <image name="register_image_fa" width="556" height="635"/>
+        <image name="sent" width="256" height="256"/>
         <image name="sent_image_fa" width="549" height="727"/>
         <image name="user (1)" width="64" height="64"/>
         <image name="user (2)" width="128" height="128"/>

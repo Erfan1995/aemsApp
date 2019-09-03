@@ -148,7 +148,9 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             files.append(ImageFile(fileName:images[0]))
 
                 let firstImageData = (ReportImage().loadImageFromDocumentDirectory(nameOfImage: images[0]).jpegData(compressionQuality: 0))!
-                Alamofire.upload(multipartFormData: { (multipartFormData) in
+                let manager = Alamofire.SessionManager.default
+                manager.session.configuration.timeoutIntervalForRequest = 120
+                manager.upload(multipartFormData: { (multipartFormData) in
                     multipartFormData.append(firstImageData, withName: "image1", fileName: self.images[0], mimeType: "image/png");
                     multipartFormData.append(candidateData!, withName: "candidates");
                     multipartFormData.append(String(self.report!.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
@@ -193,7 +195,9 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                 files.append(ImageFile(fileName: images[1]))
                 let firstImageData = (ReportImage().loadImageFromDocumentDirectory(nameOfImage: images[0]).jpegData(compressionQuality: 0))!
                 let secondImageData = (ReportImage().loadImageFromDocumentDirectory(nameOfImage: images[1]).jpegData(compressionQuality: 0))!
-                Alamofire.upload(multipartFormData: { (multipartFormData) in
+                let manager = Alamofire.SessionManager.default
+                manager.session.configuration.timeoutIntervalForRequest = 120
+                manager.upload(multipartFormData: { (multipartFormData) in
                     multipartFormData.append(firstImageData, withName: "image1", fileName: self.images[0], mimeType: "image/png");
                     multipartFormData.append(secondImageData, withName: "image2", fileName: self.images[1], mimeType: "image/png");
                     multipartFormData.append(candidateData!, withName: "candidates");

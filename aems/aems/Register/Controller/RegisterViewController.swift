@@ -294,7 +294,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 let user: Dictionary = ["complete_name": complete_name, "observer_code": observer_code,"phone":phone,"password":pass,"polling_center_id":pollingCenter_id] as [String : Any]
-                Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
+                let manager = Alamofire.SessionManager.default
+                manager.session.configuration.timeoutIntervalForRequest = 120
+                manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         guard response.result.isSuccess else {
                             return
