@@ -242,6 +242,15 @@ class LoginViewController: UIViewController {
         }
     }
 
+    @IBAction func btnHelpPressed(_ sender: Any) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let helpViewController = mainStoryboard.instantiateViewController(withIdentifier: "HelpViewController") as? HelpViewController else {
+            print("couldn't find the view controller")
+            return
+            
+        }
+        navigationController?.pushViewController(helpViewController, animated: true)
+    }
     
 
 }
