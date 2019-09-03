@@ -136,6 +136,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationItem.rightBarButtonItem = barButtonSend
     }
     @objc func tapButton(){
+        Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
         files.removeAll()
         let headers: HTTPHeaders = [
             "authorization": User().getLoginUserDefault()!.token
@@ -173,13 +174,16 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                 AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
                                 self.report!.is_sent=true
                                 AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
-                                Helper.showSnackBar(messageString: "your report stored")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
                             }
+                            
+                            Loader.stop()
                             
                         }
                         
                     case .failure(let encodingError):
-                        Helper.showSnackBar(messageString: "occured some error . Please try again")
+                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                        Loader.stop()
                     }
                 }
             
@@ -216,20 +220,21 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                 AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
                                 self.report!.is_sent=true
                                 AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
-                                Helper.showSnackBar(messageString: "your report stored in sent report")
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
                             }
                             
-                            
+                            Loader.stop()
                         }
                         
                     case .failure(let encodingError):
-                        Helper.showSnackBar(messageString: "occured some proble , please try again ")
+                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                        Loader.stop()
                     }
                 }
             }
         }
         else{
-            Helper.showSnackBar(messageString: " please check network connection ")
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
         }
     }
 
@@ -259,11 +264,16 @@ extension DraftDetailsViewController{
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "DraftCollectionReusableView", for: indexPath) as! DraftCollectionReusableView
 
         headerView.iconImage.image = #imageLiteral(resourceName: "logo")
-        headerView.locationName.text = "محل شماره \(locName)"
+        headerView.locationName.text = " \(AppLanguage().Locale(text: "pollingCenterNo")) \(locName)"
         headerView.date.text = "\(report!.date_time!)"
         headerView.correctVote.text = String(report!.right_vote!)
         headerView.wrongVote.text = String(report!.void_vote!)
         headerView.whiteVote.text = String(report!.white_vote!)
+        headerView.lblCorrectVote.text=AppLanguage().Locale(text: "correctVote")
+        headerView.lblWrongVote.text=AppLanguage().Locale(text: "wrongVote")
+        headerView.lblWhiteVote.text=AppLanguage().Locale(text: "whiteVote")
+        
+        
         images = AppDatabase().getImageReport(report_id: report!.id!)
         if  images.count==1{
             headerView.firstImage.image=ReportImage().loadImageFromDocumentDirectory(nameOfImage: images[0])

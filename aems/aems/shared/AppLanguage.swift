@@ -19,9 +19,9 @@ class AppLanguage: NSObject {
     
     func Locale(text:String) -> String {
         var languageBundel:Bundle?
-        var languageCode = UserDefaults.standard
+        let languageCode = UserDefaults.standard
         if languageCode.value(forKey: "language") != nil {
-           var language=languageCode.string(forKey: "language")
+            let language=languageCode.string(forKey: "language")
             let path = Bundle.main.path(forResource: language, ofType: "lproj")
             languageBundel = Bundle(path: path!)
         }

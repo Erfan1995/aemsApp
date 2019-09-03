@@ -127,8 +127,6 @@ class NewReportViewController: UIViewController {
         let station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
         var candidatesVote:Dictionary<String, Int> = [:]
-        
-        
         let whiteVote=Int(txtWhiteVote!.text ?? "0")
         let correctVote=Int(txtCorrectVote!.text ?? "0")
         let wrongVote=Int(txtWrongVote!.text ?? "0")
@@ -151,7 +149,7 @@ class NewReportViewController: UIViewController {
         
         
         
-        if tootalVote>=450 || tootalVote==0 || tootalVote>=(whiteVote!+wrongVote!+correctVote!){
+        if tootalVote>=460 || tootalVote==0 || tootalVote>=(whiteVote!+wrongVote!+correctVote!) || (whiteVote!+wrongVote!+correctVote!)>=460 {
             Helper.showSnackBar(messageString: AppLanguage().Locale(text: "correctReport"))
         }else{
         if selectedFiles.count == 1{
@@ -200,8 +198,7 @@ class NewReportViewController: UIViewController {
             
             let alert = UIAlertController(title:AppLanguage().Locale(text: "duplicateReport"), message: AppLanguage().Locale(text: "duplicateMessage"), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler: { action in
-                
-                
+                Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
@@ -226,6 +223,7 @@ class NewReportViewController: UIViewController {
                                 
                                 upload.responseJSON { response in
         
+                                    
                                     if let json = response.result.value {
                                         if  JSON(json)["response"]==1{
                                             AppDatabase().deleteReport(station_id: station_id!)
@@ -235,10 +233,11 @@ class NewReportViewController: UIViewController {
                                             _ = self.navigationController?.popViewController(animated: true)
                                         }
                                     }
-                                    
+                                    Loader.stop()
                                 }
                                 
                             case .failure(let encodingError):
+                                Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
@@ -246,6 +245,7 @@ class NewReportViewController: UIViewController {
                         
                     }
                     else{
+                        Loader.stop()
                         AppDatabase().deleteReport(station_id: station_id!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
@@ -286,14 +286,17 @@ class NewReportViewController: UIViewController {
                                             _ = self.navigationController?.popViewController(animated: true)
                                         }
                                     }
+                                    Loader.stop()
                                 }
                                 
                             case .failure(let encodingError):
+                                Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
                     }
                     else{
+                        Loader.stop()
                         AppDatabase().deleteReport(station_id: station_id!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
@@ -314,7 +317,7 @@ class NewReportViewController: UIViewController {
             
         }
         else{
-            
+            Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
@@ -347,9 +350,11 @@ class NewReportViewController: UIViewController {
                                             _ = self.navigationController?.popViewController(animated: true)
                                         }
                                     }
+                                    Loader.stop()
                                 }
                                 
                             case .failure(let encodingError):
+                                Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
                         }
@@ -360,6 +365,7 @@ class NewReportViewController: UIViewController {
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
+                        Loader.stop()
                     }
                 }
                 else if files.count == 2{
@@ -396,10 +402,13 @@ class NewReportViewController: UIViewController {
                                             _ = self.navigationController?.popViewController(animated: true)
                                         }
                                     }
+                                    
+                                    Loader.stop()
                                 }
                                 
                             case .failure(let encodingError):
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                Loader.stop()
                             }
                         }
                     }
@@ -407,6 +416,7 @@ class NewReportViewController: UIViewController {
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
+                        Loader.stop()
                     }
                 }
                 else{

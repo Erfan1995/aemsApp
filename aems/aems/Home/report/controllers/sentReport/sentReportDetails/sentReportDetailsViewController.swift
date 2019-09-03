@@ -141,12 +141,15 @@ extension sentReportDetailsViewController{
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SentReportCollectionReusableView", for: indexPath) as! SentReportCollectionReusableView
 
        
-        headerView.locationName.text = "محل شماره \(locName)"
+        headerView.locationName.text = "\(AppLanguage().Locale(text: "pollingCenterNo")) \(locName)"
         headerView.date.text = "\(report!.date_time!)"
         headerView.reportIcon.image = #imageLiteral(resourceName: "logo")
         headerView.correctVote.text = String(report!.right_vote!)
         headerView.wrongVote.text = String(report!.void_vote!)
         headerView.whiteVote.text = String(report!.white_vote!)
+        headerView.lblWhiteVote.text = AppLanguage().Locale(text: "whiteVote")
+        headerView.lblWrongVote.text = AppLanguage().Locale(text: "wrongVote")
+        headerView.lblCorrectVote.text = AppLanguage().Locale(text: "correctVote")
         
         var images = AppDatabase().getImageReport(report_id: report!.id!)
         if  images.count==1{
