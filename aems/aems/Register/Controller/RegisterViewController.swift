@@ -206,7 +206,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validateDistrict( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "District"))
             _sender.layer.borderColor = UIColor.gray.cgColor
             districtLabel.text = nil
         }catch(let error){
@@ -220,7 +220,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validatePollingCenter( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "PollingCenter"))
             _sender.layer.borderColor = UIColor.gray.cgColor
             pollingCenterLabel.text = nil
         }catch(let error){
@@ -361,6 +361,7 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
             }
             break
         case 2:
+            if districtPickerData.count>0{
             district.text = districtPickerData[row]
             for dis in districts{
                 if dis.name == district.text! {
@@ -371,12 +372,15 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
                     }
                     if  pollingCenterData.count>0{
                         pollingCenter.text=pollingCenterData[0]
+                        }
                     }
                 }
             }
             break
         case 3:
-            pollingCenter.text = pollingCenterData[row]
+            if pollingCenterData.count>0{
+               pollingCenter.text = pollingCenterData[row]
+            }
             break
         default:
             province.text = provincePickerData[row]
