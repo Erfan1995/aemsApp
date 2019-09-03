@@ -136,13 +136,14 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationItem.rightBarButtonItem = barButtonSend
     }
     @objc func tapButton(){
-        Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
+        
         files.removeAll()
         let headers: HTTPHeaders = [
             "authorization": User().getLoginUserDefault()!.token
         ]
         let candidateData = try? JSONSerialization.data(withJSONObject: candidateVotes , options: [])
         if CheckInternetConnection.isConnectedToInternet(){
+            Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
             
         if images.count == 1{
             files.append(ImageFile(fileName:images[0]))
@@ -171,12 +172,15 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                         
                         upload.responseJSON { response in
                             
-                            var res = response.result.value as? Int
-                            if res==1{
-                                AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
-                                self.report!.is_sent=true
-                                AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                            if let json = response.result.value {
+                                if  JSON(json)["response"]==1{
+                                    AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
+                                    self.report!.is_sent=true
+                                    AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                    print("report \(self.report!.is_sent)")
+                                    _ = self.navigationController?.popViewController(animated: true)
+                                }
                             }
                             
                             Loader.stop()
@@ -218,15 +222,18 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                         })
                         
                         upload.responseJSON { response in
-                            
-                            var res = response.result.value as? Int
-                            if res==1{
-                                AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
-                                self.report!.is_sent=true
-                                AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                        
+                            if let json = response.result.value {
+                                if  JSON(json)["response"]==1{
+                                    AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
+                                    self.report!.is_sent=true
+                                    AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                    print("report \(self.report!.is_sent)")
+                                    _ = self.navigationController?.popViewController(animated: true)
+                                }
                             }
-                            
+            
                             Loader.stop()
                         }
                         
