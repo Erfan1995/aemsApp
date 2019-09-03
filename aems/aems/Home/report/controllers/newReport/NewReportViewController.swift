@@ -197,11 +197,8 @@ class NewReportViewController: UIViewController {
         
             let report : Report = Report(latitude: ReportViewController.latitude, longitude: ReportViewController.longitude, observer_id: observer_id, void_vote: wrongVote, white_vote: whiteVote, right_vote: correctVote, province_id: provice_id, polling_center_id: polling_center_id, pc_station_nummber: station_id, date_time: getCurrentDate())
         
-        
         let candidateData = try? JSONSerialization.data(withJSONObject: candidateArray , options: [])
-        
-        
-        
+  
         if AppDatabase().isSentReport(station_id: station_id!){
             
             if  files.count==0{
@@ -264,6 +261,7 @@ class NewReportViewController: UIViewController {
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 }
                 else if files.count == 2{
@@ -317,6 +315,7 @@ class NewReportViewController: UIViewController {
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString:AppLanguage().Locale(text: "storedToDraft"))
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 }
                 else{
@@ -334,8 +333,9 @@ class NewReportViewController: UIViewController {
             }
         }
         else{
-            Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
+            
                 if files.count == 1{
+                    Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
                         let manager = Alamofire.SessionManager.default
@@ -385,9 +385,11 @@ class NewReportViewController: UIViewController {
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
                         Loader.stop()
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 }
                 else if files.count == 2{
+                    Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
                         let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
@@ -438,6 +440,8 @@ class NewReportViewController: UIViewController {
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
                         Loader.stop()
+                        _ = self.navigationController?.popViewController(animated: true)
+                        
                     }
                 }
                 else{
@@ -650,8 +654,6 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
         self.txtCorrectVote=headerView.correctVote
         self.pollingCenter = headerView.pollingCenter
         pollingCenter?.delegate = self
-//        let pollingCenterTap = UITapGestureRecognizer(target: self, action: #selector(choosePollingCenter))
-//        pollingCenter?.addGestureRecognizer(pollingCenterTap)
         createPollingCenterPicker()
         return headerView
     }
@@ -681,19 +683,20 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
 extension NewReportViewController:  ImagePickerDelegate{
     func didSelect(image: UIImage?) {
         
-        if selectedImage==1{
-            if firsImage != nil{
-                firsImage?.image=image
-                selectedFiles.append(1)
+        if image != nil{
+            if selectedImage==1{
+                if firsImage != nil{
+                    firsImage?.image=image
+                    selectedFiles.append(1)
+                }
+            }
+            else if(selectedImage==2){
+                if secondImage != nil{
+                    secondImage?.image = image
+                    selectedFiles.append(2)
+                }
             }
         }
-        else if(selectedImage==2){
-            if secondImage != nil{
-                 secondImage?.image = image
-                 selectedFiles.append(2)
-            }
-        }
-      
     }
 }
 

@@ -352,13 +352,35 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         case 1:
             province.text = provincePickerData[row]
             for pro in provinces{
+                var district_id:Int=0
+                var isDistrictSelected : Bool = false
                 if pro.name == province.text! {
+                    isDistrictSelected=true
                    districtPickerData.removeAll()
                    districts = AppDatabase().getDistrict(province_id: pro.province_id!)
                     for dis in districts{
                         districtPickerData.append(dis.name!)
+                        if isDistrictSelected{
+                            district_id=Int(dis.district_id!)
+                            isDistrictSelected=false
+                        }
                     }
                     district.text=districtPickerData[0]
+                    
+                    
+                    if  district_id != 0 {
+                        print("selected district \(district_id)")
+                        centers=AppDatabase().getPollingCenters(district_id: Int32(district_id))
+                        for cen in centers{
+                            pollingCenterData.append(cen.polling_center_code!)
+                        }
+                    }
+                    if pollingCenterData.count>0{
+                        print("print \(pollingCenterData[0])")
+                        pollingCenter.text=pollingCenterData[0]
+                    }
+                    
+                    
                 }
             }
             break
@@ -389,6 +411,7 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
             break
         }
     }
+    
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var label: UILabel
