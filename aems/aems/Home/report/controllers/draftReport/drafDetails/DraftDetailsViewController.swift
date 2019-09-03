@@ -219,7 +219,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                         
                         upload.responseJSON { response in
                             
-                            var res = response.result.value as? Int
+                            let res = response.result.value as? Int
                             if res==1{
                                 AppDatabase().deleteReport(station_id: self.report!.pc_station_number!)
                                 self.report!.is_sent=true

@@ -91,8 +91,6 @@ class NewReportViewController: UIViewController {
         }
         if notification.name == UIResponder.keyboardWillShowNotification ||
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
-            let keyboardRect = keyboardFrame.cgRectValue
-            
             view.frame.origin.y = -150
             
         }else{
@@ -125,7 +123,7 @@ class NewReportViewController: UIViewController {
         var tootalVote = 0
         let station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
-        var candidatesVote:Dictionary<String, Int> = [:]
+        var _:Dictionary<String, Int> = [:]
         let whiteVote=Int(txtWhiteVote!.text ?? "0") ?? 0
         let correctVote=Int(txtCorrectVote!.text ?? "0") ?? 0
         let wrongVote=Int(txtWrongVote!.text ?? "0") ?? 0
@@ -252,7 +250,7 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure(let encodingError):
+                            case .failure( _):
                                 Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
@@ -307,7 +305,7 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure(let encodingError):
+                            case .failure( _):
                                 Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
@@ -374,7 +372,7 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure(let encodingError):
+                            case .failure( _):
                                 Loader.stop()
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
@@ -429,7 +427,7 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure(let encodingError):
+                            case .failure( _):
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                                 Loader.stop()
                             }

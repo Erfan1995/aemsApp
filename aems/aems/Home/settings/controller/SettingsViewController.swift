@@ -43,7 +43,7 @@ extension SettingsViewController{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        var index = indexPath.row
+        let index = indexPath.row
         if(index == 0){
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             guard let helpViewController = mainStoryboard.instantiateViewController(withIdentifier: "HelpViewController") as? HelpViewController else {
@@ -58,7 +58,7 @@ extension SettingsViewController{
                 let dialogMessage = UIAlertController(title: AppLanguage().Locale(text: "logout"), message: AppLanguage().Locale(text: "logoutMessage"), preferredStyle: .alert)
                 let ok = UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler:{
                     (action)->Void in
-                    var loginData=LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                    let loginData=LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
                     User().setLoginUserDefault(loginData: loginData)
                     self.dismiss(animated: true, completion: nil)
                 })
