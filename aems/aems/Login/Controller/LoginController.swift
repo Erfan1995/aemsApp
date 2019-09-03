@@ -30,7 +30,8 @@ class LoginViewController: UIViewController {
 //     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+ self.navigationController?.navigationBar.topItem?.title = "صفحه ورودی"
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
@@ -249,6 +250,7 @@ class LoginViewController: UIViewController {
             return
             
         }
+        helpViewController.parentName = "Login"
         navigationController?.pushViewController(helpViewController, animated: true)
     }
     

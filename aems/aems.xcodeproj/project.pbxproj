@@ -39,9 +39,6 @@
 		22061D732315421700ED900A /* DraftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D722315421700ED900A /* DraftTableViewCell.swift */; };
 		22061D75231544FF00ED900A /* DraftAndSentReportContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22061D74231544FF00ED900A /* DraftAndSentReportContent.swift */; };
 		220C961C230282AC0096E5EA /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220C961B230282AC0096E5EA /* ReportViewController.swift */; };
-		22666250231CD6FB005D28D8 /* NotificationTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2266624C231CD6FB005D28D8 /* NotificationTab.swift */; };
-		22666251231CD6FB005D28D8 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2266624E231CD6FB005D28D8 /* NotificationTableViewCell.swift */; };
-		22666252231CD6FB005D28D8 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2266624F231CD6FB005D28D8 /* NotificationViewController.swift */; };
 		226A0B45230BFC59001B8BCD /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A0B44230BFC58001B8BCD /* SettingsContent.swift */; };
 		226A0B47230BFD0E001B8BCD /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */; };
 		22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22880ED222F9995E009E2B0D /* TabBarViewController.swift */; };
@@ -115,9 +112,6 @@
 		22061D722315421700ED900A /* DraftTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftTableViewCell.swift; sourceTree = "<group>"; };
 		22061D74231544FF00ED900A /* DraftAndSentReportContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftAndSentReportContent.swift; sourceTree = "<group>"; };
 		220C961B230282AC0096E5EA /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
-		2266624C231CD6FB005D28D8 /* NotificationTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTab.swift; sourceTree = "<group>"; };
-		2266624E231CD6FB005D28D8 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
-		2266624F231CD6FB005D28D8 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		226A0B44230BFC58001B8BCD /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		226A0B46230BFD0E001B8BCD /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		22880ED222F9995E009E2B0D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -342,24 +336,6 @@
 			path = report;
 			sourceTree = "<group>";
 		};
-		2266624B231CD6FB005D28D8 /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				2266624D231CD6FB005D28D8 /* controller */,
-				2266624C231CD6FB005D28D8 /* NotificationTab.swift */,
-			);
-			path = Notifications;
-			sourceTree = "<group>";
-		};
-		2266624D231CD6FB005D28D8 /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				2266624E231CD6FB005D28D8 /* NotificationTableViewCell.swift */,
-				2266624F231CD6FB005D28D8 /* NotificationViewController.swift */,
-			);
-			path = controller;
-			sourceTree = "<group>";
-		};
 		22880ED822F9A803009E2B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +437,6 @@
 		22D569AE22F982D80075F41D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				2266624B231CD6FB005D28D8 /* Notifications */,
 				228852122302992000F5AEFF /* settings */,
 				220C9619230282910096E5EA /* report */,
 				22880ED222F9995E009E2B0D /* TabBarViewController.swift */,
@@ -657,13 +632,10 @@
 				174703AB230913190030AD28 /* FMDatabasePool.h in Sources */,
 				174703AA2309130A0030AD28 /* FMResultSet.m in Sources */,
 				17F60F2E230E51BB002B4035 /* Helper.swift in Sources */,
-				22666252231CD6FB005D28D8 /* NotificationViewController.swift in Sources */,
 				174703A9230912FB0030AD28 /* FMDatabase.m in Sources */,
 				22D2132023159F4500BD3A53 /* SentReportTableViewCell.swift in Sources */,
 				22AE32162303D6A000CFD4BF /* SentReportViewController.swift in Sources */,
 				171BAB22231396CF00EAEC8B /* ReportCondidates.swift in Sources */,
-				22666251231CD6FB005D28D8 /* NotificationTableViewCell.swift in Sources */,
-				22666250231CD6FB005D28D8 /* NotificationTab.swift in Sources */,
 				22FEE80023179A93009B2E97 /* SentReportCollectionReusableView.swift in Sources */,
 				174703BB23091E450030AD28 /* User.swift in Sources */,
 				22880ED322F9995E009E2B0D /* TabBarViewController.swift in Sources */,
