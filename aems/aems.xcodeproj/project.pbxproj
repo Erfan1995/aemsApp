@@ -566,7 +566,6 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				"fa-AF",
 				"ps-AF",
