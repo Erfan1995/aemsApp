@@ -94,7 +94,7 @@ class NewReportViewController: UIViewController {
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
             let keyboardRect = keyboardFrame.cgRectValue
             
-            view.frame.origin.y = -keyboardRect.height
+            view.frame.origin.y = -150
             
         }else{
             view.frame.origin.y = 0

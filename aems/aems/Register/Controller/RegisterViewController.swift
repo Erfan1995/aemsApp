@@ -13,9 +13,8 @@ import SwiftyJSON
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
-    
+
     @IBOutlet weak var btnRegister: UIButton!
     @IBOutlet weak var lblRegisterTitle: UILabel!
     @IBOutlet weak var province: UITextField!
@@ -95,16 +94,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
             return
         }
+        let keyboardRect = keyboardFrame.cgRectValue
+        let keyboardEndFrame = view.convert(keyboardRect, from: view.window)
         if notification.name == UIResponder.keyboardWillShowNotification ||
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
-            let keyboardRect = keyboardFrame.cgRectValue
+            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardEndFrame.height, right: 0)
             
-            view.frame.origin.y = -100
             
         }else{
-            view.frame.origin.y = 0
+            self.scrollView.contentInset = UIEdgeInsets.zero
         }
+        self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
     }
+    
     
     
     func creatProvincePicker(){
