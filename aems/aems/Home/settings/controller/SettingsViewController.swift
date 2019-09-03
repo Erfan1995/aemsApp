@@ -51,6 +51,7 @@ extension SettingsViewController{
                 return
                 
             }
+            helpViewController.parentName = "Info"
             navigationController?.pushViewController(helpViewController, animated: true)
         }
             if(index == 1){

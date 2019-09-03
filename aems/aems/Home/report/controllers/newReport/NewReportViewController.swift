@@ -37,13 +37,12 @@ class NewReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
-
+        self.navigationController?.navigationBar.topItem?.title = "صفحه اصلی"
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
         let numberOfStation = User().getLoginUserDefault()!.pc_station_number
         for stationNumber in 1...numberOfStation{

@@ -108,14 +108,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Es3-pa-oV1">
-                                <rect key="frame" x="75" y="511" width="78" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="دانلود"/>
-                                <connections>
-                                    <action selector="downloadPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bDn-yU-yWW"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کاربر گرامی قبل از استفاده به راهنما مراجعه نمایید" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pk9-ft-Z5a">
                                 <rect key="frame" x="78.5" y="605" width="276.5" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -127,6 +119,14 @@
                                 <state key="normal" title="راهنما"/>
                                 <connections>
                                     <action selector="btnHelpPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0gi-Iu-69G"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Es3-pa-oV1">
+                                <rect key="frame" x="94" y="510" width="40" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="دانلود"/>
+                                <connections>
+                                    <action selector="downloadPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bDn-yU-yWW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -143,29 +143,29 @@
                             <constraint firstItem="5Xz-KM-EU1" firstAttribute="top" secondItem="3p3-KU-AS7" secondAttribute="bottom" constant="59" id="8f1-aR-wYT"/>
                             <constraint firstItem="hsc-Qj-B88" firstAttribute="top" secondItem="2Ca-JT-rik" secondAttribute="bottom" constant="10" id="D3y-Xu-MZA"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="5Xz-KM-EU1" secondAttribute="trailing" constant="63" id="DHh-iy-iS2"/>
-                            <constraint firstItem="5Xz-KM-EU1" firstAttribute="leading" secondItem="Es3-pa-oV1" secondAttribute="trailing" constant="8" id="HAk-g2-JIl"/>
+                            <constraint firstItem="5Xz-KM-EU1" firstAttribute="leading" secondItem="Es3-pa-oV1" secondAttribute="trailing" constant="27" id="HAk-g2-JIl"/>
                             <constraint firstItem="2eW-DK-Bsx" firstAttribute="top" secondItem="5Xz-KM-EU1" secondAttribute="bottom" constant="29" id="JkO-ts-tq5"/>
                             <constraint firstItem="91c-z4-h1U" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="29" id="K9u-e9-Ey2"/>
                             <constraint firstItem="XvF-DD-58x" firstAttribute="top" secondItem="PeC-NM-Lk1" secondAttribute="bottom" constant="29" id="QzF-g2-dCL"/>
-                            <constraint firstItem="2Ld-SC-roz" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="23" id="Sht-ce-gAI"/>
+                            <constraint firstItem="2Ld-SC-roz" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="24" id="Sht-ce-gAI"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="pk9-ft-Z5a" secondAttribute="trailing" constant="20" id="W28-RD-hz5"/>
                             <constraint firstItem="pD7-Z0-SPf" firstAttribute="leading" secondItem="2Ld-SC-roz" secondAttribute="trailing" constant="10.5" id="Wxs-jW-aNJ"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="2Ca-JT-rik" secondAttribute="trailing" constant="58.060000000000002" id="YiP-Lt-CtY"/>
                             <constraint firstItem="3p3-KU-AS7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Qsa-rP-lXh" secondAttribute="trailing" constant="8" symbolic="YES" id="bqT-ve-eib"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="3p3-KU-AS7" secondAttribute="trailing" constant="61" id="ciF-A0-W1L"/>
                             <constraint firstItem="Qsa-rP-lXh" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="58" id="co0-vF-Y2E"/>
-                            <constraint firstItem="pD7-Z0-SPf" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="14" id="ejD-WE-8OJ"/>
+                            <constraint firstItem="pD7-Z0-SPf" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="15" id="ejD-WE-8OJ"/>
                             <constraint firstItem="PeC-NM-Lk1" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="136" id="fSB-fM-em0"/>
-                            <constraint firstItem="Es3-pa-oV1" firstAttribute="top" secondItem="Qsa-rP-lXh" secondAttribute="bottom" constant="53" id="ioJ-qq-dKY"/>
+                            <constraint firstItem="Es3-pa-oV1" firstAttribute="top" secondItem="Qsa-rP-lXh" secondAttribute="bottom" constant="52" id="ioJ-qq-dKY"/>
                             <constraint firstItem="91c-z4-h1U" firstAttribute="top" secondItem="Qsa-rP-lXh" secondAttribute="bottom" constant="140" id="jCQ-6f-15x"/>
                             <constraint firstItem="pk9-ft-Z5a" firstAttribute="leading" secondItem="91c-z4-h1U" secondAttribute="trailing" constant="13.5" id="jWE-6Z-NqK"/>
-                            <constraint firstItem="s34-e3-XxQ" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="17" id="kTS-ZL-2fm"/>
+                            <constraint firstItem="s34-e3-XxQ" firstAttribute="top" secondItem="Es3-pa-oV1" secondAttribute="bottom" constant="18" id="kTS-ZL-2fm"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="XvF-DD-58x" secondAttribute="trailing" constant="95.549999999999997" id="mMr-C6-9io"/>
                             <constraint firstItem="Qsa-rP-lXh" firstAttribute="top" secondItem="hsc-Qj-B88" secondAttribute="bottom" constant="25" id="rQv-HY-jPL"/>
                             <constraint firstItem="pkt-6f-6BI" firstAttribute="trailing" secondItem="2eW-DK-Bsx" secondAttribute="trailing" constant="57" id="rZB-iT-mjq"/>
                             <constraint firstItem="2eW-DK-Bsx" firstAttribute="leading" secondItem="pD7-Z0-SPf" secondAttribute="trailing" constant="18" id="sT3-5A-JIC"/>
                             <constraint firstItem="2Ca-JT-rik" firstAttribute="top" secondItem="XvF-DD-58x" secondAttribute="bottom" constant="27" id="vnE-aY-dGV"/>
-                            <constraint firstItem="Es3-pa-oV1" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="75" id="xsL-eC-Xea"/>
+                            <constraint firstItem="Es3-pa-oV1" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="94" id="xsL-eC-Xea"/>
                             <constraint firstItem="hsc-Qj-B88" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="56.939999999999998" id="y2w-8W-Hx4"/>
                             <constraint firstItem="2Ca-JT-rik" firstAttribute="leading" secondItem="pkt-6f-6BI" secondAttribute="leading" constant="56.939999999999998" id="z3E-Kw-3bW"/>
                         </constraints>
@@ -593,7 +593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ghu-V2-lU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2294" y="3222"/>
+            <point key="canvasLocation" x="1190" y="3303"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="MTo-jd-zFz">
