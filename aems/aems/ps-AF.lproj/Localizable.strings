@@ -7,4 +7,84 @@
 //
 
 
-"appName" = "pashto";
+
+"download" = "دانلود";
+"loginTitle" = "د ننوتلو فورم";
+"phone" = "د اړی شمیره";
+"password" = "رمز";
+"register" = " نوی حساب جورول ";
+"login" = " حساب ته ننوتو";
+"downloadTitle" = " مخکی له راجستر کولو";
+"selectLanguage" = " د سیستم د ژبی انتخابول";
+"dari" = "دری ";
+"pashto" = " پشتو ";
+
+
+
+"registerTitle" = "د نوم لیکني فورم";
+"completeName" = " نوم";
+"observerCode" = " ډ";
+"province" = " ولایت ";
+"district" = " ولسوالی ";
+"pollingCenter" = " د رآیځای ";
+"confirmPassword" = " د رمز تکرار";
+"save" = "ثبت ";
+
+
+"downloadFile" = "لومړی ضروری فایلونهړی";
+"accountNotApproved" = " ی حساب تر دې دمه نه دی فعال شوی ";
+"wrongUsernameAndPassword" = "دکارنی نوم یا رمز غلط دی";
+"occuredSomeProblem" = " د پیوستون ستونزه٬ بیا هڅهړۍ ";
+"checkInternetConnection" = "د خپل انترنت د پیوستون چک کړی";
+"enterCorrectPasswordAndUsername" = "په سمه توګهیاډایلی";
+"completeDownloadOperation" = "په بریالیتوپ سره دانلود شو";
+
+
+"required" = "ضروری";
+"number" = " یوازې شمیره";
+"donotMatch" = "ی";
+"size10" = "باید ۱۰ توري وی";
+"min3" = "لږترلږ باید ۳ توري وی";
+"max18" = " حداکثر باید ۱۸ توري وی";
+"min6" = "لږترلږ باید ۶ توري وی";
+
+
+"registredSuccessfuly" = "ستاسی نوم لیکنه بریالی و انتظار باسی چی ستاسی حساب له ادمین له طرفه تصدیق شې";
+"duplicatePhone" = " ستاسی اړیی شمیرهی";
+
+"newReport" = "نوی راپور";
+"draft" = "مسوده";
+"sent" = " لیږل شوی";
+"settings" = "تنظیمات";
+"cancel" = "لغوه کول";
+"locationPermission" = "اجازه د ځای د لاسرسی لپاره اړین دی";
+"locatioMessage" = "مهربانیړی د مبایل تنظیمات ته ورشی او د ځای خدمات فعال کړی ";
+
+
+"addImage" = "د عکسونو اضافه کول ";
+"publicInfo" = "د مرکز عمومی معلومات";
+"pollingCenter" = "د نوم لی محل";
+"correctVote" = "سمي رایی";
+"whiteVote" = "غلطی رایی";
+"wrongVote" = "سپینی رایی";
+"amountVote" = "د رایو تعداد";
+
+
+"correctReport" = "مهربانیړی سمه راپور ولیږی٬ ستاسی راپور سمه نه دی";
+"selectFile" = "مهربانیړۍ انځورونهړی";
+"duplicateReport" = "تکراری راپور";
+"duplicateMessage" = "ستاسی راپور یوځل لیړل شوی آیا غواری بیرته راپور و لیږی ؟";
+"yes" = "هو";
+"no" = "نه";
+"storedToDraft" = "ستاسی راپور په وړاندوینه کې خوندي شو ";
+"storedToSent" = "ستاسی راپور په لیږل شوی برخه کې خوندی شو";
+"pollingCenterNo" = "د محل شمیره ";
+"guide" = "لارښود";
+"logout" = "وتل";
+"logoutMessage" = "آیا غواړی له سیستم نه بهر شی؟ ";
+
+
+"selectStation" = ". مهربانیړی د رآی ورکولو محل انتحاب کړی ";
+"candidateVotes" = " . مهربانیړی د نوماندانو د رایو تعداد سمه دننه کړی ";
+"publicInfo" = " مهربانیړی د عمومی معومات سمه ډک کړی .";
+"downloadComplated" = "د دانلود پروسه بشپړه شو ";
