@@ -36,7 +36,7 @@ class NewReportViewController: UIViewController {
     var languageBundle : Bundle?
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
 
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
@@ -127,9 +127,9 @@ class NewReportViewController: UIViewController {
         let station_id = Int(pollingCenter!.text ?? "0")
         var files : Array<ImageFile> = Array();
         var candidatesVote:Dictionary<String, Int> = [:]
-        let whiteVote=Int(txtWhiteVote!.text ?? "0")
-        let correctVote=Int(txtCorrectVote!.text ?? "0")
-        let wrongVote=Int(txtWrongVote!.text ?? "0")
+        let whiteVote=Int(txtWhiteVote!.text ?? "0") ?? 0
+        let correctVote=Int(txtCorrectVote!.text ?? "0") ?? 0
+        let wrongVote=Int(txtWrongVote!.text ?? "0") ?? 0
         let polling_center_id = User().getLoginUserDefault()?.polling_center_id
         let observer_id = User().getLoginUserDefault()?.observer_id
         let provice_id = User().getLoginUserDefault()?.province_id
@@ -149,9 +149,20 @@ class NewReportViewController: UIViewController {
         
         
         
-        if tootalVote>=460 || tootalVote==0 || tootalVote>=(whiteVote!+wrongVote!+correctVote!) || (whiteVote!+wrongVote!+correctVote!)>=460 {
-            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "correctReport"))
-        }else{
+        if tootalVote>=460 || tootalVote==0 || tootalVote>=(whiteVote+wrongVote+correctVote) || (whiteVote+wrongVote+correctVote)>=460 || station_id==nil {
+            if(station_id==nil || station_id==0){
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectStation"))
+            }
+            if((whiteVote+wrongVote+correctVote)>=460){
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "publicInfo"))
+                
+            }
+            if(tootalVote>=460 || tootalVote==0 || tootalVote>=(whiteVote+wrongVote+correctVote)){
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "candidateVotes"))
+                
+            }
+        }else {
+            
         if selectedFiles.count == 1{
             if selectedFiles[0]==1{
                 if firsImage!.image != nil{
@@ -196,13 +207,19 @@ class NewReportViewController: UIViewController {
         
         if AppDatabase().isSentReport(station_id: station_id!){
             
+            if  files.count==0{
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectFile"))
+            }
+            else{
             let alert = UIAlertController(title:AppLanguage().Locale(text: "duplicateReport"), message: AppLanguage().Locale(text: "duplicateMessage"), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler: { action in
                 Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
-                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        let manager = Alamofire.SessionManager.default
+                        manager.session.configuration.timeoutIntervalForRequest = 120
+                        manager.upload(multipartFormData: { (multipartFormData) in
                             multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
                             multipartFormData.append(candidateData!, withName: "candidates");
                             multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
@@ -256,7 +273,9 @@ class NewReportViewController: UIViewController {
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
                         let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
-                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        let manager = Alamofire.SessionManager.default
+                        manager.session.configuration.timeoutIntervalForRequest = 120
+                        manager.upload(multipartFormData: { (multipartFormData) in
                             multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
                             multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
                             multipartFormData.append(candidateData!, withName: "candidates");
@@ -304,6 +323,7 @@ class NewReportViewController: UIViewController {
                     }
                 }
                 else{
+                    Loader.stop()
                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectFile"))
                 }
                 
@@ -314,14 +334,16 @@ class NewReportViewController: UIViewController {
             alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "no"), style: .cancel, handler: nil))
             self.present(alert, animated: true)
             
-            
+            }
         }
         else{
             Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
-                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        let manager = Alamofire.SessionManager.default
+                        manager.session.configuration.timeoutIntervalForRequest = 120
+                        manager.upload(multipartFormData: { (multipartFormData) in
                             multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
                             multipartFormData.append(candidateData!, withName: "candidates");
                             multipartFormData.append(String(report.province_id!).data(using: String.Encoding.utf8)!, withName: "province_id");
@@ -372,7 +394,9 @@ class NewReportViewController: UIViewController {
                     if CheckInternetConnection.isConnectedToInternet(){
                         let firstImageData = (files[0].file?.jpegData(compressionQuality: 0))!
                         let secondImageData = (files[1].file?.jpegData(compressionQuality: 0))!
-                        Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        let manager = Alamofire.SessionManager.default
+                        manager.session.configuration.timeoutIntervalForRequest = 120
+                        manager.upload(multipartFormData: { (multipartFormData) in
                             multipartFormData.append(firstImageData, withName: "image1", fileName: files[0].fileName!, mimeType: "image/png");
                             multipartFormData.append(secondImageData, withName: "image2", fileName: files[1].fileName!, mimeType: "image/png");
                             multipartFormData.append(candidateData!, withName: "candidates");

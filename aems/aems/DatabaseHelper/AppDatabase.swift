@@ -9,9 +9,10 @@
 import UIKit
 
 class AppDatabase: NSObject {
-    
-//    static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
-    static let DOMAIN_ADDRESS="http://192.168.1.135:3000";
+
+    static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
+    //static let DOMAIN_ADDRESS="http://192.168.20.245:3000";
+
     
     override init() {
         do{

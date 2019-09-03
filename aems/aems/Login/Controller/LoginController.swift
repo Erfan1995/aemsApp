@@ -49,17 +49,10 @@ class LoginViewController: UIViewController {
         localizeLogin()
     }
     
-    
-    
-    
-    @IBAction func btnDownload(_ sender: UIButton) {
-        downloadFiles()
-    }
-    
+
     @IBAction func btnDari(_ sender: UIButton) {
         AppLanguage().setLanguage(lang: "fa-AF")
         viewDidLoad()
-        
     }
     
     @IBAction func btnPashto(_ sender: UIButton) {
@@ -124,16 +117,22 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginBtnPressed(_ sender: Any) {
         
+        
+        if !Candidate().getCondidateUserDefault() || !Province().getProvinceUserDefault() || !District().getDistrictUserDefault() || !PollingCenter().getPollingCenterUserDefault() {
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "downloadFile"))
+        }
+        else{
+        
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
         do{
            let phones =  try txtPhone.validatedText(validationType: ValidatorType.phone)
-        
-            
             let pass =   try txtPassword.validatedText(validationType: ValidatorType.password)
             if CheckInternetConnection.isConnectedToInternet(){
                 Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
-                Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
+                let manager = Alamofire.SessionManager.default
+                manager.session.configuration.timeoutIntervalForRequest = 120
+                manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
                                   method: .post,
                                   parameters: ["phone": phone,"password":password])
                     .validate()
@@ -175,6 +174,8 @@ class LoginViewController: UIViewController {
         }catch(let error){
             Helper.showSnackBar(messageString: AppLanguage().Locale(text: "enterCorrectPasswordAndUsername"))
         }
+            
+        }
         
     }
 
@@ -184,7 +185,9 @@ class LoginViewController: UIViewController {
     func downloadFiles() {
         if CheckInternetConnection.isConnectedToInternet(){
             Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
-            Alamofire.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
+            let manager = Alamofire.SessionManager.default
+            manager.session.configuration.timeoutIntervalForRequest = 120
+            manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/commondatacollection/get-common-data-for-mobile",
                               method: .get)
                 .validate()
                 .responseJSON { response in
@@ -221,19 +224,21 @@ class LoginViewController: UIViewController {
                     })
                     
                     AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
-                    
             }
 
         }else{
             Helper.showSnackBar(messageString:AppLanguage().Locale(text: "checkInternetConnection"))
         }
     }
+    
+    
     @IBAction func downloadPressed(_ sender: Any) {
-        if !Candidate().getCondidateUserDefault() && !Province().getProvinceUserDefault() && !District().getDistrictUserDefault() && !PollingCenter().getPollingCenterUserDefault() {
+        
+        if !Candidate().getCondidateUserDefault() || !Province().getProvinceUserDefault() || !District().getDistrictUserDefault() || !PollingCenter().getPollingCenterUserDefault() {
             downloadFiles()
         }
         else{
-            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "completeDownloadOperation"))
+            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "downloadComplated"))
         }
     }
 
