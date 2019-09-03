@@ -9,6 +9,32 @@
 import UIKit
 
 class HelpViewController: UIViewController {
+    
+    @IBOutlet weak var txtLoginPageGuide: UITextView!
+    @IBOutlet weak var lblLoginTitle: UILabel!
+    @IBOutlet weak var imgLogin: UIImageView!
+    @IBOutlet weak var txtDownloadFileGuide: UITextView!
+    @IBOutlet weak var lblDownloadTitle: UILabel!
+    @IBOutlet weak var txtSelectLanguageGuide: UITextView!
+    
+    @IBOutlet weak var txtCreateAcountGuide: UITextView!
+    @IBOutlet weak var lblCreateAcountTitle: UILabel!
+    @IBOutlet weak var lblLoginToSystem: UILabel!
+    @IBOutlet weak var txtLoginToSystemGuide: UITextView!
+    @IBOutlet weak var lblRegisterTitle: UILabel!
+    @IBOutlet weak var lblSelectLanguageTitle: UILabel!
+    @IBOutlet weak var txtRegisterGuide: UITextView!
+    @IBOutlet weak var imgRegister: UIImageView!
+    @IBOutlet weak var lblMainPageGuide: UILabel!
+    @IBOutlet weak var txtMainPageGuide: UITextView!
+    @IBOutlet weak var lblMainPageFirstOption: UILabel!
+    @IBOutlet weak var lblMainPageSecondOption: UILabel!
+    @IBOutlet weak var imgMainPage: UIImageView!
+    @IBOutlet weak var lblFirstOption: UILabel!
+    @IBOutlet weak var txtFirstOption: UITextView!
+    @IBOutlet weak var imgFistOption: UIImageView!
+    
+    
     var parentName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
