@@ -223,8 +223,9 @@ class LoginViewController: UIViewController {
                             
                             case .failure(let error):
                                 if error._code == NSURLErrorTimedOut {
-                                    print("Request timeout!")
                                     Loader.stop()
+                                    
+                                    
                                 }
                             break
                             
@@ -255,39 +256,48 @@ class LoginViewController: UIViewController {
                               method: .get)
                 .validate()
                 .responseJSON { response in
-                    guard response.result.isSuccess else {
-                        return
+                    switch (response.result){
+                    case .success:
+                        
+                        let json=JSON(response.value)
+                        var condidateData : Array<Candidate> = Array()
+                        var provinceData : Array<Province> = Array()
+                        var districtData : Array<District> = Array();
+                        var pollingCenterData : Array<PollingCenter> = Array();
+                        
+                        json["candidates"].array?.forEach({
+                            (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
+                            condidateData.append(condidate)
+                        })
+                        
+                        json["provinces"].array?.forEach({
+                            (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
+                            provinceData.append(province)
+                        })
+                        
+                        
+                        json["districts"].array?.forEach({
+                            (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
+                            districtData.append(district)
+                        })
+                        
+                        
+                        json["polling_centers"].array?.forEach({
+                            (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
+                            pollingCenterData.append(center)
+                        })
+                        
+                        AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
+                        Loader.stop()
+                        break
+                        
+                    case .failure(let error):
+                        if error._code == NSURLErrorTimedOut {
+                            Loader.stop()
+
+                        }
+                        break
                     }
-                    Loader.stop()
-                    let json=JSON(response.value)
-                    var condidateData : Array<Candidate> = Array()
-                    var provinceData : Array<Province> = Array()
-                    var districtData : Array<District> = Array();
-                    var pollingCenterData : Array<PollingCenter> = Array();
-                    
-                    json["candidates"].array?.forEach({
-                        (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
-                        condidateData.append(condidate)
-                    })
-                    
-                    json["provinces"].array?.forEach({
-                        (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
-                        provinceData.append(province)
-                    })
-                    
-                    
-                    json["districts"].array?.forEach({
-                        (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
-                        districtData.append(district)
-                    })
-                    
-                    
-                    json["polling_centers"].array?.forEach({
-                        (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
-                        pollingCenterData.append(center)
-                    })
-                    
-                    AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
             }
 
         }else{

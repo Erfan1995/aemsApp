@@ -167,7 +167,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     switch result {
                     case .success(let upload, _, _):
                         upload.uploadProgress(closure: { (progress) in
-                            print("Upload Progress: \(progress.fractionCompleted)")
+                        
                         })
                         
                         upload.responseJSON { response in
@@ -178,7 +178,6 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
-                                    print("report \(self.report!.is_sent)")
                                     _ = self.navigationController?.popViewController(animated: true)
                                 }
                             }
@@ -187,9 +186,15 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                             
                         }
                         
-                    case .failure(let encodingError):
-                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
-                        Loader.stop()
+                    break
+                    case .failure(let error):
+                        if error._code == NSURLErrorTimedOut {
+                            Loader.stop()
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                        }
+                        break
+                        
+                        
                     }
                 }
             
@@ -218,7 +223,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                     switch result {
                     case .success(let upload, _, _):
                         upload.uploadProgress(closure: { (progress) in
-                            print("Upload Progress: \(progress.fractionCompleted)")
+                            
                         })
                         
                         upload.responseJSON { response in
@@ -229,7 +234,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
-                                    print("report \(self.report!.is_sent)")
+                
                                     _ = self.navigationController?.popViewController(animated: true)
                                 }
                             }
@@ -237,9 +242,15 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                             Loader.stop()
                         }
                         
-                    case .failure(let encodingError):
-                        Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
-                        Loader.stop()
+                        break
+                    case .failure(let error):
+                        if error._code == NSURLErrorTimedOut {
+                            Loader.stop()
+                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                        }
+                        break
+                        
+                        
                     }
                 }
             }

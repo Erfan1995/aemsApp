@@ -229,12 +229,11 @@ class NewReportViewController: UIViewController {
                             switch result {
                             case .success(let upload, _, _):
                                 upload.uploadProgress(closure: { (progress) in
-                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                   
                                 })
                                 
                                 upload.responseJSON { response in
-        
-                                    
+    
                                     if let json = response.result.value {
                                         if  JSON(json)["response"]==1{
                                             AppDatabase().deleteReport(station_id: station_id!)
@@ -247,9 +246,17 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure( _):
-                                Loader.stop()
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                break
+                
+                            case .failure(let error):
+                                if error._code == NSURLErrorTimedOut {
+                                    Loader.stop()
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                }
+                                break
+                                
+                                
+                                
                             }
                         }
                         
@@ -257,7 +264,7 @@ class NewReportViewController: UIViewController {
                     }
                     else{
                         Loader.stop()
-                        AppDatabase().deleteReport(station_id: station_id!)
+                        AppDatabase().deleteReport(station_id: report.pc_station_number!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
@@ -287,7 +294,7 @@ class NewReportViewController: UIViewController {
                             switch result {
                             case .success(let upload, _, _):
                                 upload.uploadProgress(closure: { (progress) in
-                                    print("Upload Progress: \(progress.fractionCompleted)")
+                             
                                 })
                                 
                                 upload.responseJSON { response in
@@ -303,15 +310,21 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure( _):
-                                Loader.stop()
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                break
+            
+                            case .failure(let error):
+                                if error._code == NSURLErrorTimedOut {
+                                    Loader.stop()
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                }
+                                break
+                                
                             }
                         }
                     }
                     else{
                         Loader.stop()
-                        AppDatabase().deleteReport(station_id: station_id!)
+                        AppDatabase().deleteReport(station_id: report.pc_station_number!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString:AppLanguage().Locale(text: "storedToDraft"))
@@ -356,7 +369,7 @@ class NewReportViewController: UIViewController {
                             switch result {
                             case .success(let upload, _, _):
                                 upload.uploadProgress(closure: { (progress) in
-                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                  
                                 })
                                 
                                 upload.responseJSON { response in
@@ -372,15 +385,24 @@ class NewReportViewController: UIViewController {
                                     Loader.stop()
                                 }
                                 
-                            case .failure( _):
-                                Loader.stop()
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                break
+                            
+                            case .failure(let error):
+                                if error._code == NSURLErrorTimedOut {
+                                    Loader.stop()
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                }
+                                break
+                                
+                                
+                                
                             }
                         }
                         
                         
                     }
                     else{
+                        AppDatabase().deleteReport(station_id: report.pc_station_number!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))
@@ -412,7 +434,7 @@ class NewReportViewController: UIViewController {
                             switch result {
                             case .success(let upload, _, _):
                                 upload.uploadProgress(closure: { (progress) in
-                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                   
                                 })
                                 
                                 upload.responseJSON { response in
@@ -428,14 +450,20 @@ class NewReportViewController: UIViewController {
                                     
                                     Loader.stop()
                                 }
+                                break
+                            case .failure(let error):
+                                if error._code == NSURLErrorTimedOut {
+                                    Loader.stop()
+                                    Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                                }
+                                break
                                 
-                            case .failure( _):
-                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
-                                Loader.stop()
+                            
                             }
                         }
                     }
                     else{
+                        AppDatabase().deleteReport(station_id: report.pc_station_number!)
                         report.is_sent=false
                         AppDatabase().storeFileToLocal(files: files, report: report, candidatesVote: candidateArray)
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToDraft"))

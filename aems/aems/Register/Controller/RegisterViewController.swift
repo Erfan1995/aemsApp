@@ -300,21 +300,30 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 manager.session.configuration.timeoutIntervalForRequest = 120
                 manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
                     .responseJSON { response in
-                        guard response.result.isSuccess else {
-                            return
+                        switch(response.result){
+                        case .success:
+                            Loader.stop()
+                            let json=JSON(response.value)
+                            if  json["response"]==1{
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "registredSuccessfuly"))
+                                self.dismiss( animated: true, completion: nil)
+                            }
+                            else if json["response"]==2{
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "duplicatePhone"))
+                            }
+                            else if json["response"]==3{
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                            }
+                            break
+                            
+                        case .failure(let error):
+                            if error._code == NSURLErrorTimedOut {
+                                Loader.stop()
+                            }
+                            break
+
                         }
-                        Loader.stop()
-                        let json=JSON(response.value)
-                        if  json["response"]==1{
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "registredSuccessfuly"))
-                            self.dismiss( animated: true, completion: nil)
-                        }
-                        else if json["response"]==2{
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "duplicatePhone"))
-                        }
-                        else if json["response"]==3{
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
-                        }
+                        
                 }
             }else{
                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
