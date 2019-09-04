@@ -150,11 +150,11 @@ class NewReportViewController: UIViewController {
             if(station_id==nil || station_id==0){
                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "selectStation"))
             }
-            if((whiteVote+wrongVote+correctVote)>=460){
-                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "publicInfo"))
+            if((whiteVote+wrongVote+correctVote)>=460 || tootalVote>=460){
+                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "correctReport"))
                 
             }
-            if(tootalVote>=460 || tootalVote==0 || tootalVote>=(whiteVote+wrongVote+correctVote)){
+            if(  tootalVote==0 || tootalVote>=(whiteVote+wrongVote+correctVote)){
                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "candidateVotes"))
                 
             }

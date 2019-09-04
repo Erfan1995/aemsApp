@@ -376,21 +376,8 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
                         }
                     }
                     district.text=districtPickerData[0]
-                    
-                    
-                    if  district_id != 0 {
-                        print("selected district \(district_id)")
-                        centers=AppDatabase().getPollingCenters(district_id: Int32(district_id))
-                        for cen in centers{
-                            pollingCenterData.append(cen.polling_center_code!)
-                        }
-                    }
-                    if pollingCenterData.count>0{
-                        print("print \(pollingCenterData[0])")
-                        pollingCenter.text=pollingCenterData[0]
-                    }
-                    
-                    
+                    pollingCenter.text=""
+                    pollingCenterData.removeAll()
                 }
             }
             break
