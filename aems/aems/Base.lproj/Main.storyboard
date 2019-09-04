@@ -180,6 +180,8 @@
                         <outlet property="dobwloadTitle" destination="5Xz-KM-EU1" id="uPX-st-pdg"/>
                         <outlet property="formTitle" destination="XvF-DD-58x" id="SPl-4Q-cvz"/>
                         <outlet property="lblDari" destination="pD7-Z0-SPf" id="9z9-Qi-5gQ"/>
+                        <outlet property="lblGuide" destination="91c-z4-h1U" id="KzB-pj-jlf"/>
+                        <outlet property="lblGuideText" destination="pk9-ft-Z5a" id="coz-hT-1Bt"/>
                         <outlet property="lblPashot" destination="s34-e3-XxQ" id="TQX-Zt-dOK"/>
                         <outlet property="lblSelectLanguage" destination="2eW-DK-Bsx" id="tHr-p0-L12"/>
                         <outlet property="txtDownload" destination="Es3-pa-oV1" id="l6B-U1-45S"/>
@@ -214,7 +216,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="جزییات" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="DRe-6e-OXf">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="جزییات" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRe-6e-OXf">
                                                 <rect key="frame" x="7" y="52" width="359" height="58"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -230,7 +232,7 @@
                                                     <constraint firstAttribute="height" constant="370" id="oG0-nI-vk4"/>
                                                 </constraints>
                                             </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="hskdk skdhk sdh" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="cxq-gw-13S">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="hskdk skdhk sdh" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxq-gw-13S">
                                                 <rect key="frame" x="8" y="634" width="359" height="93"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -248,7 +250,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="kshdkjhsdhkshd" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="zGv-Xq-IFY">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="kshdkjhsdhkshd" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGv-Xq-IFY">
                                                 <rect key="frame" x="11" y="528" width="350" height="64"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -266,7 +268,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="yYk-vF-4mE">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYk-vF-4mE">
                                                 <rect key="frame" x="8" y="768" width="359" height="150"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -285,7 +287,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="HmN-Rl-YGe">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HmN-Rl-YGe">
                                                 <rect key="frame" x="8" y="957" width="359" height="157"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -313,7 +315,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="hkshdkh s" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="Fcp-SP-FMn">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="hkshdkh s" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcp-SP-FMn">
                                                 <rect key="frame" x="8" y="1151" width="359" height="79"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -338,7 +340,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="skhdks kdhk sdh" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="Ue8-Eu-4vo">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="skhdks kdhk sdh" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue8-Eu-4vo">
                                                 <rect key="frame" x="9" y="1634" width="358" height="101"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -381,7 +383,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="hfF-YM-hIQ">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfF-YM-hIQ">
                                                 <rect key="frame" x="8" y="2322" width="359" height="197"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -398,7 +400,7 @@
                                                     <constraint firstAttribute="width" constant="359" id="W3k-yQ-XIq"/>
                                                 </constraints>
                                             </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="hEN-u2-uKe">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEN-u2-uKe">
                                                 <rect key="frame" x="8" y="2950" width="359" height="111"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -440,7 +442,7 @@
                                                     <constraint firstAttribute="width" constant="353" id="RKo-R2-FwE"/>
                                                 </constraints>
                                             </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-dK-H2o">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-dK-H2o">
                                                 <rect key="frame" x="8" y="3641" width="359" height="81"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -450,7 +452,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="EAG-Ad-NFf">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAG-Ad-NFf">
                                                 <rect key="frame" x="13" y="4212" width="353" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -509,7 +511,7 @@
                                             <constraint firstItem="FWB-hb-hZH" firstAttribute="top" secondItem="hfF-YM-hIQ" secondAttribute="bottom" constant="10" id="Hld-Ng-ppu"/>
                                             <constraint firstItem="8a9-fR-kue" firstAttribute="top" secondItem="ve0-uX-B2x" secondAttribute="bottom" constant="10" id="K32-Y0-IGH"/>
                                             <constraint firstAttribute="trailing" secondItem="blP-Be-NLo" secondAttribute="trailing" constant="12" id="KCj-SM-JNF"/>
-                                            <constraint firstItem="bMk-sx-XVR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" symbolic="YES" id="KQe-rU-gzk"/>
+                                            <constraint firstItem="bMk-sx-XVR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="20" symbolic="YES" id="KQe-rU-gzk"/>
                                             <constraint firstItem="o9B-cO-XrO" firstAttribute="leading" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="8" id="L9R-WE-fMU"/>
                                             <constraint firstItem="DRe-6e-OXf" firstAttribute="leading" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="7" id="MTP-cj-p2p"/>
                                             <constraint firstItem="HmN-Rl-YGe" firstAttribute="leading" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="8" id="Mq1-jQ-wWl"/>
@@ -571,7 +573,7 @@
                                             <constraint firstAttribute="trailing" secondItem="axA-f8-bHO" secondAttribute="trailing" constant="15" id="rb6-Ff-yaE"/>
                                             <constraint firstItem="axA-f8-bHO" firstAttribute="top" secondItem="yYk-vF-4mE" secondAttribute="bottom" constant="10" id="rhQ-im-Tnr"/>
                                             <constraint firstItem="zPO-Iu-em3" firstAttribute="leading" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="9" id="sKG-L9-sB1"/>
-                                            <constraint firstItem="ve0-uX-B2x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" symbolic="YES" id="sjE-7F-6kP"/>
+                                            <constraint firstItem="ve0-uX-B2x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="20" symbolic="YES" id="sjE-7F-6kP"/>
                                             <constraint firstAttribute="trailing" secondItem="hfF-YM-hIQ" secondAttribute="trailing" constant="8" id="tgw-Au-9rd"/>
                                             <constraint firstItem="8a9-fR-kue" firstAttribute="top" secondItem="ve0-uX-B2x" secondAttribute="bottom" constant="10" id="uaP-oQ-xXE"/>
                                             <constraint firstItem="cqz-Ia-jyd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" symbolic="YES" id="vHe-rX-0IN"/>
@@ -608,6 +610,8 @@
                         <outlet property="imgLogin" destination="2V2-Lb-YZX" id="MXw-fm-pVK"/>
                         <outlet property="imgMainPage" destination="8a9-fR-kue" id="uXB-Bz-7C7"/>
                         <outlet property="imgRegister" destination="o9B-cO-XrO" id="6jI-C7-0JU"/>
+                        <outlet property="imgSecondOption" destination="jWo-8n-XYC" id="sGT-H2-5hN"/>
+                        <outlet property="imgThirdOption" destination="zPO-Iu-em3" id="eMD-0S-gKB"/>
                         <outlet property="lblCreateAcountTitle" destination="0bV-RC-bQh" id="LZM-sG-byb"/>
                         <outlet property="lblDownloadTitle" destination="cqz-Ia-jyd" id="rGy-wa-XJp"/>
                         <outlet property="lblFirstOption" destination="rXY-Lv-EFf" id="YBu-e7-otP"/>
@@ -616,16 +620,22 @@
                         <outlet property="lblMainPageFirstOption" destination="WyI-bM-48c" id="gIb-G3-Cqq"/>
                         <outlet property="lblMainPageGuide" destination="Gy8-ej-qET" id="Pcu-cI-0q1"/>
                         <outlet property="lblMainPageSecondOption" destination="Xee-cW-qul" id="0OL-wv-mo2"/>
+                        <outlet property="lblMainPageThirdOption" destination="ve0-uX-B2x" id="X2O-mi-2Qq"/>
                         <outlet property="lblRegisterTitle" destination="zVE-vG-fAk" id="wLm-xl-KnW"/>
+                        <outlet property="lblSecondOption" destination="Ouv-0l-N7J" id="wJb-MB-7Cg"/>
                         <outlet property="lblSelectLanguageTitle" destination="5a0-bI-Xbx" id="gRb-qs-P5w"/>
+                        <outlet property="lblThirdOption" destination="bMk-sx-XVR" id="uKE-mi-f5J"/>
                         <outlet property="txtCreateAcountGuide" destination="yYk-vF-4mE" id="ccR-zK-PVZ"/>
                         <outlet property="txtDownloadFileGuide" destination="cxq-gw-13S" id="zsT-Pe-iPb"/>
                         <outlet property="txtFirstOption" destination="hfF-YM-hIQ" id="TCk-Bk-Ibu"/>
                         <outlet property="txtLoginPageGuide" destination="DRe-6e-OXf" id="y7h-F1-8EX"/>
                         <outlet property="txtLoginToSystemGuide" destination="HmN-Rl-YGe" id="WrG-WQ-ebi"/>
                         <outlet property="txtMainPageGuide" destination="Ue8-Eu-4vo" id="0ZB-rl-1Sl"/>
+                        <outlet property="txtNote" destination="EAG-Ad-NFf" id="YTV-rN-A5B"/>
                         <outlet property="txtRegisterGuide" destination="Fcp-SP-FMn" id="GsQ-RD-Nqf"/>
+                        <outlet property="txtSecondOption" destination="hEN-u2-uKe" id="Jd9-7E-fyF"/>
                         <outlet property="txtSelectLanguageGuide" destination="zGv-Xq-IFY" id="eiA-ne-Eas"/>
+                        <outlet property="txtThirdOption" destination="iO7-dK-H2o" id="bUh-Tg-oQJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ghu-V2-lU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2050,7 +2060,7 @@
         <image name="back" width="24" height="24"/>
         <image name="business-card-of-a-man-with-contact-info" width="16" height="16"/>
         <image name="draft_image_fa" width="482" height="728"/>
-        <image name="final_result_image_fa" width="653" height="770"/>
+        <image name="final_result_image_fa" width="629" height="646"/>
         <image name="image" width="256" height="256"/>
         <image name="login_icon" width="250" height="250"/>
         <image name="login_image_fa" width="484" height="720"/>
