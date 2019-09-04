@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-
 class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
    
     @IBOutlet weak var draftViewCollection: UICollectionView!
@@ -22,6 +21,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     var images : Array<String> = Array()
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         draftViewCollection.dataSource = self
         draftViewCollection.delegate = self
         report=AppDatabase().getReport(station_id: Int(locName)!)
@@ -178,6 +178,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
+                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadTable"),object: nil)
                                     _ = self.navigationController?.popViewController(animated: true)
                                 }
                             }
@@ -228,7 +229,8 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
-                                    _ = self.navigationController?.popViewController(animated: true)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadTable"),object: nil); self.navigationController?.popViewController(animated: true)
+                                
                                 }
                             }
             

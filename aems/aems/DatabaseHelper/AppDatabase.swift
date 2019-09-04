@@ -29,7 +29,6 @@ class AppDatabase: NSObject {
                     try database!.executeUpdate(ReportImage.CREATE_TABLE, values: nil)
                     
                 }catch{
-                    print( " TABLE INSERTION ERROR \(error) ")
                 }
             }
         }
@@ -70,8 +69,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             Candidate().setCondidateUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("condidate insertion field ")
         }
         con!.close()
     }
@@ -98,8 +95,6 @@ class AppDatabase: NSObject {
             Province().setProvinceUserDefault(uploaded: true)
             
         }catch{
-            print( error)
-            print("province insertion field ")
         }
         con!.close()
     }
@@ -125,8 +120,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             District().setDistrictUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("district insertion field ")
         }
         con!.close()
     }
@@ -152,8 +145,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             PollingCenter().setPollingCenterUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("polling center insertion field ")
         }
         con!.close()
     }
@@ -403,8 +394,6 @@ class AppDatabase: NSObject {
             
        
         }catch{
-            print( error)
-            print("storeLocaleFile your insertion field ")
         }
         con!.close()
     }
