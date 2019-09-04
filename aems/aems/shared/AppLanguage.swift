@@ -19,6 +19,7 @@ class AppLanguage: NSObject {
     
     func Locale(text:String) -> String {
         var languageBundel:Bundle?
+        
         let languageCode = UserDefaults.standard
         if languageCode.value(forKey: "language") != nil && (languageCode.value(forKey: "language")as? String != "en" ) {
             let language=languageCode.string(forKey: "language")

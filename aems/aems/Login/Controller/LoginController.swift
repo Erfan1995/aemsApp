@@ -14,6 +14,9 @@ class LoginViewController: UIViewController {
 
 
    
+    @IBOutlet weak var lblGuideTextView: UITextView!
+    @IBOutlet weak var lblGuideText: UILabel!
+    @IBOutlet weak var lblGuide: UIButton!
     @IBOutlet weak var txtDownload: UIButton!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -25,20 +28,23 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var lblDari: UIButton!
     @IBOutlet weak var lblPashot: UIButton!
     
-    
-    
 //     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
- self.navigationController?.navigationBar.topItem?.title = "صفحه ورودی"
+ self.navigationController?.navigationBar.topItem?.title = AppLanguage().Locale(text: "loginPage")
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
-                let tabBarViewController = storyboard?.instantiateViewController(
-                    withIdentifier: "TabBarViewController") as! TabBarViewController
-                present(tabBarViewController, animated: true, completion: nil)
-
+                if checkActivation(observer_id: loginDate!.observer_id, token: loginDate!.token){
+                    let tabBarViewController = storyboard?.instantiateViewController(
+                        withIdentifier: "TabBarViewController") as! TabBarViewController
+                    present(tabBarViewController, animated: true, completion: nil)
+                    print("if executed ")
+                }
+                else{
+                    print("else executed")
+                }
             }
             else{
                 var _ : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
@@ -74,7 +80,12 @@ class LoginViewController: UIViewController {
         lblSelectLanguage.text=AppLanguage().Locale(text: "selectLanguage")
         lblDari.setTitle(AppLanguage().Locale(text: "dari"), for: .normal)
         lblPashot.setTitle(AppLanguage().Locale(text: "pashto"), for: .normal)
+        lblGuide.setTitle(AppLanguage().Locale(text: "guide"), for: .normal)
+        lblGuideTextView.text=AppLanguage().Locale(text: "guid_text")
     }
+    
+    
+    
     
     func appearKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
@@ -116,8 +127,51 @@ class LoginViewController: UIViewController {
         
     }
 
-    @IBAction func loginBtnPressed(_ sender: Any) {
+    
+    func checkActivation(observer_id:Int,token:String) -> Bool {
+        var result: Bool = true
+        let headers: HTTPHeaders = [
+            "authorization": token
+        ]
         
+        if CheckInternetConnection.isConnectedToInternet(){
+            Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
+            let manager = Alamofire.SessionManager.default
+            manager.session.configuration.timeoutIntervalForRequest = 2
+            manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-activation-check", method: .post, parameters: ["observer_id": observer_id], encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .responseJSON {
+                    response in
+                    switch (response.result) {
+                    case .success: // succes path
+                        let json=JSON(response.value as Any)
+                        if json["response"]==1{
+                            result=true
+                        }
+                        else if json["response"]==2{
+                            result=false
+                            let loginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                            User().setLoginUserDefault(loginData: loginData)
+                        }
+                        break
+                    case .failure(let error):
+                        if error._code == NSURLErrorTimedOut {
+                            print("Request timeout!")
+                        }
+                        break
+                    }
+                }
+        
+            Loader.stop()
+        }
+        
+        return result;
+    }
+    
+    
+    
+    
+    @IBAction func loginBtnPressed(_ sender: Any) {
         
         if !Candidate().getCondidateUserDefault() || !Province().getProvinceUserDefault() || !District().getDistrictUserDefault() || !PollingCenter().getPollingCenterUserDefault() {
             Helper.showSnackBar(messageString: AppLanguage().Locale(text: "downloadFile"))
@@ -132,45 +186,51 @@ class LoginViewController: UIViewController {
             if CheckInternetConnection.isConnectedToInternet(){
                 Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
                 let manager = Alamofire.SessionManager.default
-                manager.session.configuration.timeoutIntervalForRequest = 120
-                
+                manager.session.configuration.timeoutIntervalForRequest = 10
                 manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
                                   method: .post,
                                   parameters: ["phone": phone,"password":password])
                     .validate()
                     .responseJSON { response in
-                        print("------------------ timedout")
-                        guard response.result.isSuccess else {
+                        switch(response.result){
+                        case .success:
+                            let json=JSON(response.value as Any)
+                            Loader.stop()
+                            if json["response"]==1{
+                                var responseData = json["data"]
+                                let loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+                                
+                                User().setLoginUserDefault(loginData: loginData)
+                                
+                                let tabBarViewController =
+                                    self.storyboard?.instantiateViewController(
+                                        withIdentifier: "TabBarViewController") as! TabBarViewController
+                                self.present(tabBarViewController, animated: true, completion: nil)
+                            }
+                            else if json["response"]==2{
+                                
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "accountNotApproved"))
+                            }
+                            else if json["response"]==3{
+                                
+                                
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "wrongUsernameAndPassword"))
+                            }
+                            else if json["response"]==4{
+                                
+                                Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
+                            }
+                            break
                             
-                            return
+                            case .failure(let error):
+                                if error._code == NSURLErrorTimedOut {
+                                    print("Request timeout!")
+                                    Loader.stop()
+                                }
+                            break
+                            
                         }
-                        let json=JSON(response.value as Any)
-                        
-                        Loader.stop()
-                        if json["response"]==1{
-                            var responseData = json["data"]
-                            let loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
-                            
-                            User().setLoginUserDefault(loginData: loginData)
-                            
-                            let tabBarViewController =
-                                self.storyboard?.instantiateViewController(
-                                    withIdentifier: "TabBarViewController") as! TabBarViewController
-                            self.present(tabBarViewController, animated: true, completion: nil)
-                        }
-                        else if json["response"]==2{
-                            
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "accountNotApproved"))
-                        }
-                        else if json["response"]==3{
-                            
-                            
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "wrongUsernameAndPassword"))
-                        }
-                        else if json["response"]==4{
-                            
-                            Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
-                        }
+
                 }
             }
             else{

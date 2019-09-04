@@ -42,7 +42,7 @@ class NewReportViewController: UIViewController {
         addBarButton()
         candidateName.removeAll()
         candidateNumber.removeAll()
-        self.navigationController?.navigationBar.topItem?.title = "صفحه اصلی"
+        self.navigationController?.navigationBar.topItem?.title = AppLanguage().Locale(text: "mainPage")
         var candidatesList : Array<Candidate> = AppDatabase().getCandidates()
         let numberOfStation = User().getLoginUserDefault()!.pc_station_number
         for stationNumber in 1...numberOfStation{
