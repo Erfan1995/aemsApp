@@ -86,7 +86,7 @@ class NewReportViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(notification: Notification){
-        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
+        guard let _: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{
             return
         }
         if notification.name == UIResponder.keyboardWillShowNotification ||
@@ -659,7 +659,7 @@ extension NewReportViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func createPollingCenterPicker(){
-        picker.delegate = self as? UIPickerViewDelegate
+        picker.delegate = self as UIPickerViewDelegate
         pollingCenter?.inputView = picker
         picker.backgroundColor = .gray
     }

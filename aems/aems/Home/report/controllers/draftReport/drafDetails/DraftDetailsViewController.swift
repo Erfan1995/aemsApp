@@ -178,7 +178,6 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
-                                    print("report \(self.report!.is_sent)")
                                     _ = self.navigationController?.popViewController(animated: true)
                                 }
                             }
@@ -187,7 +186,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                             
                         }
                         
-                    case .failure(let encodingError):
+                    case .failure( _):
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                         Loader.stop()
                     }
@@ -229,7 +228,6 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                                     self.report!.is_sent=true
                                     AppDatabase().storeFileToLocal(files: self.files, report: self.report!, candidatesVote: self.candidateVotes)
                                     Helper.showSnackBar(messageString: AppLanguage().Locale(text: "storedToSent"))
-                                    print("report \(self.report!.is_sent)")
                                     _ = self.navigationController?.popViewController(animated: true)
                                 }
                             }
@@ -237,7 +235,7 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
                             Loader.stop()
                         }
                         
-                    case .failure(let encodingError):
+                    case .failure( _):
                         Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                         Loader.stop()
                     }

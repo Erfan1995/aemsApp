@@ -313,7 +313,7 @@ class AppDatabase: NSObject {
         let con = openDatabase()
         con!.open()
         var result=false
-        var reportLists : Array<Report> = Array()
+        var _ : Array<Report> = Array()
         let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)' AND \(Report.COL_IS_SENT)='1'"
         let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
         while fmresult!.next(){
@@ -330,7 +330,7 @@ class AppDatabase: NSObject {
         
         let con = openDatabase()
         con!.open()
-        var sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
+        let sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
         do{
             try con!.executeUpdate(sqlStatement, values: nil)
             print("successfuly deleted ")
@@ -387,7 +387,7 @@ class AppDatabase: NSObject {
         
         do{
             try con!.executeUpdate(insertStatment, values: nil)
-            var report_id=getLastReportId(con: con!)
+            let report_id=getLastReportId(con: con!)
             
             
             for file in files{

@@ -41,7 +41,7 @@ class LoginViewController: UIViewController {
 
             }
             else{
-                var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                var _ : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
             }
         }
         hideKeyboardWhenTappedAround()
@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
         }
         if notification.name == UIResponder.keyboardWillShowNotification ||
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
-            let keyboardRect = keyboardFrame.cgRectValue
+            _ = keyboardFrame.cgRectValue
             
             view.frame.origin.y = -30
             
@@ -127,25 +127,29 @@ class LoginViewController: UIViewController {
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
         do{
-           let phones =  try txtPhone.validatedText(validationType: ValidatorType.phone)
-            let pass =   try txtPassword.validatedText(validationType: ValidatorType.password)
+            _ =  try txtPhone.validatedText(validationType: ValidatorType.phone)
+            _ =   try txtPassword.validatedText(validationType: ValidatorType.password)
             if CheckInternetConnection.isConnectedToInternet(){
                 Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
                 let manager = Alamofire.SessionManager.default
                 manager.session.configuration.timeoutIntervalForRequest = 120
+                
                 manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-login",
                                   method: .post,
                                   parameters: ["phone": phone,"password":password])
                     .validate()
                     .responseJSON { response in
+                        print("------------------ timedout")
                         guard response.result.isSuccess else {
+                            
                             return
                         }
-                        let json=JSON(response.value)
+                        let json=JSON(response.value as Any)
+                        
                         Loader.stop()
                         if json["response"]==1{
                             var responseData = json["data"]
-                            var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+                            let loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
                             
                             User().setLoginUserDefault(loginData: loginData)
                             
@@ -172,7 +176,7 @@ class LoginViewController: UIViewController {
             else{
                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
             }
-        }catch(let error){
+        }catch( _){
             Helper.showSnackBar(messageString: AppLanguage().Locale(text: "enterCorrectPasswordAndUsername"))
         }
             
@@ -196,7 +200,7 @@ class LoginViewController: UIViewController {
                         return
                     }
                     Loader.stop()
-                    let json=JSON(response.value)
+                    let json=JSON(response.value as Any)
                     var condidateData : Array<Candidate> = Array()
                     var provinceData : Array<Province> = Array()
                     var districtData : Array<District> = Array();

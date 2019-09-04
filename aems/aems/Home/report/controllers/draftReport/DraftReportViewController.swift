@@ -20,6 +20,10 @@ class DraftReportViewController: UIViewController, UITableViewDelegate, UITableV
        draftContent = creatArry()
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        draftTable.reloadData()
+    }
     func creatArry()->[DraftAndSentReportContent]{
         var temptDraft: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
