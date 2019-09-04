@@ -77,7 +77,7 @@ class HelpViewController: UIViewController {
 //        imgThirdOption.image=""
         
         
-       var lang = UserDefaults.standard.string(forKey: "language")
+        let lang = UserDefaults.standard.string(forKey: "language")
         if lang=="ps-AF"{
                 imgLogin.image=#imageLiteral(resourceName: "login_image_ps.jpg")
                 imgRegister.image=#imageLiteral(resourceName: "register_image_ps.jpg")

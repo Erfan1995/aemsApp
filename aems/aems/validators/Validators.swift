@@ -43,8 +43,8 @@ struct pollsterCodeValidator: ValidatorConvertible {
         guard value.count > 0 else {throw
             ValidationError(AppLanguage().Locale(text: "required"))
         }
-        guard let voteNumber = Int(value) else{throw
-            ValidationError(AppLanguage().Locale(text: "min3"))
+        if Int(value) == nil {
+            throw ValidationError(AppLanguage().Locale(text: "number"))
         }
         return value
     }
@@ -69,7 +69,9 @@ struct matchPasswordValidator: ValidatorConvertible {
 class phoneValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else {throw ValidationError(AppLanguage().Locale(text: "requied"))}
-        guard let phone = Int(value) else {throw ValidationError(AppLanguage().Locale(text: "number"))}
+        if Int(value) == nil{
+            throw ValidationError(AppLanguage().Locale(text: "number"))
+        }
         guard value.count == 10 else {throw ValidationError(AppLanguage().Locale(text: "size10"))}
        
         return value

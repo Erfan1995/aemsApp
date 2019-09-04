@@ -209,20 +209,6 @@
 			path = District;
 			sourceTree = "<group>";
 		};
-		174703B423091D980030AD28 /* Notification */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notification;
-			sourceTree = "<group>";
-		};
-		174703B523091DA30030AD28 /* Password */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Password;
-			sourceTree = "<group>";
-		};
 		174703B623091DA90030AD28 /* PollingCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,8 +446,6 @@
 				174703B823091DC70030AD28 /* Report */,
 				174703B723091DB90030AD28 /* Province */,
 				174703B623091DA90030AD28 /* PollingCenter */,
-				174703B523091DA30030AD28 /* Password */,
-				174703B423091D980030AD28 /* Notification */,
 				174703B323091D8E0030AD28 /* District */,
 				174703B223091D830030AD28 /* Candidate */,
 			);

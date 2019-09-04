@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
 
 
    
+    @IBOutlet weak var lblGuideTextView: UITextView!
     @IBOutlet weak var lblGuideText: UILabel!
     @IBOutlet weak var lblGuide: UIButton!
     @IBOutlet weak var txtDownload: UIButton!
@@ -46,7 +47,7 @@ class LoginViewController: UIViewController {
                 }
             }
             else{
-                var data : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                var _ : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
             }
         }
         hideKeyboardWhenTappedAround()
@@ -80,7 +81,7 @@ class LoginViewController: UIViewController {
         lblDari.setTitle(AppLanguage().Locale(text: "dari"), for: .normal)
         lblPashot.setTitle(AppLanguage().Locale(text: "pashto"), for: .normal)
         lblGuide.setTitle(AppLanguage().Locale(text: "guide"), for: .normal)
-        lblGuideText.text=AppLanguage().Locale(text: "guid_text")
+        lblGuideTextView.text=AppLanguage().Locale(text: "guid_text")
     }
     
     
@@ -100,7 +101,7 @@ class LoginViewController: UIViewController {
         }
         if notification.name == UIResponder.keyboardWillShowNotification ||
             notification.name == UIResponder.keyboardWillChangeFrameNotification{
-            let keyboardRect = keyboardFrame.cgRectValue
+            _ = keyboardFrame.cgRectValue
             
             view.frame.origin.y = -30
             
@@ -143,13 +144,13 @@ class LoginViewController: UIViewController {
                     response in
                     switch (response.result) {
                     case .success: // succes path
-                        let json=JSON(response.value)
+                        let json=JSON(response.value as Any)
                         if json["response"]==1{
                             result=true
                         }
                         else if json["response"]==2{
                             result=false
-                            var loginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
+                            let loginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
                             User().setLoginUserDefault(loginData: loginData)
                         }
                         break
@@ -180,8 +181,8 @@ class LoginViewController: UIViewController {
         let phone : String = txtPhone.text!
         let password : String = txtPassword.text!
         do{
-           let phones =  try txtPhone.validatedText(validationType: ValidatorType.phone)
-            let pass =   try txtPassword.validatedText(validationType: ValidatorType.password)
+            _ =  try txtPhone.validatedText(validationType: ValidatorType.phone)
+            _ =   try txtPassword.validatedText(validationType: ValidatorType.password)
             if CheckInternetConnection.isConnectedToInternet(){
                 Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
                 let manager = Alamofire.SessionManager.default
@@ -193,11 +194,11 @@ class LoginViewController: UIViewController {
                     .responseJSON { response in
                         switch(response.result){
                         case .success:
-                            let json=JSON(response.value)
+                            let json=JSON(response.value as Any)
                             Loader.stop()
                             if json["response"]==1{
                                 var responseData = json["data"]
-                                var loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
+                                let loginData = LoginData(complete_name: responseData["complete_name"].stringValue, observer_id: responseData["observer_id"].intValue, polling_center_id: responseData["polling_center_id"].intValue, province_id: responseData["province_id"].intValue, token: responseData["token"].stringValue, pc_station_number: responseData["pc_amount_of_polling_station"].intValue)
                                 
                                 User().setLoginUserDefault(loginData: loginData)
                                 
@@ -236,7 +237,7 @@ class LoginViewController: UIViewController {
             else{
                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "checkInternetConnection"))
             }
-        }catch(let error){
+        }catch( _){
             Helper.showSnackBar(messageString: AppLanguage().Locale(text: "enterCorrectPasswordAndUsername"))
         }
             
@@ -298,6 +299,38 @@ class LoginViewController: UIViewController {
                         }
                         break
                     }
+
+                    Loader.stop()
+                    let json=JSON(response.value as Any)
+                    var condidateData : Array<Candidate> = Array()
+                    var provinceData : Array<Province> = Array()
+                    var districtData : Array<District> = Array();
+                    var pollingCenterData : Array<PollingCenter> = Array();
+                    
+                    json["candidates"].array?.forEach({
+                        (condidate) in let condidate = Candidate(election_no: condidate["election_number"].int32Value, candidate_name: condidate["candidate_name"].stringValue)
+                        condidateData.append(condidate)
+                    })
+                    
+                    json["provinces"].array?.forEach({
+                        (province) in let province = Province(province_id: province["province_id"].int32Value, name: province["province_name"].stringValue)
+                        provinceData.append(province)
+                    })
+                    
+                    
+                    json["districts"].array?.forEach({
+                        (district) in let district = District(district_id: district["district_id"].int32Value, province_id: district["province_id"].int32Value, name: district["district_name"].stringValue)
+                        districtData.append(district)
+                    })
+                    
+                    
+                    json["polling_centers"].array?.forEach({
+                        (center) in let center = PollingCenter(polling_center_id: center["id"].int32Value, polling_center_code: center["polling_center_name"].stringValue, district_id: center["district_id"].int32Value)
+                        pollingCenterData.append(center)
+                    })
+                    
+                    AppDatabase().downloadFileFromServer(condidates: condidateData, provinces: provinceData, districts: districtData, centers: pollingCenterData)
+
             }
 
         }else{

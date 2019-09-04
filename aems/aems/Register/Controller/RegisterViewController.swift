@@ -152,7 +152,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validateFullName( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.username)
+            try _ = _sender.validatedText(validationType: ValidatorType.username)
             fullNameLabel.text = nil
             _sender.layer.borderColor = UIColor.gray.cgColor
         }catch(let error){
@@ -166,7 +166,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validatePollsterCode( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.pollsterCode)
+            try _ = _sender.validatedText(validationType: ValidatorType.pollsterCode)
             _sender.layer.borderColor = UIColor.gray.cgColor
             polesterCodeLabel.text = nil
         }catch(let error){
@@ -180,7 +180,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validatePhoneNumber( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.phone)
+            try _ = _sender.validatedText(validationType: ValidatorType.phone)
             _sender.layer.borderColor = UIColor.gray.cgColor
             phoneNumberLabel.text = nil
         }catch(let error){
@@ -194,7 +194,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validateProvince( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            try  _ = _sender.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
             _sender.layer.borderColor = UIColor.gray.cgColor
             provinceLabel.text = nil
         }catch(let error){
@@ -208,7 +208,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validateDistrict( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "District"))
+            try _ = _sender.validatedText(validationType: ValidatorType.requiredField(field: "District"))
             _sender.layer.borderColor = UIColor.gray.cgColor
             districtLabel.text = nil
         }catch(let error){
@@ -222,7 +222,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validatePollingCenter( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.requiredField(field: "PollingCenter"))
+            try _ = _sender.validatedText(validationType: ValidatorType.requiredField(field: "PollingCenter"))
             _sender.layer.borderColor = UIColor.gray.cgColor
             pollingCenterLabel.text = nil
         }catch(let error){
@@ -236,7 +236,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validatePassword( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.password)
+            try _ = _sender.validatedText(validationType: ValidatorType.password)
             self.passwordText = _sender.text
             _sender.layer.borderColor = UIColor.gray.cgColor
             passwordLabel.text = nil
@@ -251,7 +251,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func validateConfPassword( _sender: UITextField){
         do{
-            try _sender.validatedText(validationType: ValidatorType.matchPassword(password: passwordText!))
+            try _ = _sender.validatedText(validationType: ValidatorType.matchPassword(password: passwordText!))
             _sender.layer.borderColor = UIColor.gray.cgColor
             confirmPassLabel.text = nil
         }catch(let error){
@@ -264,14 +264,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func register(_ sender: Any) {
         do{
-            let userName  = try fullName.validatedText(validationType: ValidatorType.username)
-            let pollster = try pollsterCode.validatedText(validationType: ValidatorType.pollsterCode)
-            let phone = try phoneNumber.validatedText(validationType: ValidatorType.phone)
-            let provinceName = try province.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
-            let districtName = try district.validatedText(validationType: ValidatorType.requiredField(field: "District"))
-            let pollingCenterName = try pollingCenter.validatedText(validationType: ValidatorType.requiredField(field: "polling center"))
+            _  = try fullName.validatedText(validationType: ValidatorType.username)
+            _ = try pollsterCode.validatedText(validationType: ValidatorType.pollsterCode)
+            _ = try phoneNumber.validatedText(validationType: ValidatorType.phone)
+            _ = try province.validatedText(validationType: ValidatorType.requiredField(field: "Province"))
+            _ = try district.validatedText(validationType: ValidatorType.requiredField(field: "District"))
+            _ = try pollingCenter.validatedText(validationType: ValidatorType.requiredField(field: "polling center"))
             let pass = try password.validatedText(validationType: ValidatorType.password)
-            let confPass = try confirmPassword.validatedText(validationType: ValidatorType.matchPassword(password: pass))
+            _ = try confirmPassword.validatedText(validationType: ValidatorType.matchPassword(password: pass))
             if CheckInternetConnection.isConnectedToInternet(){
                 Loader.start(style: .whiteLarge, backColor: .gray, baseColor: UIColor.blue)
                 var province_id : Int32 = 0
@@ -283,7 +283,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 
                 for pro in provinces{
                     if pro.name == province.text!{
-                        province_id=pro.province_id!
+                        province_id = pro.province_id!
                     }
                 }
                 
@@ -300,6 +300,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 manager.session.configuration.timeoutIntervalForRequest = 120
                 manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/observers/register", method: .post, parameters:user, encoding: JSONEncoding.default)
                     .responseJSON { response in
+
                         switch(response.result){
                         case .success:
                             Loader.stop()

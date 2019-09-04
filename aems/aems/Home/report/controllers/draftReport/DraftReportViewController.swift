@@ -18,8 +18,16 @@ class DraftReportViewController: UIViewController, UITableViewDelegate, UITableV
         draftTable.dataSource = self
         setLocationName=AppDatabase().getDraftOrSentReports(isSent: 0)
        draftContent = creatArry()
-        // Do any additional setup after loading the view.
+            }
+    @objc func loadList(){
+        setLocationName=AppDatabase().getDraftOrSentReports(isSent: 0)
+        draftContent = creatArry()
+        self.draftTable.reloadData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name("loadTable"), object: nil)
+   }
     func creatArry()->[DraftAndSentReportContent]{
         var temptDraft: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
@@ -49,3 +57,4 @@ extension DraftReportViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+

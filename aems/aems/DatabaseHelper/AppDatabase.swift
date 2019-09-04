@@ -10,8 +10,8 @@ import UIKit
 
 class AppDatabase: NSObject {
 
-    //static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
-    static let DOMAIN_ADDRESS="http://192.168.20.244:3000";
+    static let DOMAIN_ADDRESS="http://18.214.22.234:3000";
+    //static let DOMAIN_ADDRESS="http://192.168.20.244:3000";
 
     
     override init() {
@@ -29,7 +29,6 @@ class AppDatabase: NSObject {
                     try database!.executeUpdate(ReportImage.CREATE_TABLE, values: nil)
                     
                 }catch{
-                    print( " TABLE INSERTION ERROR \(error) ")
                 }
             }
         }
@@ -70,8 +69,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             Candidate().setCondidateUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("condidate insertion field ")
         }
         con!.close()
     }
@@ -98,8 +95,6 @@ class AppDatabase: NSObject {
             Province().setProvinceUserDefault(uploaded: true)
             
         }catch{
-            print( error)
-            print("province insertion field ")
         }
         con!.close()
     }
@@ -125,8 +120,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             District().setDistrictUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("district insertion field ")
         }
         con!.close()
     }
@@ -152,8 +145,6 @@ class AppDatabase: NSObject {
             try con!.executeUpdate(insertStatment, values: nil)
             PollingCenter().setPollingCenterUserDefault(uploaded: true)
         }catch{
-            print( error)
-            print("polling center insertion field ")
         }
         con!.close()
     }
@@ -313,7 +304,7 @@ class AppDatabase: NSObject {
         let con = openDatabase()
         con!.open()
         var result=false
-        var reportLists : Array<Report> = Array()
+        var _ : Array<Report> = Array()
         let selectStatment = "SELECT * FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION)='\(station_id)' AND \(Report.COL_IS_SENT)='1'"
         let fmresult = con!.executeQuery(selectStatment, withParameterDictionary: nil)
         while fmresult!.next(){
@@ -330,7 +321,7 @@ class AppDatabase: NSObject {
         
         let con = openDatabase()
         con!.open()
-        var sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
+        let sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
         do{
             try con!.executeUpdate(sqlStatement, values: nil)
             print("successfuly deleted ")
@@ -387,7 +378,7 @@ class AppDatabase: NSObject {
         
         do{
             try con!.executeUpdate(insertStatment, values: nil)
-            var report_id=getLastReportId(con: con!)
+            let report_id=getLastReportId(con: con!)
             
             
             for file in files{
@@ -403,8 +394,6 @@ class AppDatabase: NSObject {
             
        
         }catch{
-            print( error)
-            print("storeLocaleFile your insertion field ")
         }
         con!.close()
     }
