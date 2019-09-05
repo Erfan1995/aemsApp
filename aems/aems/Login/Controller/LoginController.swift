@@ -33,18 +33,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
  self.navigationController?.navigationBar.topItem?.title = AppLanguage().Locale(text: "loginPage")
+        
         let loginDate : LoginData? = User().getLoginUserDefault()
         if  loginDate != nil {
             if loginDate!.polling_center_id != 0{
-                if checkActivation(observer_id: loginDate!.observer_id, token: loginDate!.token){
-                    let tabBarViewController = storyboard?.instantiateViewController(
-                        withIdentifier: "TabBarViewController") as! TabBarViewController
-                    present(tabBarViewController, animated: true, completion: nil)
-                    print("if executed ")
-                }
-                else{
-                    print("else executed")
-                }
+                checkActivation(observer_id: loginDate!.observer_id, token: loginDate!.token)
             }
             else{
                 var _ : LoginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
@@ -128,8 +121,7 @@ class LoginViewController: UIViewController {
     }
 
     
-    func checkActivation(observer_id:Int,token:String) -> Bool {
-        var result: Bool = true
+    func checkActivation(observer_id:Int,token:String) {
         let headers: HTTPHeaders = [
             "authorization": token
         ]
@@ -137,8 +129,8 @@ class LoginViewController: UIViewController {
         if CheckInternetConnection.isConnectedToInternet(){
             Loader.start(style: .whiteLarge, backColor: UIColor.white, baseColor: UIColor.blue)
             let manager = Alamofire.SessionManager.default
-            manager.session.configuration.timeoutIntervalForRequest = 2
-            manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-activation-check", method: .post, parameters: ["observer_id": observer_id], encoding: JSONEncoding.default, headers: headers)
+            manager.session.configuration.timeoutIntervalForRequest = 100
+           manager.request(AppDatabase.DOMAIN_ADDRESS+"/api/authentication/mobile-activation-check", method: .post, parameters: ["observer_id": observer_id], encoding: JSONEncoding.default, headers: headers)
                 .validate()
                 .responseJSON {
                     response in
@@ -146,26 +138,30 @@ class LoginViewController: UIViewController {
                     case .success: // succes path
                         let json=JSON(response.value as Any)
                         if json["response"]==1{
-                            result=true
+                            let tabBarViewController = self.storyboard?.instantiateViewController(
+                                withIdentifier: "TabBarViewController") as! TabBarViewController
+                            self.present(tabBarViewController, animated: true, completion: nil)
                         }
                         else if json["response"]==2{
-                            result=false
                             let loginData = LoginData(complete_name: "", observer_id: 0, polling_center_id: 0, province_id: 0, token: "", pc_station_number: 0)
                             User().setLoginUserDefault(loginData: loginData)
                         }
+                        Loader.stop()
                         break
+           
                     case .failure(let error):
                         if error._code == NSURLErrorTimedOut {
-                            print("Request timeout!")
+                            Loader.stop()
                         }
-                        break
+                    break
                     }
-                }
-        
-            Loader.stop()
+            }
         }
-        
-        return result;
+        else{
+            let tabBarViewController = self.storyboard?.instantiateViewController(
+                withIdentifier: "TabBarViewController") as! TabBarViewController
+            self.present(tabBarViewController, animated: true, completion: nil)
+        }
     }
     
     
@@ -202,6 +198,8 @@ class LoginViewController: UIViewController {
                                 
                                 User().setLoginUserDefault(loginData: loginData)
                                 
+                                self.txtPhone.text=""
+                                self.txtPassword.text=""
                                 let tabBarViewController =
                                     self.storyboard?.instantiateViewController(
                                         withIdentifier: "TabBarViewController") as! TabBarViewController
