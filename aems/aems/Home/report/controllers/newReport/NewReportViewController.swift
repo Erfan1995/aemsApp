@@ -36,7 +36,7 @@ class NewReportViewController: UIViewController {
     var languageBundle : Bundle?
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
         self.hideKeyboardWhenTappedAround()
         addBarButton()

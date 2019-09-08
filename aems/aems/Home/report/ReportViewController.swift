@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+@available(iOS 10.0, *)
 class ReportViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var lblSent: UILabel!
