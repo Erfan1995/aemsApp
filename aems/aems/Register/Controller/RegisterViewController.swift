@@ -307,7 +307,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                             let json=JSON(response.value as Any)
                             if  json["response"]==1{
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "registredSuccessfuly"))
-                                self.dismiss( animated: true, completion: nil)
+                                _ = self.navigationController?.popViewController(animated: true)
                             }
                             else if json["response"]==2{
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "duplicatePhone"))
@@ -315,6 +315,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                             else if json["response"]==3{
                                 Helper.showSnackBar(messageString: AppLanguage().Locale(text: "occuredSomeProblem"))
                             }
+                            
                             break
                             
                         case .failure(let error):

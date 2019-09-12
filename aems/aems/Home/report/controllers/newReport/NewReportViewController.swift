@@ -210,6 +210,10 @@ class NewReportViewController: UIViewController {
                 Loader.start(style: .whiteLarge, backColor: .white, baseColor: UIColor.blue)
                 if files.count == 1{
                     if CheckInternetConnection.isConnectedToInternet(){
+//                        var rect = CGRect(x: 0,y: 0,width: files[0].file!.size.width/6,height: files[0].file!.size.height/6);
+//                        UIGraphicsBeginImageContext( rect.size );
+//                        [files[0].file! drawInRect:rect];
+                        
                         let firstImageData = (files[0].file!.jpegData(compressionQuality: 0))!
                         let manager = Alamofire.SessionManager.default
                         manager.session.configuration.timeoutIntervalForRequest = 120
@@ -714,17 +718,36 @@ extension NewReportViewController:  ImagePickerDelegate{
         if image != nil{
             if selectedImage==1{
                 if firsImage != nil{
-                    firsImage?.image=image
+                    firsImage?.image=resizeImage(image: image!, targetSize: CGSize(width: 1500,height: 700))
                     selectedFiles.append(1)
                 }
             }
             else if(selectedImage==2){
                 if secondImage != nil{
-                    secondImage?.image = image
+                    secondImage?.image = resizeImage(image: image!, targetSize: CGSize(width: 1500,height: 700))
                     selectedFiles.append(2)
                 }
             }
         }
+    }
+    func resizeImage(image:UIImage, targetSize: CGSize)-> UIImage{
+        let size = image.size
+        let widthRatio  = targetSize.width  / (image.size.width)
+        let heightRatio = targetSize.height / (image.size.height)
+        
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
 }
 
