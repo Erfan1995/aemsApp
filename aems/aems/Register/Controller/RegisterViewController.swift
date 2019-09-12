@@ -51,7 +51,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             provincePickerData.append(province.name!)
         }
         localize()
-        fullName.addTarget(self, action: #selector(validateFullName), for: .editingChanged )
+        fullName.addTarget(self, action: #selector(validateFullName(_sender:)), for: .editingChanged )
         pollsterCode.addTarget(self, action: #selector(validatePollsterCode(_sender:)), for: .editingChanged )
         phoneNumber.addTarget(self, action: #selector(validatePhoneNumber(_sender:)), for: .editingChanged )
         province.addTarget(self, action: #selector(validateProvince(_sender:)), for: .editingChanged )
@@ -153,8 +153,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBAction func validateFullName( _sender: UITextField){
         do{
             try _ = _sender.validatedText(validationType: ValidatorType.username)
-            fullNameLabel.text = nil
             _sender.layer.borderColor = UIColor.gray.cgColor
+            fullNameLabel.text = nil
         }catch(let error){
             _sender.layer.borderWidth = 1.0
             _sender.layer.borderColor = UIColor.red.cgColor

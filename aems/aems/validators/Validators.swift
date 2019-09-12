@@ -96,7 +96,7 @@ struct RequiredFieldValidator: ValidatorConvertible {
 struct UserNameValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
         guard value.count > 0 else{
-            throw ValidationError(AppLanguage().Locale(text: "requied"))
+            throw ValidationError(AppLanguage().Locale(text: "required"))
         }
         guard value.count >= 3 else {
             throw ValidationError(AppLanguage().Locale(text: "min3"))
