@@ -126,15 +126,17 @@ class DraftDetailsViewController: UIViewController, UICollectionViewDelegate, UI
 
         addBarButton()
     }
+    
     func addBarButton(){
         let buttonSend = UIButton(type: .custom)
         buttonSend.setImage(UIImage(named: "send-button (3)"), for: .normal)
         buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
         buttonSend.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        
         let barButtonSend = UIBarButtonItem(customView: buttonSend)
         self.navigationItem.rightBarButtonItem = barButtonSend
     }
+    
+    
     @objc func tapButton(){
         
         files.removeAll()

@@ -14,6 +14,7 @@ class SentReportViewController: UIViewController,UITableViewDataSource,UITableVi
     var setLocationName : Array<Int> = Array()
     override func viewDidLoad() {
         super.viewDidLoad()
+        addBarButton()
         sentReportTable.delegate = self
         sentReportTable.dataSource = self
         setLocationName=AppDatabase().getDraftOrSentReports(isSent: 1)
@@ -21,6 +22,12 @@ class SentReportViewController: UIViewController,UITableViewDataSource,UITableVi
         
     }
 
+    @objc func loadList(){
+        setLocationName=AppDatabase().getDraftOrSentReports(isSent: 1)
+        sentContent = creatArry()
+        self.sentReportTable.reloadData()
+    }
+    
     func creatArry()->[DraftAndSentReportContent]{
         var temptSent: [DraftAndSentReportContent] = []
         for indedx in 0..<setLocationName.count{
@@ -28,6 +35,28 @@ class SentReportViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         return temptSent
     }
+    
+    
+    func addBarButton(){
+        let buttonSend = UIButton(type: .custom)
+        buttonSend.setImage(UIImage(named: "delete_24"), for: .normal)
+        buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
+        buttonSend.frame = CGRect(x: 0, y: 0, width: 15, height: 20)
+        let barButtonSend = UIBarButtonItem(customView: buttonSend)
+        self.navigationItem.rightBarButtonItem = barButtonSend
+    }
+    
+    
+    @objc func tapButton(){
+        let alert = UIAlertController(title: AppLanguage().Locale(text: "delete"), message: AppLanguage().Locale(text: "deleteSentReport"), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "no"), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler: { action in
+            AppDatabase().deleteAllReport(is_sent: 1)
+            self.loadList()
+        }))
+        self.present(alert, animated: true)
+    }
+    
 
 }
 extension SentReportViewController{

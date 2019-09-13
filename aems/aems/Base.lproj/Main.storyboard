@@ -545,7 +545,7 @@
                                             <constraint firstItem="Ue8-Eu-4vo" firstAttribute="top" secondItem="Gy8-ej-qET" secondAttribute="bottom" constant="10" id="CNp-dY-uuc"/>
                                             <constraint firstItem="Ouv-0l-N7J" firstAttribute="top" secondItem="FWB-hb-hZH" secondAttribute="bottom" constant="10" id="Cfv-Ie-tIt"/>
                                             <constraint firstItem="FWB-hb-hZH" firstAttribute="top" secondItem="hfF-YM-hIQ" secondAttribute="bottom" constant="10" id="D3a-EU-5BV"/>
-                                            <constraint firstItem="blP-Be-NLo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" symbolic="YES" id="E9z-mN-kFR"/>
+                                            <constraint firstItem="blP-Be-NLo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="20" symbolic="YES" id="E9z-mN-kFR"/>
                                             <constraint firstItem="0bV-RC-bQh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2KA-5a-g9X" secondAttribute="leading" symbolic="YES" id="EIY-Vx-DLE"/>
                                             <constraint firstAttribute="trailing" secondItem="DRe-6e-OXf" secondAttribute="trailing" constant="9" id="FD4-Ng-gPr"/>
                                             <constraint firstItem="Ue8-Eu-4vo" firstAttribute="leading" secondItem="2KA-5a-g9X" secondAttribute="leading" constant="9" id="FLk-ke-iz7"/>
@@ -1053,7 +1053,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l3L-ol-PZs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2148" y="3138.08095952024"/>
+            <point key="canvasLocation" x="-2119" y="3171"/>
         </scene>
         <!--Sent Report View Controller-->
         <scene sceneID="0L8-NI-0Za">
@@ -1125,7 +1125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QQ-Ox-fVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1476" y="3140.7796101949029"/>
+            <point key="canvasLocation" x="-1370" y="3171"/>
         </scene>
         <!--Sent Report Details View Controller-->
         <scene sceneID="isa-0K-ovi">
@@ -1420,7 +1420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SlP-0L-t9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-834.39999999999998" y="3140.7796101949029"/>
+            <point key="canvasLocation" x="-644" y="3172"/>
         </scene>
         <!--Draft Details View Controller-->
         <scene sceneID="PAk-PJ-L6A">

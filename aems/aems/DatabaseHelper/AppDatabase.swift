@@ -91,7 +91,6 @@ class AppDatabase: NSObject {
         }
         let insertStatment = " INSERT INTO  \(Province.TABLE_NAME) ( \(Province.COL_ID),\(Province.COL_NAME) ) VALUES \(values);"
         do{
-            print(insertStatment)
             try con!.executeUpdate(insertStatment, values: nil)
             Province().setProvinceUserDefault(uploaded: true)
             
@@ -325,16 +324,27 @@ class AppDatabase: NSObject {
         let sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_STATION) ='\(station_id)'"
         do{
             try con!.executeUpdate(sqlStatement, values: nil)
-            print("successfuly deleted ")
         }catch{
-            
-            print("problem in deletion")
-            print( error)
         }
         if con!.isOpen{
             con!.close()
         }
-   
+    }
+    
+    
+    func deleteAllReport(is_sent:Int) {
+        
+        let con = openDatabase()
+        con!.open()
+        let sqlStatement = "DELETE FROM \(Report.TABLE_NAME) WHERE \(Report.COL_IS_SENT) ='\(is_sent)'"
+        do{
+            try con!.executeUpdate(sqlStatement, values: nil)
+        }catch{
+            
+        }
+        if con!.isOpen{
+            con!.close()
+        }
     }
     
     

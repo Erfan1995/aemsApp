@@ -26,6 +26,7 @@
 		174703C2230928690030AD28 /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C1230928690030AD28 /* District.swift */; };
 		174703C4230929550030AD28 /* PollingCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C3230929550030AD28 /* PollingCenter.swift */; };
 		174703C623092A610030AD28 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174703C523092A610030AD28 /* Report.swift */; };
+		177A0885232BB1C50089D7C0 /* delete_24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 177A0884232BB1C50089D7C0 /* delete_24.jpg */; };
 		17A1BD4D231980A600B8585B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 17A1BD4B231980A600B8585B /* Localizable.strings */; };
 		17F60F2E230E51BB002B4035 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F60F2D230E51BB002B4035 /* Helper.swift */; };
 		17F6D0D9231AE240000F58DD /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F6D0D8231AE240000F58DD /* AppLanguage.swift */; };
@@ -93,6 +94,7 @@
 		174703C1230928690030AD28 /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
 		174703C3230929550030AD28 /* PollingCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingCenter.swift; sourceTree = "<group>"; };
 		174703C523092A610030AD28 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		177A0884232BB1C50089D7C0 /* delete_24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = delete_24.jpg; path = ../../../../delete_24.jpg; sourceTree = "<group>"; };
 		17A1BD4C231980A600B8585B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		17A1BD4E231980AD00B8585B /* fa-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fa-AF"; path = "fa-AF.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		17A1BD4F231980B200B8585B /* ps-AF */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ps-AF"; path = "ps-AF.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				22AA7A0322F952BB0050298A /* Assets.xcassets */,
+				177A0884232BB1C50089D7C0 /* delete_24.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 			files = (
 				22AA7A0722F952BB0050298A /* LaunchScreen.storyboard in Resources */,
 				17A1BD4D231980A600B8585B /* Localizable.strings in Resources */,
+				177A0885232BB1C50089D7C0 /* delete_24.jpg in Resources */,
 				22AA7A0422F952BB0050298A /* Assets.xcassets in Resources */,
 				22AA7A0222F952BB0050298A /* Main.storyboard in Resources */,
 			);

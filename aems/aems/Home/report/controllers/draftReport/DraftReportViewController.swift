@@ -14,6 +14,7 @@ class DraftReportViewController: UIViewController, UITableViewDelegate, UITableV
     var setLocationName : Array<Int> = Array()
     override func viewDidLoad() {
         super.viewDidLoad()
+        addBarButton()
         draftTable.delegate = self
         draftTable.dataSource = self
         setLocationName=AppDatabase().getDraftOrSentReports(isSent: 0)
@@ -37,8 +38,26 @@ class DraftReportViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
 
+    func addBarButton(){
+        let buttonSend = UIButton(type: .custom)
+        buttonSend.setImage(UIImage(named: "delete_24"), for: .normal)
+        buttonSend.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
+        buttonSend.frame = CGRect(x: 0, y: 0, width: 15, height: 20)
+        let barButtonSend = UIBarButtonItem(customView: buttonSend)
+        self.navigationItem.rightBarButtonItem = barButtonSend
+    }
     
-
+    
+    @objc func tapButton(){
+        let alert = UIAlertController(title: AppLanguage().Locale(text: "delete"), message: AppLanguage().Locale(text: "deleteDraftReport"), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "no"), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: AppLanguage().Locale(text: "yes"), style: .default, handler: { action in
+            AppDatabase().deleteAllReport(is_sent: 0)
+            self.loadList()
+        }))
+        self.present(alert, animated: true)
+    }
+    
 }
 extension DraftReportViewController
 {

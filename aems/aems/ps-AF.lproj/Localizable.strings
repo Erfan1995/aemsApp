@@ -124,3 +124,7 @@
 "loginPage"="د ننوتلو پانه";
 "mainPage"="اصلی پانه";
 "descriptionPage"="مشخصات پانه";
+
+"delete"="ړنګول";
+"deleteDraftReport"=" ایا تاسو غواړئ د مسودې راپورونه حذف کړئ؟ ";
+"deleteSentReport"="ایا تاسو غواړئ سپارل شوي راپورونه حذف کړئ؟";
